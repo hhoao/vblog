@@ -1,0 +1,15 @@
+plugins {
+    alias(libs.plugins.boot)
+    alias(libs.plugins.io.spring.dependency.management)
+    id 'springboot-dev-conventions'
+}
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+    api project(':blog-common')
+    api 'org.springframework.boot:spring-boot-starter-security'
+    api libs.jackson.datatype.jsr310
+    api libs.jjwt
+}

@@ -1,0 +1,16 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+repositories {
+    gradlePluginPortal()
+}
+
+dependencies {
+    implementation libs.spotbugs.gradle.plugin
+    testImplementation platform(libs.spock.bom)
+    testImplementation 'org.spockframework:spock-core'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

@@ -1,0 +1,70 @@
+server:
+  port: 8888
+spring:
+  # 配置邮箱
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: haunghao@foxmail.com
+    # 授权码
+    password: ENC=(ps6g7c9mJXVEUlzg1OPgiQ7veHDothDpTmy4Z28CbTE=)
+    properties:
+      mail:
+        smtp:
+          socketFactory:
+            class=javax:
+              net:
+                ssl:
+                  SSLSocketFactory:
+  # 配置redis
+  redis:
+    database: 0
+    port: 6379
+    password:
+    host: redis
+  # 配置mysql数据库
+  datasource:
+    url: jdbc:mysql://mysql:3306/rare_earth_track
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ENC(F6BQrplI6kVqMA724mqn7U95rnYc7TOL)
+  # 配置缓存
+  cache:
+    redis:
+      time-to-live: 1d
+# 项目配置
+ret:
+  mail:
+    from: haunghao@foxmail.com
+#文件配置
+file:
+  upload:
+    path: /data/uploads/  #文件上传目标路径
+    baseUrl: http://120.48.118.129/uploads/
+
+# params
+params:
+  imei: 861011046699349
+  obj_id: 3200
+  obj_inst_id: 0
+  mode: 2
+  timeout: 5
+
+# body
+body:
+  res_id: 5750
+
+# header
+header:
+  content-type: application/json
+
+# OneNet平台对接
+# 这里填写apikey
+machine:
+  apiKey: eKwNk=hCz=UxFx6hENKCIWJTn5w=
+
+mq:
+  userName: MoYU
+  mqTopic: topic-test
+  mqSub: test-sub
+  accessKey: w5qhghBLH31SiichSQlmN416a1xctCs86Kvx6k61wSM=

@@ -35,6 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 安全配置
+ *
  * @author hhoa
  * @date 2022/5/5
  **/
@@ -43,6 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AdminJwtSecurityConfig {
     /**
      * 自定义UserDetailsService用来自定义获取用户、更新用户等操作
+     *
      * @return userDetailsService
      */
     @Bean
@@ -52,11 +54,12 @@ public class AdminJwtSecurityConfig {
 
     /**
      * 资源认证选举者, 用于认证资源访问请求
+     *
      * @return 选举者
      */
     @Bean
     @SuppressWarnings("all")
-    public AccessDecisionVoter resourceAccessDecisionVoter(){
+    public AccessDecisionVoter resourceAccessDecisionVoter() {
         return new AccessDecisionVoter() {
             @Override
             public boolean supports(ConfigAttribute attribute) {
@@ -95,7 +98,7 @@ public class AdminJwtSecurityConfig {
     @Configuration
     @Aspect
     @RequiredArgsConstructor
-    public static class AdminDynamicSecurityServiceConfig{
+    public static class AdminDynamicSecurityServiceConfig {
         private final UmsResourceService resourceService;
         private Map<AntPathRequestMatcher, ConfigAttribute> dataSource;
 
@@ -110,14 +113,14 @@ public class AdminJwtSecurityConfig {
         @Pointcut("execution(* com.hhoa.blog.admin.service.impl.UmsResourceServiceImpl.delete*(..)) ||" +
                 "execution(* com.hhoa.blog.admin.service.impl.UmsResourceServiceImpl.update*(..)) ||" +
                 "execution(* com.hhoa.blog.admin.service.impl.UmsResourceServiceImpl.add*(..))")
-        public void alterDataSource(){
+        public void alterDataSource() {
         }
 
         /**
          * 刷新DataSource
          */
         @AfterReturning("alterDataSource()")
-        public void refreshDataSource(){
+        public void refreshDataSource() {
             if (this.dataSource == null) {
                 this.dataSource = new ConcurrentHashMap<>();
             }
@@ -139,29 +142,31 @@ public class AdminJwtSecurityConfig {
         }
 
         @Bean
-        public DynamicSecurityService dynamicSecurityService(){
+        public DynamicSecurityService dynamicSecurityService() {
             return this::getDataSource;
         }
     }
 
     /**
      * 编码器配置
+     *
      * @return 编码器
      */
     @Bean
-    public static PasswordEncoder passwordEncoder(){
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     /**
      * token服务
+     *
      * @param administratorCacheService token缓存服务
-     * @param jwtSecurityProperties jwt安全配置属性
+     * @param jwtSecurityProperties     jwt安全配置属性
      * @return jwtToken服务
      */
     @Bean
     public static JwtTokenService jwtTokenService(UmsAdministratorCacheService administratorCacheService,
-                                                  JwtSecurityProperties jwtSecurityProperties){
+                                                  JwtSecurityProperties jwtSecurityProperties) {
         DefaultJwtTokenServiceImpl defaultJwtTokenService = new DefaultJwtTokenServiceImpl() {
             @Override
             public String generateToken(Object subject) {

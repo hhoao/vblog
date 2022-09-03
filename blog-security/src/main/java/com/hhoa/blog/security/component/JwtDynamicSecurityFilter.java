@@ -20,9 +20,10 @@ import java.util.List;
 public class JwtDynamicSecurityFilter extends AbstractSecurityInterceptor implements Filter {
     private final DynamicSecurityMetadataSource dynamicSecurityMetadataSource;
     private final List<String> ignoredUrls;
+
     public JwtDynamicSecurityFilter(AccessDecisionManager dynamicAcc,
                                     DynamicSecurityMetadataSource dynamicSecurityMetadataSource,
-                                    List<String> ignoredUrls){
+                                    List<String> ignoredUrls) {
         setAccessDecisionManager(dynamicAcc);
         this.dynamicSecurityMetadataSource = dynamicSecurityMetadataSource;
         this.ignoredUrls = ignoredUrls;
@@ -38,14 +39,14 @@ public class JwtDynamicSecurityFilter extends AbstractSecurityInterceptor implem
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         FilterInvocation fi = new FilterInvocation(servletRequest, servletResponse, filterChain);
         //OPTIONS请求直接放行
-        if(request.getMethod().equals(HttpMethod.OPTIONS.toString())){
+        if (request.getMethod().equals(HttpMethod.OPTIONS.toString())) {
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
             return;
         }
         //白名单请求直接放行
         PathMatcher pathMatcher = new AntPathMatcher();
         for (String path : ignoredUrls) {
-            if(pathMatcher.match(path,request.getRequestURI())){
+            if (pathMatcher.match(path, request.getRequestURI())) {
 //                fi.getRequest().setAttribute("__spring_security_filterSecurityInterceptor_filterApplied", true);
                 fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
                 return;

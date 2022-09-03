@@ -19,7 +19,8 @@ public enum IdentifyType {
      */
     username("username");
     private final String value;
-    IdentifyType(String value){
+
+    IdentifyType(String value) {
         this.value = value;
     }
 

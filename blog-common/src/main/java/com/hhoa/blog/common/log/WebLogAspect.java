@@ -1,6 +1,9 @@
 package com.hhoa.blog.common.log;
 
 import cn.hutool.json.JSONUtil;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.hhoa.blog.common.api.CommonPage;
+import com.hhoa.blog.common.api.CommonResult;
 import io.swagger.v3.oas.annotations.Operation;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -33,7 +36,7 @@ import java.util.Map;
 public class WebLogAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLogAspect.class);
 
-    @Pointcut("execution(public * com.rare_earth_track.*.controller.*.*(..))||execution(public * com.rare_earth_track.*.controller.*.*(..))")
+    @Pointcut("execution(public * com.hhoa.blog.*.controller.*.*(..))||execution(public * com.hhoa.*.controller.*.*(..))")
     public void webLog() {
     }
 
@@ -64,7 +67,10 @@ public class WebLogAspect {
         logMap.put("parameter", getParameter(method, joinPoint.getArgs()));
         logMap.put("url", request.getRequestURL().toString());
         logMap.put("spendTime", (int) (endTime - startTime));
-        logMap.put("result", result);
+        if (result instanceof CommonResult){
+            logMap.put("result", ((CommonResult<?>) result).getCode());
+            logMap.put("message", ((CommonResult<?>) result).getMessage());
+        }
         logMap.put("startTime", startTime);
         LOGGER.info(JSONUtil.parse(logMap).toString());
         return result;

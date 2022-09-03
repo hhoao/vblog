@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author hhoa
  * @since 2022/8/30
  **/
+
 @SpringBootApplication(scanBasePackages = {"com.hhoa.blog"})
 public class BlogAdminApplication {
     public static void main(String[] args) {

@@ -2,12 +2,11 @@ package com.hhoa.blog.mgb.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 文件
  * @author hhoa 
- * @date 2022-09-01
+ * @date 2022-09-03
  */
 @Schema(description = "文件")
 public class OmsFile implements Serializable {
@@ -30,13 +29,7 @@ public class OmsFile implements Serializable {
     private String uuid;
 
     @Schema(description = "链接是否可用（1：是 0：否）")
-    private Byte enable;
-
-    @Schema(description = "创建时间")
-    private Date createTime;
-
-    @Schema(description = "更新时间")
-    private Date updateTime;
+    private Boolean enable;
 
     private static final long serialVersionUID = 1L;
 
@@ -140,7 +133,7 @@ public class OmsFile implements Serializable {
      * 链接是否可用（1：是 0：否）
      * @return enable 链接是否可用（1：是 0：否）
      */
-    public Byte getEnable() {
+    public Boolean getEnable() {
         return enable;
     }
 
@@ -148,40 +141,8 @@ public class OmsFile implements Serializable {
      * 链接是否可用（1：是 0：否）
      * @param enable 链接是否可用（1：是 0：否）
      */
-    public void setEnable(Byte enable) {
+    public void setEnable(Boolean enable) {
         this.enable = enable;
-    }
-
-    /**
-     * 创建时间
-     * @return create_time 创建时间
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * 创建时间
-     * @param createTime 创建时间
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    /**
-     * 更新时间
-     * @return update_time 更新时间
-     */
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    /**
-     * 更新时间
-     * @param updateTime 更新时间
-     */
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
     /**
@@ -201,8 +162,6 @@ public class OmsFile implements Serializable {
         sb.append(", url=").append(url);
         sb.append(", uuid=").append(uuid);
         sb.append(", enable=").append(enable);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

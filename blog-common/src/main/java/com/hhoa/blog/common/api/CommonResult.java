@@ -4,10 +4,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * 通用返回对象
+ *
  * @author hhoa
  */
 @Schema(description = "通用返回对象")
-public class CommonResult<T>{
+public class CommonResult<T> {
     /**
      * 状态码
      */
@@ -20,31 +21,38 @@ public class CommonResult<T>{
     private String message;
     /**
      * 数据封装
-//     */
+     * //
+     */
     @Schema(description = "数据")
     private T data;
-    protected CommonResult(){
+
+    protected CommonResult() {
     }
-    protected CommonResult(long code, String message, T data){
+
+    protected CommonResult(long code, String message, T data) {
         this.message = message;
         this.code = code;
         this.data = data;
     }
+
     /**
      * 成功返回结果
+     *
      * @param data 要封装的数据
-     * @param <T> 数据类型的泛型
+     * @param <T>  数据类型的泛型
      * @return 封装结果
      */
-    public static <T> CommonResult<T> success(T data){
+    public static <T> CommonResult<T> success(T data) {
         return new CommonResult<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
     }
 
-    public static <T> CommonResult<T> success(T data, String message){
+    public static <T> CommonResult<T> success(T data, String message) {
         return new CommonResult<>(ResultCode.SUCCESS.getCode(), message, data);
     }
+
     /**
      * 失败返回结果
+     *
      * @param errorCode 错误码
      */
     public static <T> CommonResult<T> failed(IErrorCode errorCode) {
@@ -53,15 +61,17 @@ public class CommonResult<T>{
 
     /**
      * 失败返回结果
+     *
      * @param errorCode 错误码
-     * @param message 错误信息
+     * @param message   错误信息
      */
-    public static <T> CommonResult<T> failed(IErrorCode errorCode,String message) {
+    public static <T> CommonResult<T> failed(IErrorCode errorCode, String message) {
         return new CommonResult<T>(errorCode.getCode(), message, null);
     }
 
     /**
      * 失败返回结果
+     *
      * @param message 提示信息
      */
     public static <T> CommonResult<T> failed(String message) {
@@ -84,6 +94,7 @@ public class CommonResult<T>{
 
     /**
      * 参数验证失败返回结果
+     *
      * @param message 提示信息
      */
     public static <T> CommonResult<T> validateFailed(String message) {

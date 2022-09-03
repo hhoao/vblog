@@ -1,7 +1,6 @@
 package com.hhoa.blog.mgb.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class UmsMenuExample {
@@ -113,7 +112,7 @@ public class UmsMenuExample {
 
     /**
      * ums_menu
-     * @author hhoa 2022-09-01
+     * @author hhoa 2022-09-03
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -273,66 +272,6 @@ public class UmsMenuExample {
 
         public Criteria andParentIdNotBetween(Long value1, Long value2) {
             addCriterion("parent_id not between", value1, value2, "parentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeIsNull() {
-            addCriterion("create_time is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeIsNotNull() {
-            addCriterion("create_time is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeEqualTo(Date value) {
-            addCriterion("create_time =", value, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeNotEqualTo(Date value) {
-            addCriterion("create_time <>", value, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeGreaterThan(Date value) {
-            addCriterion("create_time >", value, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("create_time >=", value, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeLessThan(Date value) {
-            addCriterion("create_time <", value, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
-            addCriterion("create_time <=", value, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeIn(List<Date> values) {
-            addCriterion("create_time in", values, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeNotIn(List<Date> values) {
-            addCriterion("create_time not in", values, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeBetween(Date value1, Date value2) {
-            addCriterion("create_time between", value1, value2, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
-            addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
 
@@ -676,52 +615,52 @@ public class UmsMenuExample {
             return (Criteria) this;
         }
 
-        public Criteria andHiddenEqualTo(Integer value) {
+        public Criteria andHiddenEqualTo(Boolean value) {
             addCriterion("hidden =", value, "hidden");
             return (Criteria) this;
         }
 
-        public Criteria andHiddenNotEqualTo(Integer value) {
+        public Criteria andHiddenNotEqualTo(Boolean value) {
             addCriterion("hidden <>", value, "hidden");
             return (Criteria) this;
         }
 
-        public Criteria andHiddenGreaterThan(Integer value) {
+        public Criteria andHiddenGreaterThan(Boolean value) {
             addCriterion("hidden >", value, "hidden");
             return (Criteria) this;
         }
 
-        public Criteria andHiddenGreaterThanOrEqualTo(Integer value) {
+        public Criteria andHiddenGreaterThanOrEqualTo(Boolean value) {
             addCriterion("hidden >=", value, "hidden");
             return (Criteria) this;
         }
 
-        public Criteria andHiddenLessThan(Integer value) {
+        public Criteria andHiddenLessThan(Boolean value) {
             addCriterion("hidden <", value, "hidden");
             return (Criteria) this;
         }
 
-        public Criteria andHiddenLessThanOrEqualTo(Integer value) {
+        public Criteria andHiddenLessThanOrEqualTo(Boolean value) {
             addCriterion("hidden <=", value, "hidden");
             return (Criteria) this;
         }
 
-        public Criteria andHiddenIn(List<Integer> values) {
+        public Criteria andHiddenIn(List<Boolean> values) {
             addCriterion("hidden in", values, "hidden");
             return (Criteria) this;
         }
 
-        public Criteria andHiddenNotIn(List<Integer> values) {
+        public Criteria andHiddenNotIn(List<Boolean> values) {
             addCriterion("hidden not in", values, "hidden");
             return (Criteria) this;
         }
 
-        public Criteria andHiddenBetween(Integer value1, Integer value2) {
+        public Criteria andHiddenBetween(Boolean value1, Boolean value2) {
             addCriterion("hidden between", value1, value2, "hidden");
             return (Criteria) this;
         }
 
-        public Criteria andHiddenNotBetween(Integer value1, Integer value2) {
+        public Criteria andHiddenNotBetween(Boolean value1, Boolean value2) {
             addCriterion("hidden not between", value1, value2, "hidden");
             return (Criteria) this;
         }
@@ -735,7 +674,7 @@ public class UmsMenuExample {
 
     /**
      * ums_menu
-     * @author hhoa 2022-09-01
+     * @author hhoa 2022-09-03
      */
     public static class Criterion {
         private String condition;

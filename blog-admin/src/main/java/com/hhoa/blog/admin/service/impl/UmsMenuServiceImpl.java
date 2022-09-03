@@ -2,15 +2,14 @@ package com.hhoa.blog.admin.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.github.pagehelper.PageHelper;
-
 import com.hhoa.blog.admin.bean.PageInfo;
+import com.hhoa.blog.admin.bean.UmsMenuParam;
 import com.hhoa.blog.admin.service.UmsMenuService;
 import com.hhoa.blog.admin.service.UmsRoleMenuRelationService;
+import com.hhoa.blog.common.exception.Asserts;
 import com.hhoa.blog.mgb.mapper.UmsMenuMapper;
 import com.hhoa.blog.mgb.model.UmsMenu;
 import com.hhoa.blog.mgb.model.UmsMenuExample;
-import com.hhoa.blog.admin.bean.UmsMenuParam;
-import com.hhoa.blog.common.exception.Asserts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +29,7 @@ public class UmsMenuServiceImpl implements UmsMenuService {
     private final UmsMenuMapper menuMapper;
 
     private UmsRoleMenuRelationService roleMenuRelationService;
+
     @Lazy
     @Autowired
     public void setRoleMenuRelationService(UmsRoleMenuRelationService roleMenuRelationService) {
@@ -42,7 +42,7 @@ public class UmsMenuServiceImpl implements UmsMenuService {
         UmsMenuExample menuExample = new UmsMenuExample();
         menuExample.createCriteria().andNameEqualTo(menuName);
         List<UmsMenu> retMenus = menuMapper.selectByExample(menuExample);
-        if (retMenus.size() == 0){
+        if (retMenus.size() == 0) {
             Asserts.fail("没有该菜单");
         }
         return retMenus.get(0);
@@ -51,7 +51,7 @@ public class UmsMenuServiceImpl implements UmsMenuService {
     @Override
     public UmsMenu getMenu(Long menuId) {
         UmsMenu retMenu = menuMapper.selectByPrimaryKey(menuId);
-        if (retMenu == null){
+        if (retMenu == null) {
             Asserts.fail("没有该菜单");
         }
         return retMenu;
@@ -62,7 +62,7 @@ public class UmsMenuServiceImpl implements UmsMenuService {
         return menuMapper.selectByExample(new UmsMenuExample());
     }
 
-    private UmsMenuExample getMenuExample(UmsMenu menu){
+    private UmsMenuExample getMenuExample(UmsMenu menu) {
         UmsMenuExample menuExample = new UmsMenuExample();
         if (menu != null) {
             if (menu.getName() != null) {
@@ -94,7 +94,7 @@ public class UmsMenuServiceImpl implements UmsMenuService {
         UmsMenu menu = new UmsMenu();
         BeanUtil.copyProperties(menuParam, menu);
         int insert = menuMapper.insert(menu);
-        if (insert == 0){
+        if (insert == 0) {
             Asserts.fail("插入资源失败");
         }
     }
@@ -105,17 +105,18 @@ public class UmsMenuServiceImpl implements UmsMenuService {
 
         BeanUtils.copyProperties(menuParam, menuByName);
         int successCount = menuMapper.updateByPrimaryKeySelective(menuByName);
-        if (successCount == 0){
+        if (successCount == 0) {
             Asserts.fail("更新失败");
         }
     }
+
     @Override
     public void deleteMenu(Long menuId) {
         //删除角色菜单关系
         roleMenuRelationService.deleteRoleMenu(menuId);
         //删除菜单
         int i = menuMapper.deleteByPrimaryKey(menuId);
-        if (i == 0){
+        if (i == 0) {
             Asserts.fail("删除资源失败");
         }
     }
@@ -129,7 +130,7 @@ public class UmsMenuServiceImpl implements UmsMenuService {
         UmsMenuExample menuExample = new UmsMenuExample();
         menuExample.createCriteria().andNameEqualTo(menuName);
         int i = menuMapper.deleteByExample(menuExample);
-        if (i == 0){
+        if (i == 0) {
             Asserts.fail("删除资源失败");
         }
     }

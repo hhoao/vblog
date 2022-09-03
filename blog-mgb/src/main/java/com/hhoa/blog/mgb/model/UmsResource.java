@@ -2,19 +2,15 @@ package com.hhoa.blog.mgb.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 资源
  * @author hhoa 
- * @date 2022-09-01
+ * @date 2022-09-03
  */
 @Schema(description = "资源")
 public class UmsResource implements Serializable {
     private Long id;
-
-    @Schema(description = "创建时间")
-    private Date createTime;
 
     @Schema(description = "资源名称")
     private String name;
@@ -44,22 +40,6 @@ public class UmsResource implements Serializable {
      */
     public void setId(Long id) {
         this.id = id;
-    }
-
-    /**
-     * 创建时间
-     * @return create_time 创建时间
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * 创建时间
-     * @param createTime 创建时间
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     /**
@@ -137,7 +117,6 @@ public class UmsResource implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", createTime=").append(createTime);
         sb.append(", name=").append(name);
         sb.append(", method=").append(method);
         sb.append(", url=").append(url);

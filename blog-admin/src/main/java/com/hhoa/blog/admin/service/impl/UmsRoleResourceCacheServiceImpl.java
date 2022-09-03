@@ -1,10 +1,9 @@
 package com.hhoa.blog.admin.service.impl;
 
 
-
-import com.hhoa.blog.mgb.model.UmsResource;
 import com.hhoa.blog.admin.service.UmsRoleResourceCacheService;
 import com.hhoa.blog.common.service.RedisService;
+import com.hhoa.blog.mgb.model.UmsResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class UmsRoleResourceCacheServiceImpl implements UmsRoleResourceCacheServ
     @Value("${ret.redis.key.resource-role}")
     private String redisKeyResourceRole;
 
-    public String getRoleNameKey(String role){
+    public String getRoleNameKey(String role) {
         return redisDatabase + ":" + redisKeyResourceRole + ":" + role;
     }
 
@@ -37,11 +36,11 @@ public class UmsRoleResourceCacheServiceImpl implements UmsRoleResourceCacheServ
     @Override
     @SuppressWarnings("unchecked")
     public List<UmsResource> getByRoleName(String role) {
-        return (List<UmsResource>)redisService.get(getRoleNameKey(role));
+        return (List<UmsResource>) redisService.get(getRoleNameKey(role));
     }
 
     @Override
-    public void setByRoleName(List<UmsResource> retResources, String role){
+    public void setByRoleName(List<UmsResource> retResources, String role) {
         redisService.set(getRoleNameKey(role), retResources);
     }
 

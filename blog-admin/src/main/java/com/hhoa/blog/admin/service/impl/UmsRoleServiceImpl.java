@@ -2,13 +2,12 @@ package com.hhoa.blog.admin.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.github.pagehelper.PageHelper;
-
 import com.hhoa.blog.admin.bean.PageInfo;
 import com.hhoa.blog.admin.bean.UmsRoleParam;
 import com.hhoa.blog.admin.service.*;
+import com.hhoa.blog.common.exception.Asserts;
 import com.hhoa.blog.mgb.mapper.UmsRoleMapper;
 import com.hhoa.blog.mgb.model.*;
-import com.hhoa.blog.common.exception.Asserts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +36,7 @@ public class UmsRoleServiceImpl implements UmsRoleService, ApplicationRunner {
     public void setRoleResourceRelationService(UmsRoleResourceRelationService roleResourceRelationService) {
         this.roleResourceRelationService = roleResourceRelationService;
     }
+
     @Autowired
     @Lazy
     public void setResourceCacheService(UmsRoleResourceCacheService resourceCacheService) {
@@ -56,30 +56,34 @@ public class UmsRoleServiceImpl implements UmsRoleService, ApplicationRunner {
     }
 
     @Override
-    public void refreshCache(Long roleId){
+    public void refreshCache(Long roleId) {
         UmsRole role = getRole(roleId);
         List<UmsResource> roleResources = getRoleResources(role.getId(), false);
         resourceCacheService.setByRoleName(roleResources, role.getName());
     }
+
     @Override
-    public void refreshCache(UmsRole role){
+    public void refreshCache(UmsRole role) {
         List<UmsResource> roleResources = getRoleResources(role.getId(), false);
         resourceCacheService.setByRoleName(roleResources, role.getName());
     }
+
     @Override
-    public void refreshCache(String roleName){
+    public void refreshCache(String roleName) {
         UmsRole role = getRole(roleName);
         List<UmsResource> roleResources = getRoleResources(role.getId(), false);
         resourceCacheService.setByRoleName(roleResources, role.getName());
     }
+
     @Override
-    public void refreshCache(){
+    public void refreshCache() {
         List<UmsRole> roles = getAllRoles();
         for (UmsRole role : roles) {
             List<UmsResource> roleResources = getRoleResources(role.getId(), false);
             resourceCacheService.setByRoleName(roleResources, role.getName());
         }
     }
+
     @Override
     public void updateRole(String roleName, UmsRoleParam roleParam) {
         UmsRole role = getRole(roleName);
@@ -87,29 +91,33 @@ public class UmsRoleServiceImpl implements UmsRoleService, ApplicationRunner {
         BeanUtils.copyProperties(roleParam, newRole);
         newRole.setId(role.getId());
         int i = roleMapper.updateByPrimaryKey(newRole);
-        if (i == 0){
+        if (i == 0) {
             Asserts.fail("修改角色失败");
         }
     }
+
     @Override
-    public List<UmsResource> getRoleResources(Long roleId){
+    public List<UmsResource> getRoleResources(Long roleId) {
         return roleResourceRelationService.getRoleResources(roleId, false);
     }
+
     @Override
-    public List<UmsResource> getRoleResources(Long roleId, Boolean disableCache){
+    public List<UmsResource> getRoleResources(Long roleId, Boolean disableCache) {
         return roleResourceRelationService.getRoleResources(roleId, disableCache);
     }
+
     @Override
     public UmsRole getRole(String roleName) {
         UmsRoleExample retRoleExample = new UmsRoleExample();
         retRoleExample.createCriteria().andNameEqualTo(roleName);
         List<UmsRole> retRoles = roleMapper.selectByExample(retRoleExample);
 
-        if (retRoles.size() == 0){
+        if (retRoles.size() == 0) {
             Asserts.fail("没有该角色");
         }
         return retRoles.get(0);
     }
+
     @Override
     public UmsRole getRole(Long roleId) {
         return roleMapper.selectByPrimaryKey(roleId);
@@ -120,7 +128,7 @@ public class UmsRoleServiceImpl implements UmsRoleService, ApplicationRunner {
         UmsRole role = new UmsRole();
         BeanUtil.copyProperties(roleParam, role);
         int insert = roleMapper.insert(role);
-        if (insert == 0){
+        if (insert == 0) {
             Asserts.fail("插入角色失败");
         }
     }
@@ -130,20 +138,20 @@ public class UmsRoleServiceImpl implements UmsRoleService, ApplicationRunner {
         return roleMapper.selectByExample(new UmsRoleExample());
     }
 
-    private UmsRoleExample getRoleExample(UmsRole role){
+    private UmsRoleExample getRoleExample(UmsRole role) {
         UmsRoleExample roleExample = new UmsRoleExample();
-        if (role != null){
+        if (role != null) {
             UmsRoleExample.Criteria criteria = roleExample.createCriteria();
-            if (role.getId() != null){
+            if (role.getId() != null) {
                 criteria.andIdEqualTo(role.getId());
             }
-            if (role.getName() != null){
+            if (role.getName() != null) {
                 criteria.andNameEqualTo(role.getName());
             }
-            if (role.getDescription() != null){
+            if (role.getDescription() != null) {
                 criteria.andDescriptionLike(role.getDescription());
             }
-            if (role.getStatus() != null){
+            if (role.getStatus() != null) {
                 criteria.andStatusEqualTo(role.getStatus());
             }
         }
@@ -158,9 +166,10 @@ public class UmsRoleServiceImpl implements UmsRoleService, ApplicationRunner {
 
     /**
      * 删除引用
+     *
      * @param roleId 角色id
      */
-    private void deleteReference(Long roleId){
+    private void deleteReference(Long roleId) {
         UmsAdministrator administrator = new UmsAdministrator();
         administrator.setRoleId(roleId);
         administratorService.deleteAdministrators(administrator);
@@ -175,7 +184,7 @@ public class UmsRoleServiceImpl implements UmsRoleService, ApplicationRunner {
 
 
         int i = roleMapper.deleteByPrimaryKey(role.getId());
-        if (i == 0){
+        if (i == 0) {
             Asserts.fail("删除角色失败");
         }
     }
@@ -219,7 +228,7 @@ public class UmsRoleServiceImpl implements UmsRoleService, ApplicationRunner {
     public void allocResources(String roleName, List<Long> resourceIds) {
         UmsRole role = getRole(roleName);
         roleResourceRelationService.deleteRoleResources(role.getId());
-        for (Long resourceId : resourceIds){
+        for (Long resourceId : resourceIds) {
             roleResourceRelationService.addRoleResource(role.getId(), resourceId);
         }
     }

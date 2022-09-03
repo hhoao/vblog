@@ -1,13 +1,12 @@
 package com.hhoa.blog.admin.service;
 
 
-import com.hhoa.blog.mgb.model.OmsFile;
 import com.hhoa.blog.admin.bean.PageInfo;
+import com.hhoa.blog.mgb.model.OmsFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-
 
 
 public interface OmsFileService {

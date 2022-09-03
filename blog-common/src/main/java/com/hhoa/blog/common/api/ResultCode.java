@@ -2,10 +2,11 @@ package com.hhoa.blog.common.api;
 
 /**
  * 结果码
+ *
  * @author hhoa
  * @date 2022/4/7
  **/
-public enum ResultCode implements IErrorCode{
+public enum ResultCode implements IErrorCode {
     /**
      * 枚举
      */
@@ -17,7 +18,8 @@ public enum ResultCode implements IErrorCode{
 
     private final long code;
     private final String message;
-    ResultCode(long code, String message){
+
+    ResultCode(long code, String message) {
         this.code = code;
         this.message = message;
     }

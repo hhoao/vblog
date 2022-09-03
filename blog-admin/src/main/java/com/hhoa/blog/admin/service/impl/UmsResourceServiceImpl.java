@@ -3,17 +3,16 @@ package com.hhoa.blog.admin.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.github.pagehelper.PageHelper;
-
 import com.hhoa.blog.admin.bean.PageInfo;
 import com.hhoa.blog.admin.bean.UmsResourceParam;
 import com.hhoa.blog.admin.service.UmsResourceService;
 import com.hhoa.blog.admin.service.UmsRoleResourceRelationService;
 import com.hhoa.blog.admin.service.UmsRoleService;
+import com.hhoa.blog.common.exception.Asserts;
 import com.hhoa.blog.mgb.mapper.UmsResourceMapper;
 import com.hhoa.blog.mgb.model.UmsResource;
 import com.hhoa.blog.mgb.model.UmsResourceExample;
 import com.hhoa.blog.mgb.model.UmsRole;
-import com.hhoa.blog.common.exception.Asserts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +49,7 @@ public class UmsResourceServiceImpl implements UmsResourceService {
         UmsResourceExample resourceExample = new UmsResourceExample();
         resourceExample.createCriteria().andNameEqualTo(resourceName);
         List<UmsResource> resources = resourceMapper.selectByExample(resourceExample);
-        if (resources != null && resources.size() > 0){
+        if (resources != null && resources.size() > 0) {
             return resources.get(0);
         }
         return null;
@@ -62,7 +61,7 @@ public class UmsResourceServiceImpl implements UmsResourceService {
     }
 
 
-    private UmsResourceExample getResourceExample(UmsResource resource){
+    private UmsResourceExample getResourceExample(UmsResource resource) {
         UmsResourceExample resourceExample = new UmsResourceExample();
         if (resource != null) {
             UmsResourceExample.Criteria criteria = resourceExample.createCriteria();
@@ -95,7 +94,7 @@ public class UmsResourceServiceImpl implements UmsResourceService {
     @Override
     public UmsResource getResource(Long resourceId) {
         UmsResource retResource = resourceMapper.selectByPrimaryKey(resourceId);
-        if (retResource == null){
+        if (retResource == null) {
             Asserts.fail("没有该资源");
         }
         return retResource;
@@ -106,7 +105,7 @@ public class UmsResourceServiceImpl implements UmsResourceService {
         UmsResource resource = new UmsResource();
         BeanUtil.copyProperties(resourceParam, resource);
         int insert = resourceMapper.insert(resource);
-        if (insert == 0){
+        if (insert == 0) {
             Asserts.fail("插入资源失败");
         }
     }
@@ -118,14 +117,15 @@ public class UmsResourceServiceImpl implements UmsResourceService {
         List<UmsRole> rolesByResourceId = roleResourceRelationService.getRoles(resourceByName.getId());
         BeanUtils.copyProperties(resourceParam, resourceByName);
         int successCount = resourceMapper.updateByPrimaryKeySelective(resourceByName);
-        if (successCount == 0){
+        if (successCount == 0) {
             Asserts.fail("更新失败");
         }
         //刷新缓存
-        for (UmsRole role : rolesByResourceId){
+        for (UmsRole role : rolesByResourceId) {
             roleService.refreshCache(role);
         }
     }
+
     @Override
     public void deleteResource(Long resourceId) {
         //获取影响的角色
@@ -133,11 +133,11 @@ public class UmsResourceServiceImpl implements UmsResourceService {
 
         roleResourceRelationService.deleteRoleResource(resourceId);
         int i = resourceMapper.deleteByPrimaryKey(resourceId);
-        if (i == 0){
+        if (i == 0) {
             Asserts.fail("删除资源失败");
         }
         //刷新缓存
-        for (UmsRole role : roles){
+        for (UmsRole role : roles) {
             roleService.refreshCache(role);
         }
     }
@@ -149,11 +149,11 @@ public class UmsResourceServiceImpl implements UmsResourceService {
         UmsResource resource = getResource(resourceName);
         roleResourceRelationService.deleteRoleResource(resource.getId());
         int i = resourceMapper.deleteByPrimaryKey(resource.getId());
-        if (i == 0){
+        if (i == 0) {
             Asserts.fail("删除资源失败");
         }
         //刷新缓存
-        for (UmsRole role : roles){
+        for (UmsRole role : roles) {
             roleService.refreshCache(role);
         }
     }

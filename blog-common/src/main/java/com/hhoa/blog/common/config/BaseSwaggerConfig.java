@@ -15,6 +15,7 @@ import java.util.Map;
 
 /**
  * Swagger基础配置
+ *
  * @author hhoa
  */
 public abstract class BaseSwaggerConfig {
@@ -61,7 +62,6 @@ public abstract class BaseSwaggerConfig {
     }
 
     /**
-     *
      * 自定义Swagger配置
      */
     public abstract SwaggerProperties swaggerProperties();

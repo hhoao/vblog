@@ -20,6 +20,7 @@ import java.io.IOException;
 
 /**
  * 用于认证用户
+ *
  * @author hhoa
  */
 @RequiredArgsConstructor
@@ -28,6 +29,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private final JwtSecurityProperties jwtSecurityProperties;
     private final JwtTokenService jwtTokenService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,

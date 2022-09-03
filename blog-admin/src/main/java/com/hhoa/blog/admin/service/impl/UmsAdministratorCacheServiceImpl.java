@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * token缓存
+ *
  * @author hhoa
  * @date 2022/5/14
  **/
@@ -30,9 +31,11 @@ public class UmsAdministratorCacheServiceImpl implements UmsAdministratorCacheSe
     public void setRedisService(RedisService redisService) {
         this.redisService = redisService;
     }
-    private String getUserNameKey(String username){
+
+    private String getUserNameKey(String username) {
         return redisDatabase + ":" + redisKey + ":" + username;
     }
+
     @Override
     public void expire(String username) {
         redisService.expire(getUserNameKey(username), redisExpire);
@@ -49,7 +52,7 @@ public class UmsAdministratorCacheServiceImpl implements UmsAdministratorCacheSe
     }
 
     @Override
-    public boolean hasKey(String username){
+    public boolean hasKey(String username) {
         return redisService.hasKey(getUserNameKey(username));
     }
 
@@ -59,7 +62,7 @@ public class UmsAdministratorCacheServiceImpl implements UmsAdministratorCacheSe
     }
 
     @Override
-    public void delKey(String username){
+    public void delKey(String username) {
         redisService.del(getUserNameKey(username));
     }
 

@@ -1,18 +1,17 @@
 package com.hhoa.blog.admin.service.impl;
 
 import com.github.pagehelper.PageHelper;
-
 import com.hhoa.blog.admin.bean.PageInfo;
 import com.hhoa.blog.admin.service.UmsResourceService;
 import com.hhoa.blog.admin.service.UmsRoleResourceCacheService;
 import com.hhoa.blog.admin.service.UmsRoleResourceRelationService;
 import com.hhoa.blog.admin.service.UmsRoleService;
+import com.hhoa.blog.common.exception.Asserts;
 import com.hhoa.blog.mgb.mapper.UmsRoleResourceRelationMapper;
 import com.hhoa.blog.mgb.model.UmsResource;
 import com.hhoa.blog.mgb.model.UmsRole;
 import com.hhoa.blog.mgb.model.UmsRoleResourceRelation;
 import com.hhoa.blog.mgb.model.UmsRoleResourceRelationExample;
-import com.hhoa.blog.common.exception.Asserts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -94,18 +93,19 @@ public class UmsRoleResourceRelationServiceImpl implements UmsRoleResourceRelati
             roleService.refreshCache(roleId);
         }
     }
+
     @Override
     public List<UmsResource> getRoleResources(Long roleId) {
         return getRoleResources(roleId, false);
     }
+
     @Override
     public List<UmsResource> getRoleResources(Long roleId, Boolean disableCache) {
         UmsRole retRole = roleService.getRole(roleId);
         List<UmsResource> byRoleName;
         if (disableCache == null) {
             byRoleName = roleResourceCacheService.getByRoleName(retRole.getName());
-        }
-        else {
+        } else {
             byRoleName = new ArrayList<>();
             UmsRoleResourceRelationExample roleResourceRelationExample = new UmsRoleResourceRelationExample();
             roleResourceRelationExample.createCriteria().andRoleIdEqualTo(roleId);

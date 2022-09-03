@@ -31,6 +31,7 @@ import java.util.Objects;
 
 /**
  * 对SpringSecurity配置类的扩展，支持自定义白名单资源路径和查询用户逻辑
+ *
  * @author hhoa
  */
 @Configuration
@@ -49,23 +50,31 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    public JwtTokenService getDefaultJwtTokenService(){
+    public JwtTokenService getDefaultJwtTokenService() {
         this.jwtTokenService = new DefaultJwtTokenServiceImpl();
         configureJwtTokenService();
         return this.jwtTokenService;
     }
+
     @Autowired(required = false)
     @ConditionalOnBean(JwtTokenService.class)
-    public JwtTokenService jwtTokenService(JwtTokenService jwtTokenService){
+    public JwtTokenService jwtTokenService(JwtTokenService jwtTokenService) {
         this.jwtTokenService = jwtTokenService;
         return this.jwtTokenService;
     }
-    public void configureJwtTokenService(){
+
+    public void configureJwtTokenService() {
         this.jwtTokenService.setTokenHead(jwtSecurityProperties.getTokenHead());
         this.jwtTokenService.setExpiration(jwtSecurityProperties.getExpiration());
         Assert.hasText(jwtSecurityProperties.getSecret());
         this.jwtTokenService.setSecret(jwtSecurityProperties.getSecret());
         this.jwtTokenService.setRefreshTime(jwtSecurityProperties.getRefreshTime());
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService())
+                .passwordEncoder(getPasswordEncode());
     }
 
     @Override
@@ -101,13 +110,13 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         //有动态权限配置时添加动态权限校验过滤器
-        if (dynamicSecurityService != null){
+        if (dynamicSecurityService != null) {
             registry.and().addFilterBefore(getDynamicSecurityFilter(), FilterSecurityInterceptor.class);
         }
     }
 
-    public AuthenticationTokenFilter jwtAuthenticationTokenFilter(){
-        if (this.jwtTokenService == null){
+    public AuthenticationTokenFilter jwtAuthenticationTokenFilter() {
+        if (this.jwtTokenService == null) {
             this.jwtTokenService = getDefaultJwtTokenService();
             SpringUtil.registerBean("jwtTokenService", this.jwtTokenService);
         }
@@ -118,51 +127,52 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         }
         return this.authenticationTokenFilter;
     }
+
     @Autowired(required = false)
-    public void dynamicSecurityService(DynamicSecurityService dynamicSecurityService){
+    public void dynamicSecurityService(DynamicSecurityService dynamicSecurityService) {
         this.dynamicSecurityService = dynamicSecurityService;
     }
+
     @Autowired(required = false)
-    public void DecisionVoters(List<AccessDecisionVoter<?>> accessDecisionVoterList){
+    public void DecisionVoters(List<AccessDecisionVoter<?>> accessDecisionVoterList) {
         this.voters = accessDecisionVoterList;
     }
 
-    public JwtDynamicSecurityFilter getDynamicSecurityFilter(){
+    public JwtDynamicSecurityFilter getDynamicSecurityFilter() {
         return new JwtDynamicSecurityFilter(//new DynamicAccessDecisionManager(voters),
                 new AffirmativeBased(voters),
                 new DynamicSecurityMetadataSource(dynamicSecurityService),
                 jwtSecurityProperties.getIgnored().getUrls());
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService())
-                .passwordEncoder(getPasswordEncode());
+    @Autowired(required = false)
+    public void passwordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Autowired(required = false)
-    public void passwordEncoder(PasswordEncoder passwordEncoder){
-       this.passwordEncoder = passwordEncoder;
-    }
-
-    @Autowired(required = false)
-    public void userDetailsService(UserDetailsService userDetailsService){
+    public void userDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-    }
-    private PasswordEncoder getPasswordEncode(){
-        return Objects.requireNonNullElseGet(this.passwordEncoder, BCryptPasswordEncoder::new);
     }
     @Override
     protected UserDetailsService userDetailsService() {
-        if (userDetailsService != null){
+        if (userDetailsService != null) {
             return userDetailsService;
         }
         return super.userDetailsService();
     }
-    public AuthenticationEntryPoint getAuthenticationEntryPoint(){
+
+    private PasswordEncoder getPasswordEncode() {
+        return Objects.requireNonNullElseGet(this.passwordEncoder, BCryptPasswordEncoder::new);
+    }
+
+
+
+    public AuthenticationEntryPoint getAuthenticationEntryPoint() {
         return new RestAuthenticationEntryPoint();
     }
-    public AccessDeniedHandler getAccessDeniedHandler(){
+
+    public AccessDeniedHandler getAccessDeniedHandler() {
         return new RestfulAccessDeniedHandler();
     }
 }

@@ -1,19 +1,18 @@
 package com.hhoa.blog.admin.service.impl;
 
 import com.github.pagehelper.PageHelper;
-
 import com.hhoa.blog.admin.bean.PageInfo;
 import com.hhoa.blog.admin.bean.UmsAdministratorDetails;
 import com.hhoa.blog.admin.bean.UmsLoginParam;
 import com.hhoa.blog.admin.service.UmsAdministratorCacheService;
 import com.hhoa.blog.admin.service.UmsAdministratorService;
 import com.hhoa.blog.admin.service.UmsRoleService;
+import com.hhoa.blog.common.exception.Asserts;
 import com.hhoa.blog.mgb.mapper.UmsAdministratorMapper;
 import com.hhoa.blog.mgb.model.UmsAdministrator;
 import com.hhoa.blog.mgb.model.UmsAdministratorExample;
 import com.hhoa.blog.mgb.model.UmsMenu;
 import com.hhoa.blog.mgb.model.UmsResource;
-import com.hhoa.blog.common.exception.Asserts;
 import com.hhoa.blog.security.util.JwtTokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,8 +50,8 @@ public class UmsAdministratorServiceImpl implements UmsAdministratorService {
             if (!passwordEncoder.matches(loginParam.getPassword(), administrator.getPassword())) {
                 Asserts.fail("密码错误");
             }
-            if (!administrator.getStatus().equals(1)) {
-                throw new DisabledException("用户已被冻结");
+            if (!administrator.getStatus()) {
+                Asserts.fail("用户已被冻结");
             }
             UmsAdministratorDetails administratorDetails = getAdministratorDetails(administrator.getUsername());
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(administratorDetails, null, administratorDetails.getAuthorities());
@@ -82,7 +81,7 @@ public class UmsAdministratorServiceImpl implements UmsAdministratorService {
         UmsAdministratorExample.Criteria criteria = administratorExample.createCriteria();
         criteria.andUsernameEqualTo(administratorName);
         List<UmsAdministrator> retAdministrators = administratorMapper.selectByExample(administratorExample);
-        if (retAdministrators.size() == 0){
+        if (retAdministrators.size() == 0) {
             Asserts.fail("没有该用户名");
         }
         UmsAdministrator administratorByAdministratorName = retAdministrators.get(0);
@@ -229,16 +228,16 @@ public class UmsAdministratorServiceImpl implements UmsAdministratorService {
 
     @Override
     public void addAdministrator(UmsAdministrator administrator) {
-        if (!StringUtils.hasLength(administrator.getUsername()) || !StringUtils.hasLength(administrator.getPassword())){
+        if (!StringUtils.hasLength(administrator.getUsername()) || !StringUtils.hasLength(administrator.getPassword())) {
             Asserts.fail("请您输入用户名和密码");
         }
-        if (administrator.getRoleId() == null){
+        if (administrator.getRoleId() == null) {
             Asserts.fail("请您输入角色");
         }
         String encode = passwordEncoder.encode(administrator.getPassword());
         administrator.setPassword(encode);
         int i = administratorMapper.insertSelective(administrator);
-        if (i == 0){
+        if (i == 0) {
             Asserts.fail("插入失败");
         }
     }

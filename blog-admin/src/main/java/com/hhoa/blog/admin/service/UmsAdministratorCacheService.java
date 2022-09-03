@@ -14,6 +14,7 @@ public interface UmsAdministratorCacheService {
      * @param username 用户名
      */
     void expire(String username);
+
     /**
      * 延长时间
      *
@@ -21,10 +22,11 @@ public interface UmsAdministratorCacheService {
      * @param expiration 时间
      */
     void expire(String username, Long expiration);
+
     /**
      * 通过角色名和资源设置token
      *
-     * @param username    用户名
+     * @param username             用户名
      * @param administratorDetails 角色名
      */
     void setKey(String username, UmsAdministratorDetails administratorDetails);

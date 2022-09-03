@@ -1,7 +1,6 @@
 package com.hhoa.blog.mgb.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class UmsAdministratorExample {
@@ -113,7 +112,7 @@ public class UmsAdministratorExample {
 
     /**
      * ums_administrator
-     * @author hhoa 2022-09-01
+     * @author hhoa 2022-09-03
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -366,173 +365,53 @@ public class UmsAdministratorExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Integer value) {
+        public Criteria andStatusEqualTo(Boolean value) {
             addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Integer value) {
+        public Criteria andStatusNotEqualTo(Boolean value) {
             addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Integer value) {
+        public Criteria andStatusGreaterThan(Boolean value) {
             addCriterion("status >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+        public Criteria andStatusGreaterThanOrEqualTo(Boolean value) {
             addCriterion("status >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Integer value) {
+        public Criteria andStatusLessThan(Boolean value) {
             addCriterion("status <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+        public Criteria andStatusLessThanOrEqualTo(Boolean value) {
             addCriterion("status <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Integer> values) {
+        public Criteria andStatusIn(List<Boolean> values) {
             addCriterion("status in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Integer> values) {
+        public Criteria andStatusNotIn(List<Boolean> values) {
             addCriterion("status not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Integer value1, Integer value2) {
+        public Criteria andStatusBetween(Boolean value1, Boolean value2) {
             addCriterion("status between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+        public Criteria andStatusNotBetween(Boolean value1, Boolean value2) {
             addCriterion("status not between", value1, value2, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeIsNull() {
-            addCriterion("create_time is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeIsNotNull() {
-            addCriterion("create_time is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeEqualTo(Date value) {
-            addCriterion("create_time =", value, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeNotEqualTo(Date value) {
-            addCriterion("create_time <>", value, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeGreaterThan(Date value) {
-            addCriterion("create_time >", value, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("create_time >=", value, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeLessThan(Date value) {
-            addCriterion("create_time <", value, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
-            addCriterion("create_time <=", value, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeIn(List<Date> values) {
-            addCriterion("create_time in", values, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeNotIn(List<Date> values) {
-            addCriterion("create_time not in", values, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeBetween(Date value1, Date value2) {
-            addCriterion("create_time between", value1, value2, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
-            addCriterion("create_time not between", value1, value2, "createTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLatestTimeIsNull() {
-            addCriterion("latest_time is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLatestTimeIsNotNull() {
-            addCriterion("latest_time is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLatestTimeEqualTo(Date value) {
-            addCriterion("latest_time =", value, "latestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLatestTimeNotEqualTo(Date value) {
-            addCriterion("latest_time <>", value, "latestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLatestTimeGreaterThan(Date value) {
-            addCriterion("latest_time >", value, "latestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLatestTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("latest_time >=", value, "latestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLatestTimeLessThan(Date value) {
-            addCriterion("latest_time <", value, "latestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLatestTimeLessThanOrEqualTo(Date value) {
-            addCriterion("latest_time <=", value, "latestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLatestTimeIn(List<Date> values) {
-            addCriterion("latest_time in", values, "latestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLatestTimeNotIn(List<Date> values) {
-            addCriterion("latest_time not in", values, "latestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLatestTimeBetween(Date value1, Date value2) {
-            addCriterion("latest_time between", value1, value2, "latestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLatestTimeNotBetween(Date value1, Date value2) {
-            addCriterion("latest_time not between", value1, value2, "latestTime");
             return (Criteria) this;
         }
 
@@ -675,7 +554,7 @@ public class UmsAdministratorExample {
 
     /**
      * ums_administrator
-     * @author hhoa 2022-09-01
+     * @author hhoa 2022-09-03
      */
     public static class Criterion {
         private String condition;

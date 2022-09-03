@@ -15,6 +15,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  * 全局异常处理
+ *
  * @author hhoa
  */
 @ControllerAdvice
@@ -32,9 +33,10 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(value = SQLIntegrityConstraintViolationException.class)
-    public CommonResult handle(SQLIntegrityConstraintViolationException e){
+    public CommonResult handle(SQLIntegrityConstraintViolationException e) {
         return CommonResult.failed("有相关联的项目没有处理");
     }
+
     @ResponseBody
     @ExceptionHandler(value = RuntimeException.class)
     public CommonResult handle(RuntimeException e) {
@@ -61,7 +63,7 @@ public class GlobalExceptionHandler {
         if (bindingResult.hasErrors()) {
             FieldError fieldError = bindingResult.getFieldError();
             if (fieldError != null) {
-                message = fieldError.getField()+fieldError.getDefaultMessage();
+                message = fieldError.getField() + fieldError.getDefaultMessage();
             }
         }
         return CommonResult.validateFailed(message);

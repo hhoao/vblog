@@ -2,28 +2,24 @@ package com.hhoa.blog.mgb.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 角色
  * @author hhoa 
- * @date 2022-09-01
+ * @date 2022-09-03
  */
 @Schema(description = "角色")
 public class UmsRole implements Serializable {
     private Long id;
 
-    @Schema(description = "启用状态：0->禁用；1->启用")
-    private Integer status;
-
     @Schema(description = "名称")
     private String name;
 
+    @Schema(description = "启用状态：false->禁用；true->启用")
+    private Boolean status;
+
     @Schema(description = "描述")
     private String description;
-
-    @Schema(description = "创建时间")
-    private Date createTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -44,22 +40,6 @@ public class UmsRole implements Serializable {
     }
 
     /**
-     * 启用状态：0->禁用；1->启用
-     * @return status 启用状态：0->禁用；1->启用
-     */
-    public Integer getStatus() {
-        return status;
-    }
-
-    /**
-     * 启用状态：0->禁用；1->启用
-     * @param status 启用状态：0->禁用；1->启用
-     */
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    /**
      * 名称
      * @return name 名称
      */
@@ -73,6 +53,22 @@ public class UmsRole implements Serializable {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * 启用状态：false->禁用；true->启用
+     * @return status 启用状态：false->禁用；true->启用
+     */
+    public Boolean getStatus() {
+        return status;
+    }
+
+    /**
+     * 启用状态：false->禁用；true->启用
+     * @param status 启用状态：false->禁用；true->启用
+     */
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     /**
@@ -92,22 +88,6 @@ public class UmsRole implements Serializable {
     }
 
     /**
-     * 创建时间
-     * @return create_time 创建时间
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * 创建时间
-     * @param createTime 创建时间
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    /**
      * toString
      * @return java.lang.String
      */
@@ -118,10 +98,9 @@ public class UmsRole implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", status=").append(status);
         sb.append(", name=").append(name);
+        sb.append(", status=").append(status);
         sb.append(", description=").append(description);
-        sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

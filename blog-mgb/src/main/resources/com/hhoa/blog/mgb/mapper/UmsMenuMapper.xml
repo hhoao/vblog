@@ -4,13 +4,12 @@
   <resultMap id="BaseResultMap" type="com.hhoa.blog.mgb.model.UmsMenu">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="level" jdbcType="INTEGER" property="level" />
-    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="level" jdbcType="TINYINT" property="level" />
+    <result column="sort" jdbcType="TINYINT" property="sort" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="hidden" jdbcType="INTEGER" property="hidden" />
+    <result column="hidden" jdbcType="BIT" property="hidden" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, parent_id, create_time, title, level, sort, name, icon, hidden
+    id, parent_id, title, level, sort, name, icon, hidden
   </sql>
   <select id="selectByExample" parameterType="com.hhoa.blog.mgb.model.UmsMenuExample" resultMap="BaseResultMap">
     select
@@ -107,12 +106,12 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into ums_menu (parent_id, create_time, title, 
-      level, sort, name, 
-      icon, hidden)
-    values (#{parentId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
-      #{level,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{icon,jdbcType=VARCHAR}, #{hidden,jdbcType=INTEGER})
+    insert into ums_menu (parent_id, title, level, 
+      sort, name, icon, hidden
+      )
+    values (#{parentId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{level,jdbcType=TINYINT}, 
+      #{sort,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{hidden,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.hhoa.blog.mgb.model.UmsMenu">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -122,9 +121,6 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="parentId != null">
         parent_id,
-      </if>
-      <if test="createTime != null">
-        create_time,
       </if>
       <if test="title != null">
         title,
@@ -149,17 +145,14 @@
       <if test="parentId != null">
         #{parentId,jdbcType=BIGINT},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
       <if test="level != null">
-        #{level,jdbcType=INTEGER},
+        #{level,jdbcType=TINYINT},
       </if>
       <if test="sort != null">
-        #{sort,jdbcType=INTEGER},
+        #{sort,jdbcType=TINYINT},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -168,7 +161,7 @@
         #{icon,jdbcType=VARCHAR},
       </if>
       <if test="hidden != null">
-        #{hidden,jdbcType=INTEGER},
+        #{hidden,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -187,17 +180,14 @@
       <if test="row.parentId != null">
         parent_id = #{row.parentId,jdbcType=BIGINT},
       </if>
-      <if test="row.createTime != null">
-        create_time = #{row.createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="row.title != null">
         title = #{row.title,jdbcType=VARCHAR},
       </if>
       <if test="row.level != null">
-        level = #{row.level,jdbcType=INTEGER},
+        level = #{row.level,jdbcType=TINYINT},
       </if>
       <if test="row.sort != null">
-        sort = #{row.sort,jdbcType=INTEGER},
+        sort = #{row.sort,jdbcType=TINYINT},
       </if>
       <if test="row.name != null">
         name = #{row.name,jdbcType=VARCHAR},
@@ -206,7 +196,7 @@
         icon = #{row.icon,jdbcType=VARCHAR},
       </if>
       <if test="row.hidden != null">
-        hidden = #{row.hidden,jdbcType=INTEGER},
+        hidden = #{row.hidden,jdbcType=BIT},
       </if>
     </set>
     <if test="example != null">
@@ -217,13 +207,12 @@
     update ums_menu
     set id = #{row.id,jdbcType=BIGINT},
       parent_id = #{row.parentId,jdbcType=BIGINT},
-      create_time = #{row.createTime,jdbcType=TIMESTAMP},
       title = #{row.title,jdbcType=VARCHAR},
-      level = #{row.level,jdbcType=INTEGER},
-      sort = #{row.sort,jdbcType=INTEGER},
+      level = #{row.level,jdbcType=TINYINT},
+      sort = #{row.sort,jdbcType=TINYINT},
       name = #{row.name,jdbcType=VARCHAR},
       icon = #{row.icon,jdbcType=VARCHAR},
-      hidden = #{row.hidden,jdbcType=INTEGER}
+      hidden = #{row.hidden,jdbcType=BIT}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -234,17 +223,14 @@
       <if test="parentId != null">
         parent_id = #{parentId,jdbcType=BIGINT},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
       <if test="level != null">
-        level = #{level,jdbcType=INTEGER},
+        level = #{level,jdbcType=TINYINT},
       </if>
       <if test="sort != null">
-        sort = #{sort,jdbcType=INTEGER},
+        sort = #{sort,jdbcType=TINYINT},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -253,7 +239,7 @@
         icon = #{icon,jdbcType=VARCHAR},
       </if>
       <if test="hidden != null">
-        hidden = #{hidden,jdbcType=INTEGER},
+        hidden = #{hidden,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -261,13 +247,12 @@
   <update id="updateByPrimaryKey" parameterType="com.hhoa.blog.mgb.model.UmsMenu">
     update ums_menu
     set parent_id = #{parentId,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
       title = #{title,jdbcType=VARCHAR},
-      level = #{level,jdbcType=INTEGER},
-      sort = #{sort,jdbcType=INTEGER},
+      level = #{level,jdbcType=TINYINT},
+      sort = #{sort,jdbcType=TINYINT},
       name = #{name,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},
-      hidden = #{hidden,jdbcType=INTEGER}
+      hidden = #{hidden,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

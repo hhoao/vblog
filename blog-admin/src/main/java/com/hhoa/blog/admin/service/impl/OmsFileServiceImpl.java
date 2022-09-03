@@ -3,7 +3,6 @@ package com.hhoa.blog.admin.service.impl;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.lang.UUID;
 import com.github.pagehelper.PageHelper;
-
 import com.hhoa.blog.admin.bean.PageInfo;
 import com.hhoa.blog.admin.service.OmsFileService;
 import com.hhoa.blog.mgb.mapper.OmsFileMapper;
@@ -37,7 +36,6 @@ public class OmsFileServiceImpl implements OmsFileService {
     private String baseUrl;
 
 
-
     @Override
     public List<OmsFile> getFileList(PageInfo pageInfo, OmsFile queryFile) {
         PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
@@ -48,24 +46,24 @@ public class OmsFileServiceImpl implements OmsFileService {
 
     private OmsFileExample getFileExample(OmsFile queryFile) {
         OmsFileExample fileExample = new OmsFileExample();
-        if (queryFile != null){
+        if (queryFile != null) {
             OmsFileExample.Criteria criteria = fileExample.createCriteria();
-            if (StringUtils.hasLength(queryFile.getFileName())){
+            if (StringUtils.hasLength(queryFile.getFileName())) {
                 criteria.andFileNameEqualTo(queryFile.getFileName());
             }
-            if (queryFile.getId() != null){
+            if (queryFile.getId() != null) {
                 criteria.andIdEqualTo(queryFile.getId());
             }
-            if (StringUtils.hasLength(queryFile.getUrl())){
+            if (StringUtils.hasLength(queryFile.getUrl())) {
                 criteria.andUrlEqualTo(queryFile.getUrl());
             }
-            if (StringUtils.hasLength(queryFile.getUuid())){
+            if (StringUtils.hasLength(queryFile.getUuid())) {
                 criteria.andUrlEqualTo(queryFile.getUuid());
             }
-            if (queryFile.getEnable() != null){
+            if (queryFile.getEnable() != null) {
                 criteria.andEnableEqualTo(queryFile.getEnable());
             }
-            if (StringUtils.hasLength(queryFile.getType())){
+            if (StringUtils.hasLength(queryFile.getType())) {
                 criteria.andTypeEqualTo(queryFile.getType());
             }
         }
@@ -115,8 +113,6 @@ public class OmsFileServiceImpl implements OmsFileService {
             saveFile.setSize(size / 1024);//（单位：KB）
             saveFile.setUrl(url);
             saveFile.setUuid(uuid);
-            saveFile.setCreateTime(DateTime.now());
-            saveFile.setUpdateTime(DateTime.now());
             //保存操作
             fileMapper.insert(saveFile);
 
@@ -168,7 +164,7 @@ public class OmsFileServiceImpl implements OmsFileService {
     public void deleteFileById(Long id) {
         try {
             OmsFile retFile = fileMapper.selectByPrimaryKey(id);
-            Path path = Path.of(filesUploadPath + retFile.getUuid()+"."+retFile.getType());
+            Path path = Path.of(filesUploadPath + retFile.getUuid() + "." + retFile.getType());
             Files.deleteIfExists(path);
             fileMapper.deleteByPrimaryKey(id);
         } catch (IOException e) {

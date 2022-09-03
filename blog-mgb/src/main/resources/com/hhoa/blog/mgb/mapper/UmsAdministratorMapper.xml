@@ -5,9 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="latest_time" jdbcType="TIMESTAMP" property="latestTime" />
+    <result column="status" jdbcType="BIT" property="status" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="role_id" jdbcType="BIGINT" property="roleId" />
   </resultMap>
@@ -70,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, password, username, status, create_time, latest_time, icon, role_id
+    id, password, username, status, icon, role_id
   </sql>
   <select id="selectByExample" parameterType="com.hhoa.blog.mgb.model.UmsAdministratorExample" resultMap="BaseResultMap">
     select
@@ -107,11 +105,9 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into ums_administrator (password, username, status, 
-      create_time, latest_time, icon, 
-      role_id)
-    values (#{password,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{latestTime,jdbcType=TIMESTAMP}, #{icon,jdbcType=VARCHAR}, 
-      #{roleId,jdbcType=BIGINT})
+      icon, role_id)
+    values (#{password,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      #{icon,jdbcType=VARCHAR}, #{roleId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.hhoa.blog.mgb.model.UmsAdministrator">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -128,12 +124,6 @@
       <if test="status != null">
         status,
       </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="latestTime != null">
-        latest_time,
-      </if>
       <if test="icon != null">
         icon,
       </if>
@@ -149,13 +139,7 @@
         #{username,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="latestTime != null">
-        #{latestTime,jdbcType=TIMESTAMP},
+        #{status,jdbcType=BIT},
       </if>
       <if test="icon != null">
         #{icon,jdbcType=VARCHAR},
@@ -184,13 +168,7 @@
         username = #{row.username,jdbcType=VARCHAR},
       </if>
       <if test="row.status != null">
-        status = #{row.status,jdbcType=INTEGER},
-      </if>
-      <if test="row.createTime != null">
-        create_time = #{row.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="row.latestTime != null">
-        latest_time = #{row.latestTime,jdbcType=TIMESTAMP},
+        status = #{row.status,jdbcType=BIT},
       </if>
       <if test="row.icon != null">
         icon = #{row.icon,jdbcType=VARCHAR},
@@ -208,9 +186,7 @@
     set id = #{row.id,jdbcType=BIGINT},
       password = #{row.password,jdbcType=VARCHAR},
       username = #{row.username,jdbcType=VARCHAR},
-      status = #{row.status,jdbcType=INTEGER},
-      create_time = #{row.createTime,jdbcType=TIMESTAMP},
-      latest_time = #{row.latestTime,jdbcType=TIMESTAMP},
+      status = #{row.status,jdbcType=BIT},
       icon = #{row.icon,jdbcType=VARCHAR},
       role_id = #{row.roleId,jdbcType=BIGINT}
     <if test="example != null">
@@ -227,13 +203,7 @@
         username = #{username,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="latestTime != null">
-        latest_time = #{latestTime,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=BIT},
       </if>
       <if test="icon != null">
         icon = #{icon,jdbcType=VARCHAR},
@@ -248,9 +218,7 @@
     update ums_administrator
     set password = #{password,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      latest_time = #{latestTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT},
       icon = #{icon,jdbcType=VARCHAR},
       role_id = #{roleId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}

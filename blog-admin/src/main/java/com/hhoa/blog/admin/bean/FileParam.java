@@ -11,7 +11,6 @@ import lombok.Data;
 @Schema(description = "FileParam", name = "FileParam")
 @Data
 public class FileParam {
-//    @Schema( type = "string", format = "binary")
 //    private MultipartFile file;
     private String name;
 }

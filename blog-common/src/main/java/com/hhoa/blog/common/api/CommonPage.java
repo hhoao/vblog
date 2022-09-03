@@ -1,7 +1,6 @@
 package com.hhoa.blog.common.api;
 
 
-
 import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.data.domain.Page;
@@ -10,6 +9,7 @@ import java.util.List;
 
 /**
  * 分页数据封装类
+ *
  * @author hhoa
  */
 @Schema(description = "分页数据")

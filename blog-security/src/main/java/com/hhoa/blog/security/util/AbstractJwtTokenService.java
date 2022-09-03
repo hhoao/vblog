@@ -8,7 +8,7 @@ import lombok.Data;
  **/
 
 @Data
-public abstract class AbstractJwtTokenService implements JwtTokenService{
+public abstract class AbstractJwtTokenService implements JwtTokenService {
     private String secret;
     private Long expiration;
     private Integer refreshTime;

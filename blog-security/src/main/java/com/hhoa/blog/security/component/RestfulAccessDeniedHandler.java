@@ -13,6 +13,7 @@ import java.io.IOException;
 
 /**
  * 自定义返回结果：没有权限访问时
+ *
  * @author hhoa
  */
 public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
@@ -21,7 +22,7 @@ public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
                        HttpServletResponse response,
                        AccessDeniedException e) throws IOException, ServletException {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Cache-Control","no-cache");
+        response.setHeader("Cache-Control", "no-cache");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         response.getWriter().println(JSONUtil.parse(CommonResult.forbidden(e.getMessage())));

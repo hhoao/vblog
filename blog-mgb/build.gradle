@@ -5,8 +5,6 @@ buildscript {
 }
 plugins {
     id 'application'
-    alias(libs.plugins.io.spring.dependency.management)
-    alias(libs.plugins.boot)
 }
 
 group 'com.hhoa'
@@ -16,8 +14,6 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     implementation libs.mybatis.generator.core
     implementation libs.mybatis.generator.core
     implementation libs.mybatis.generator.core

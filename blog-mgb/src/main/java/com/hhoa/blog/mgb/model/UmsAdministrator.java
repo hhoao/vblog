@@ -2,12 +2,11 @@ package com.hhoa.blog.mgb.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 管理员
  * @author hhoa 
- * @date 2022-09-01
+ * @date 2022-09-03
  */
 @Schema(description = "管理员")
 public class UmsAdministrator implements Serializable {
@@ -19,14 +18,8 @@ public class UmsAdministrator implements Serializable {
     @Schema(description = "用户名")
     private String username;
 
-    @Schema(description = "账号启用状态: 0->禁言， 1->启用")
-    private Integer status;
-
-    @Schema(description = "创建时间")
-    private Date createTime;
-
-    @Schema(description = "最后登录时间")
-    private Date latestTime;
+    @Schema(description = "账号启用状态: FALSE->禁言， TRUE->启用")
+    private Boolean status;
 
     @Schema(description = "头像")
     private String icon;
@@ -85,51 +78,19 @@ public class UmsAdministrator implements Serializable {
     }
 
     /**
-     * 账号启用状态: 0->禁言， 1->启用
-     * @return status 账号启用状态: 0->禁言， 1->启用
+     * 账号启用状态: FALSE->禁言， TRUE->启用
+     * @return status 账号启用状态: FALSE->禁言， TRUE->启用
      */
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
     /**
-     * 账号启用状态: 0->禁言， 1->启用
-     * @param status 账号启用状态: 0->禁言， 1->启用
+     * 账号启用状态: FALSE->禁言， TRUE->启用
+     * @param status 账号启用状态: FALSE->禁言， TRUE->启用
      */
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
-    }
-
-    /**
-     * 创建时间
-     * @return create_time 创建时间
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * 创建时间
-     * @param createTime 创建时间
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    /**
-     * 最后登录时间
-     * @return latest_time 最后登录时间
-     */
-    public Date getLatestTime() {
-        return latestTime;
-    }
-
-    /**
-     * 最后登录时间
-     * @param latestTime 最后登录时间
-     */
-    public void setLatestTime(Date latestTime) {
-        this.latestTime = latestTime;
     }
 
     /**
@@ -178,8 +139,6 @@ public class UmsAdministrator implements Serializable {
         sb.append(", password=").append(password);
         sb.append(", username=").append(username);
         sb.append(", status=").append(status);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", latestTime=").append(latestTime);
         sb.append(", icon=").append(icon);
         sb.append(", roleId=").append(roleId);
         sb.append(", serialVersionUID=").append(serialVersionUID);

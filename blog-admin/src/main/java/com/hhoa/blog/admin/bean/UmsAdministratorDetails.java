@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * 认证需要的UserDetails
+ *
  * @author hhoa
  **/
 @Data
@@ -69,6 +70,6 @@ public class UmsAdministratorDetails implements UserDetails {
     @Override
     @JsonIgnore
     public boolean isEnabled() {
-        return administrator.getStatus() == 1;
+        return administrator.getStatus();
     }
 }

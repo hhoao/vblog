@@ -112,7 +112,7 @@ public class UmsRoleResourceRelationExample {
 
     /**
      * ums_role_resource_relation
-     * @author hhoa 2022-09-01
+     * @author hhoa 2022-09-03
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -344,7 +344,7 @@ public class UmsRoleResourceRelationExample {
 
     /**
      * ums_role_resource_relation
-     * @author hhoa 2022-09-01
+     * @author hhoa 2022-09-03
      */
     public static class Criterion {
         private String condition;

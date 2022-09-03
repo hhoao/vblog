@@ -22,20 +22,12 @@ ret:
   redis:
     database: ret
     key:
-      user: user
       administrator: administrator
-      token: token
       role: role
       resource-role: resource-role
-
-      factory-invitation: factory-invitation
-    auth-code:
-      mail: ret-mail
-      phone: ret-phone
     expire:
       common: 86400 # 24小时
       token: 86400
-      mail: 60
 # 配置security
 jwt:
   secret: ENC(12TJmQ4Reu4FXZhHZnfxgfpDTXSwx9K5)
@@ -54,14 +46,8 @@ jwt:
       - /**/*.png
       - /**/*.ico
       - /administrators/auth/token
-#文件配置
-file:
-  upload:
-    allowTypes:             #文件上传允许的类型
-      - image/jpeg
-      - image/png
-      - image/bmp
-      - application/pdf
+
+
 pagehelper:
   pageSizeZero: true
 

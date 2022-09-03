@@ -13,7 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Configuration
 public class AdminRedisConfig {
     @Bean
-    public RedisService redisService(RedisTemplate<String, Object> redisTemplate){
+    public RedisService redisService(RedisTemplate<String, Object> redisTemplate) {
         return new RedisServiceImpl(redisTemplate);
     }
 }

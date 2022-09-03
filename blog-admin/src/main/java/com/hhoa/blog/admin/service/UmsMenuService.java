@@ -1,9 +1,9 @@
 package com.hhoa.blog.admin.service;
 
 
-import com.hhoa.blog.mgb.model.UmsMenu;
 import com.hhoa.blog.admin.bean.PageInfo;
 import com.hhoa.blog.admin.bean.UmsMenuParam;
+import com.hhoa.blog.mgb.model.UmsMenu;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -30,6 +30,7 @@ public interface UmsMenuService {
      * @return the menu
      */
     UmsMenu getMenu(Long menuId);
+
     /**
      * 获取所有资源
      *
@@ -44,6 +45,7 @@ public interface UmsMenuService {
      * @param menuParams
      */
     List<UmsMenu> list(PageInfo pageInfo, UmsMenu menuParams);
+
     /**
      * 添加资源
      *

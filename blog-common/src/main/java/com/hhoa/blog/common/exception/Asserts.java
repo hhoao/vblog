@@ -5,6 +5,7 @@ import com.hhoa.blog.common.api.IErrorCode;
 
 /**
  * 断言处理类，用于抛出各种API异常
+ *
  * @author hhoa
  */
 public class Asserts {

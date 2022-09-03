@@ -2,12 +2,11 @@ package com.hhoa.blog.mgb.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 后台菜单
  * @author hhoa 
- * @date 2022-09-01
+ * @date 2022-09-03
  */
 @Schema(description = "后台菜单")
 public class UmsMenu implements Serializable {
@@ -15,9 +14,6 @@ public class UmsMenu implements Serializable {
 
     @Schema(description = "父级id")
     private Long parentId;
-
-    @Schema(description = "创建时间")
-    private Date createTime;
 
     @Schema(description = "菜单名称")
     private String title;
@@ -35,7 +31,7 @@ public class UmsMenu implements Serializable {
     private String icon;
 
     @Schema(description = "前端隐藏")
-    private Integer hidden;
+    private Boolean hidden;
 
     private static final long serialVersionUID = 1L;
 
@@ -69,22 +65,6 @@ public class UmsMenu implements Serializable {
      */
     public void setParentId(Long parentId) {
         this.parentId = parentId;
-    }
-
-    /**
-     * 创建时间
-     * @return create_time 创建时间
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * 创建时间
-     * @param createTime 创建时间
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     /**
@@ -171,7 +151,7 @@ public class UmsMenu implements Serializable {
      * 前端隐藏
      * @return hidden 前端隐藏
      */
-    public Integer getHidden() {
+    public Boolean getHidden() {
         return hidden;
     }
 
@@ -179,7 +159,7 @@ public class UmsMenu implements Serializable {
      * 前端隐藏
      * @param hidden 前端隐藏
      */
-    public void setHidden(Integer hidden) {
+    public void setHidden(Boolean hidden) {
         this.hidden = hidden;
     }
 
@@ -195,7 +175,6 @@ public class UmsMenu implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", parentId=").append(parentId);
-        sb.append(", createTime=").append(createTime);
         sb.append(", title=").append(title);
         sb.append(", level=").append(level);
         sb.append(", sort=").append(sort);

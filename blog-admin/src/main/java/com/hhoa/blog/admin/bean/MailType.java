@@ -29,9 +29,11 @@ public enum MailType {
      * 类型唯一标志
      */
     private final Integer id;
-    MailType(Integer id){
+
+    MailType(Integer id) {
         this.id = id;
     }
+
     public String toString() {
         return id.toString();
     }

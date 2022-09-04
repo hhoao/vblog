@@ -49,9 +49,9 @@ public class AmsCatalogController {
     }
 
     @Operation(summary = "删除目录")
-    @DeleteMapping("/catalogs/{catalogName}")
-    public CommonResult<String> delCatalog(@PathVariable String catalogName) {
-        catalogService.deleteCatalog(catalogName);
+    @DeleteMapping("/catalogs/{catalogId}")
+    public CommonResult<String> delCatalog(@PathVariable Integer catalogId) {
+        catalogService.deleteCatalog(catalogId);
         return CommonResult.success(null);
     }
 }

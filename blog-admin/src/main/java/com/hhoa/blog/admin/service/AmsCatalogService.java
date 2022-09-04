@@ -38,7 +38,7 @@ public interface AmsCatalogService  {
     /**
      * Delete catalog.
      *
-     * @param catalogName the catalog name
+     * @param catalogId the catalog name
      */
-    void deleteCatalog(String catalogName);
+    void deleteCatalog(Integer catalogId);
 }

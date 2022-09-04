@@ -37,10 +37,7 @@ public class AmsCatalogServiceImpl implements AmsCatalogService {
     }
 
     @Override
-    public void deleteCatalog(String catalogName) {
-        AmsCatalog amsCatalog = new AmsCatalog();
-        amsCatalog.setName(catalogName);
-        AmsCatalog delCatalog = catalogDao.selectOne(new QueryWrapper<>(amsCatalog));
-        catalogDao.deleteById(delCatalog);
+    public void deleteCatalog(Integer catalogId) {
+        catalogDao.deleteById(catalogId);
     }
 }

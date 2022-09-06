@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * 文章和目录关系
  * @author hhoa 
- * @date 2022-09-03
+ * @date 2022-09-06
  */
 @Schema(description = "文章和目录关系")
 public class AmsComment implements Serializable {
@@ -20,6 +20,7 @@ public class AmsComment implements Serializable {
     @Schema(description = "昵称")
     private String nickname;
 
+    @Schema(description = "引用")
     private String reference;
 
     private static final long serialVersionUID = 1L;
@@ -89,16 +90,16 @@ public class AmsComment implements Serializable {
     }
 
     /**
-     * 
-     * @return reference 
+     * 引用
+     * @return reference 引用
      */
     public String getReference() {
         return reference;
     }
 
     /**
-     * 
-     * @param reference 
+     * 引用
+     * @param reference 引用
      */
     public void setReference(String reference) {
         this.reference = reference;

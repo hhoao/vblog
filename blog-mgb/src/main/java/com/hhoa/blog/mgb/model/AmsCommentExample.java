@@ -112,7 +112,7 @@ public class AmsCommentExample {
 
     /**
      * ams_comment
-     * @author hhoa 2022-09-03
+     * @author hhoa 2022-09-06
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -494,7 +494,7 @@ public class AmsCommentExample {
 
     /**
      * ams_comment
-     * @author hhoa 2022-09-03
+     * @author hhoa 2022-09-06
      */
     public static class Criterion {
         private String condition;

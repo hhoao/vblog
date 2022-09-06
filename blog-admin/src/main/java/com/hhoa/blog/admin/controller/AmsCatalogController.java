@@ -5,10 +5,9 @@ import com.hhoa.blog.admin.bean.PageInfo;
 import com.hhoa.blog.admin.service.AmsCatalogService;
 import com.hhoa.blog.common.api.CommonPage;
 import com.hhoa.blog.common.api.CommonResult;
+import com.hhoa.blog.mgb.model.AmsArticle;
 import com.hhoa.blog.mgb.model.AmsCatalog;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,6 @@ public class AmsCatalogController {
 
     @Operation(description = "分页获取目录列表", summary = "分页获取目录列表")
     @GetMapping("/catalogs")
-    @Parameters({@Parameter()})
     public CommonResult<CommonPage<AmsCatalog>> list(PageInfo pageInfo,
                                                      AmsCatalog catalogParams) {
         List<AmsCatalog> amsCatalogs = catalogService.selectList(catalogParams, pageInfo);
@@ -50,8 +48,15 @@ public class AmsCatalogController {
 
     @Operation(summary = "删除目录")
     @DeleteMapping("/catalogs/{catalogId}")
-    public CommonResult<String> delCatalog(@PathVariable Integer catalogId) {
+    public CommonResult<String> delCatalog(@PathVariable Long catalogId) {
         catalogService.deleteCatalog(catalogId);
         return CommonResult.success(null);
+    }
+    @Operation(summary = "分页获取目录文章")
+    @GetMapping("/catalogs/{catalogId}/articles")
+    public CommonResult<CommonPage<AmsArticle>> getCatalogArticles(PageInfo pageInfo,
+                                                 @PathVariable Long catalogId){
+        List<AmsArticle> articles = catalogService.getCatalogArticles(catalogId, pageInfo);
+        return CommonResult.success(CommonPage.restPage(articles));
     }
 }

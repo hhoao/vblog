@@ -1,8 +1,8 @@
 package com.hhoa.blog.admin.service.impl;
 
 
-import com.hhoa.blog.admin.bean.UmsAdministratorDetails;
-import com.hhoa.blog.admin.service.UmsAdministratorCacheService;
+import com.hhoa.blog.admin.bean.UmsAccountDetails;
+import com.hhoa.blog.admin.service.UmsAccountCacheService;
 import com.hhoa.blog.common.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 //@RequiredArgsConstructor
-public class UmsAdministratorCacheServiceImpl implements UmsAdministratorCacheService {
+public class UmsAccountCacheServiceImpl implements UmsAccountCacheService {
     @Value("${ret.redis.database}")
     private String redisDatabase;
     @Value("${ret.redis.expire.token}")
@@ -47,7 +47,7 @@ public class UmsAdministratorCacheServiceImpl implements UmsAdministratorCacheSe
     }
 
     @Override
-    public void setKey(String username, UmsAdministratorDetails userDetails) {
+    public void setKey(String username, UmsAccountDetails userDetails) {
         redisService.set(getUserNameKey(username), userDetails, redisExpire);
     }
 
@@ -57,8 +57,8 @@ public class UmsAdministratorCacheServiceImpl implements UmsAdministratorCacheSe
     }
 
     @Override
-    public UmsAdministratorDetails getKey(String username) {
-        return (UmsAdministratorDetails) redisService.get(getUserNameKey(username));
+    public UmsAccountDetails getKey(String username) {
+        return (UmsAccountDetails) redisService.get(getUserNameKey(username));
     }
 
     @Override

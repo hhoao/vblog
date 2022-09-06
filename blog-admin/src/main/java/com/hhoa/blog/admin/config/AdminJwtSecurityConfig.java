@@ -3,8 +3,8 @@ package com.hhoa.blog.admin.config;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.jwt.JWT;
-import com.hhoa.blog.admin.service.UmsAdministratorCacheService;
-import com.hhoa.blog.admin.service.UmsAdministratorService;
+import com.hhoa.blog.admin.service.UmsAccountCacheService;
+import com.hhoa.blog.admin.service.UmsAccountService;
 import com.hhoa.blog.admin.service.UmsResourceService;
 import com.hhoa.blog.mgb.model.UmsResource;
 import com.hhoa.blog.security.component.DynamicSecurityService;
@@ -48,8 +48,8 @@ public class AdminJwtSecurityConfig {
      * @return userDetailsService
      */
     @Bean
-    public static UserDetailsService userDetailsService(UmsAdministratorService administratorService) {
-        return administratorService::getAdministratorDetails;
+    public static UserDetailsService userDetailsService(UmsAccountService administratorService) {
+        return administratorService::getAccountDetails;
     }
 
     /**
@@ -165,7 +165,7 @@ public class AdminJwtSecurityConfig {
      * @return jwtToken服务
      */
     @Bean
-    public static JwtTokenService jwtTokenService(UmsAdministratorCacheService administratorCacheService,
+    public static JwtTokenService jwtTokenService(UmsAccountCacheService administratorCacheService,
                                                   JwtSecurityProperties jwtSecurityProperties) {
         DefaultJwtTokenServiceImpl defaultJwtTokenService = new DefaultJwtTokenServiceImpl() {
             @Override

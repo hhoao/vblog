@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.hhoa.blog.admin.bean.PageInfo;
 import com.hhoa.blog.admin.dao.AmsCatalogDao;
+import com.hhoa.blog.admin.service.AmsArticleCatalogRelationService;
 import com.hhoa.blog.admin.service.AmsCatalogService;
+import com.hhoa.blog.mgb.model.AmsArticle;
 import com.hhoa.blog.mgb.model.AmsCatalog;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AmsCatalogServiceImpl implements AmsCatalogService {
     private AmsCatalogDao catalogDao;
+    private AmsArticleCatalogRelationService articleCatalogRelationService;
     @Override
     public List<AmsCatalog> selectList(AmsCatalog amsCatalogQueryWrapper, PageInfo pageInfo) {
         PageHelper.startPage(pageInfo);
@@ -37,7 +40,14 @@ public class AmsCatalogServiceImpl implements AmsCatalogService {
     }
 
     @Override
-    public void deleteCatalog(Integer catalogId) {
+    public void deleteCatalog(Long catalogId) {
         catalogDao.deleteById(catalogId);
+    }
+
+    @Override
+    public List<AmsArticle> getCatalogArticles(Long catalogId, PageInfo pageInfo) {
+        PageHelper.startPage(pageInfo);
+        List<AmsArticle> articles = articleCatalogRelationService.getCatalogArticles(catalogId);
+        return articles;
     }
 }

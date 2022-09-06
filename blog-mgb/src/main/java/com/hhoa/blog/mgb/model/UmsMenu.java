@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * 后台菜单
  * @author hhoa 
- * @date 2022-09-03
+ * @date 2022-09-06
  */
 @Schema(description = "后台菜单")
 public class UmsMenu implements Serializable {

@@ -28,7 +28,7 @@ public class UmsRoleServiceImpl implements UmsRoleService, ApplicationRunner {
     private final UmsRoleMapper roleMapper;
     private UmsRoleResourceRelationService roleResourceRelationService;
     private UmsRoleResourceCacheService resourceCacheService;
-    private UmsAdministratorService administratorService;
+    private UmsAccountService accountService;
     private UmsRoleMenuRelationService roleMenuRelationService;
 
     @Lazy
@@ -45,8 +45,8 @@ public class UmsRoleServiceImpl implements UmsRoleService, ApplicationRunner {
 
     @Autowired
     @Lazy
-    public void setAdministratorService(UmsAdministratorService administratorService) {
-        this.administratorService = administratorService;
+    public void setAccountService(UmsAccountService accountService) {
+        this.accountService = accountService;
     }
 
     @Autowired
@@ -170,9 +170,9 @@ public class UmsRoleServiceImpl implements UmsRoleService, ApplicationRunner {
      * @param roleId 角色id
      */
     private void deleteReference(Long roleId) {
-        UmsAdministrator administrator = new UmsAdministrator();
-        administrator.setRoleId(roleId);
-        administratorService.deleteAdministrators(administrator);
+        UmsAccount account = new UmsAccount();
+        account.setRoleId(roleId);
+        accountService.deleteAccounts(account);
     }
 
     @Override

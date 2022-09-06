@@ -1,13 +1,13 @@
 package com.hhoa.blog.admin.service;
 
 
-import com.hhoa.blog.admin.bean.UmsAdministratorDetails;
+import com.hhoa.blog.admin.bean.UmsAccountDetails;
 
 /**
  * @author hhoa
  * @date 2022/5/13
  **/
-public interface UmsAdministratorCacheService {
+public interface UmsAccountCacheService {
     /**
      * 延长时间
      *
@@ -29,7 +29,7 @@ public interface UmsAdministratorCacheService {
      * @param username             用户名
      * @param administratorDetails 角色名
      */
-    void setKey(String username, UmsAdministratorDetails administratorDetails);
+    void setKey(String username, UmsAccountDetails administratorDetails);
 
     /**
      * 判断是否有该key
@@ -45,7 +45,7 @@ public interface UmsAdministratorCacheService {
      * @param username 用户名
      * @return 角色
      */
-    UmsAdministratorDetails getKey(String username);
+    UmsAccountDetails getKey(String username);
 
     /**
      * 删除key

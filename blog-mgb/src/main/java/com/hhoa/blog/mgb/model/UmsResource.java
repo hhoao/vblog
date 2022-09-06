@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * 资源
  * @author hhoa 
- * @date 2022-09-03
+ * @date 2022-09-06
  */
 @Schema(description = "资源")
 public class UmsResource implements Serializable {

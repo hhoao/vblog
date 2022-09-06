@@ -6,11 +6,10 @@ import java.io.Serializable;
 /**
  * 目
  * @author hhoa 
- * @date 2022-09-03
+ * @date 2022-09-06
  */
 @Schema(description = "目")
 public class AmsCatalog implements Serializable {
-    @Schema(description = "文件id")
     private Long id;
 
     @Schema(description = "名称")
@@ -34,16 +33,16 @@ public class AmsCatalog implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 文件id
-     * @return id 文件id
+     * 
+     * @return id 
      */
     public Long getId() {
         return id;
     }
 
     /**
-     * 文件id
-     * @param id 文件id
+     * 
+     * @param id 
      */
     public void setId(Long id) {
         this.id = id;

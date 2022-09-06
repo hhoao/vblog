@@ -2,7 +2,7 @@ package com.hhoa.blog.admin.bean;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hhoa.blog.mgb.model.UmsAdministrator;
+import com.hhoa.blog.mgb.model.UmsAccount;
 import com.hhoa.blog.mgb.model.UmsResource;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,8 +23,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UmsAdministratorDetails implements UserDetails {
-    private UmsAdministrator administrator;
+public class UmsAccountDetails implements UserDetails {
+    private UmsAccount account;
 
     private List<UmsResource> resources;
 
@@ -40,13 +40,13 @@ public class UmsAdministratorDetails implements UserDetails {
     @Override
     @JsonIgnore
     public String getPassword() {
-        return administrator.getPassword();
+        return account.getPassword();
     }
 
     @Override
     @JsonIgnore
     public String getUsername() {
-        return administrator.getUsername();
+        return account.getUsername();
     }
 
     @Override
@@ -70,6 +70,6 @@ public class UmsAdministratorDetails implements UserDetails {
     @Override
     @JsonIgnore
     public boolean isEnabled() {
-        return administrator.getStatus();
+        return account.getStatus();
     }
 }

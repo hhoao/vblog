@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hhoa.blog.mgb.mapper.OmsFileMapper">
-  <resultMap id="BaseResultMap" type="com.hhoa.blog.mgb.model.OmsFile">
+<mapper namespace="com.hhoa.blog.mgb.mapper.UmsTagMapper">
+  <resultMap id="BaseResultMap" type="com.hhoa.blog.mgb.model.UmsTag">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
-    <result column="size" jdbcType="DOUBLE" property="size" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
-    <result column="enable" jdbcType="BIT" property="enable" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,15 +64,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, type, size, url, uuid, enable
+    id, label
   </sql>
-  <select id="selectByExample" parameterType="com.hhoa.blog.mgb.model.OmsFileExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.hhoa.blog.mgb.model.UmsTagExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from oms_file
+    from ums_tag
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,103 +83,56 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from oms_file
+    from ums_tag
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from oms_file
+    delete from ums_tag
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hhoa.blog.mgb.model.OmsFileExample">
-    delete from oms_file
+  <delete id="deleteByExample" parameterType="com.hhoa.blog.mgb.model.UmsTagExample">
+    delete from ums_tag
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hhoa.blog.mgb.model.OmsFile">
+  <insert id="insert" parameterType="com.hhoa.blog.mgb.model.UmsTag">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into oms_file (name, type, size, 
-      url, uuid, enable)
-    values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{size,jdbcType=DOUBLE}, 
-      #{url,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, #{enable,jdbcType=BIT})
+    insert into ums_tag (label)
+    values (#{label,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.hhoa.blog.mgb.model.OmsFile">
+  <insert id="insertSelective" parameterType="com.hhoa.blog.mgb.model.UmsTag">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into oms_file
+    insert into ums_tag
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        name,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="size != null">
-        size,
-      </if>
-      <if test="url != null">
-        url,
-      </if>
-      <if test="uuid != null">
-        uuid,
-      </if>
-      <if test="enable != null">
-        enable,
+      <if test="label != null">
+        label,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="size != null">
-        #{size,jdbcType=DOUBLE},
-      </if>
-      <if test="url != null">
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="uuid != null">
-        #{uuid,jdbcType=VARCHAR},
-      </if>
-      <if test="enable != null">
-        #{enable,jdbcType=BIT},
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hhoa.blog.mgb.model.OmsFileExample" resultType="java.lang.Long">
-    select count(*) from oms_file
+  <select id="countByExample" parameterType="com.hhoa.blog.mgb.model.UmsTagExample" resultType="java.lang.Long">
+    select count(*) from ums_tag
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update oms_file
+    update ums_tag
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=BIGINT},
       </if>
-      <if test="row.name != null">
-        name = #{row.name,jdbcType=VARCHAR},
-      </if>
-      <if test="row.type != null">
-        type = #{row.type,jdbcType=VARCHAR},
-      </if>
-      <if test="row.size != null">
-        size = #{row.size,jdbcType=DOUBLE},
-      </if>
-      <if test="row.url != null">
-        url = #{row.url,jdbcType=VARCHAR},
-      </if>
-      <if test="row.uuid != null">
-        uuid = #{row.uuid,jdbcType=VARCHAR},
-      </if>
-      <if test="row.enable != null">
-        enable = #{row.enable,jdbcType=BIT},
+      <if test="row.label != null">
+        label = #{row.label,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="example != null">
@@ -192,50 +140,25 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update oms_file
+    update ums_tag
     set id = #{row.id,jdbcType=BIGINT},
-      name = #{row.name,jdbcType=VARCHAR},
-      type = #{row.type,jdbcType=VARCHAR},
-      size = #{row.size,jdbcType=DOUBLE},
-      url = #{row.url,jdbcType=VARCHAR},
-      uuid = #{row.uuid,jdbcType=VARCHAR},
-      enable = #{row.enable,jdbcType=BIT}
+      label = #{row.label,jdbcType=VARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hhoa.blog.mgb.model.OmsFile">
-    update oms_file
+  <update id="updateByPrimaryKeySelective" parameterType="com.hhoa.blog.mgb.model.UmsTag">
+    update ums_tag
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="size != null">
-        size = #{size,jdbcType=DOUBLE},
-      </if>
-      <if test="url != null">
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="uuid != null">
-        uuid = #{uuid,jdbcType=VARCHAR},
-      </if>
-      <if test="enable != null">
-        enable = #{enable,jdbcType=BIT},
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hhoa.blog.mgb.model.OmsFile">
-    update oms_file
-    set name = #{name,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      size = #{size,jdbcType=DOUBLE},
-      url = #{url,jdbcType=VARCHAR},
-      uuid = #{uuid,jdbcType=VARCHAR},
-      enable = #{enable,jdbcType=BIT}
+  <update id="updateByPrimaryKey" parameterType="com.hhoa.blog.mgb.model.UmsTag">
+    update ums_tag
+    set label = #{label,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

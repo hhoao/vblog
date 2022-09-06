@@ -1,24 +1,24 @@
 package com.hhoa.blog.mgb.mapper;
 
-import com.hhoa.blog.mgb.model.UmsAdministrator;
-import com.hhoa.blog.mgb.model.UmsAdministratorExample;
+import com.hhoa.blog.mgb.model.UmsAccountTagRelation;
+import com.hhoa.blog.mgb.model.UmsAccountTagRelationExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface UmsAdministratorMapper {
+public interface UmsAccountTagRelationMapper {
     /**
      * countByExample
      * @param example example
      * @return long
      */
-    long countByExample(UmsAdministratorExample example);
+    long countByExample(UmsAccountTagRelationExample example);
 
     /**
      * deleteByExample
      * @param example example
      * @return int
      */
-    int deleteByExample(UmsAdministratorExample example);
+    int deleteByExample(UmsAccountTagRelationExample example);
 
     /**
      * deleteByPrimaryKey
@@ -32,28 +32,28 @@ public interface UmsAdministratorMapper {
      * @param row row
      * @return int
      */
-    int insert(UmsAdministrator row);
+    int insert(UmsAccountTagRelation row);
 
     /**
      * insertSelective
      * @param row row
      * @return int
      */
-    int insertSelective(UmsAdministrator row);
+    int insertSelective(UmsAccountTagRelation row);
 
     /**
      * selectByExample
      * @param example example
-     * @return java.util.List<com.hhoa.blog.mgb.model.UmsAdministrator>
+     * @return java.util.List<com.hhoa.blog.mgb.model.UmsAccountTagRelation>
      */
-    List<UmsAdministrator> selectByExample(UmsAdministratorExample example);
+    List<UmsAccountTagRelation> selectByExample(UmsAccountTagRelationExample example);
 
     /**
      * selectByPrimaryKey
      * @param id id
-     * @return com.hhoa.blog.mgb.model.UmsAdministrator
+     * @return com.hhoa.blog.mgb.model.UmsAccountTagRelation
      */
-    UmsAdministrator selectByPrimaryKey(Long id);
+    UmsAccountTagRelation selectByPrimaryKey(Long id);
 
     /**
      * updateByExampleSelective
@@ -61,7 +61,7 @@ public interface UmsAdministratorMapper {
      * @param example example
      * @return int
      */
-    int updateByExampleSelective(@Param("row") UmsAdministrator row, @Param("example") UmsAdministratorExample example);
+    int updateByExampleSelective(@Param("row") UmsAccountTagRelation row, @Param("example") UmsAccountTagRelationExample example);
 
     /**
      * updateByExample
@@ -69,19 +69,19 @@ public interface UmsAdministratorMapper {
      * @param example example
      * @return int
      */
-    int updateByExample(@Param("row") UmsAdministrator row, @Param("example") UmsAdministratorExample example);
+    int updateByExample(@Param("row") UmsAccountTagRelation row, @Param("example") UmsAccountTagRelationExample example);
 
     /**
      * updateByPrimaryKeySelective
      * @param row row
      * @return int
      */
-    int updateByPrimaryKeySelective(UmsAdministrator row);
+    int updateByPrimaryKeySelective(UmsAccountTagRelation row);
 
     /**
      * updateByPrimaryKey
      * @param row row
      * @return int
      */
-    int updateByPrimaryKey(UmsAdministrator row);
+    int updateByPrimaryKey(UmsAccountTagRelation row);
 }

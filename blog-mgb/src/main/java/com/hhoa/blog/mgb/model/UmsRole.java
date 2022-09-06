@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * 角色
  * @author hhoa 
- * @date 2022-09-03
+ * @date 2022-09-06
  */
 @Schema(description = "角色")
 public class UmsRole implements Serializable {

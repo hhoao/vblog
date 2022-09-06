@@ -4,17 +4,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 
 /**
- * 资源角色关系
+ * 标签
  * @author hhoa 
  * @date 2022-09-06
  */
-@Schema(description = "资源角色关系")
-public class UmsRoleResourceRelation implements Serializable {
+@Schema(description = "标签")
+public class UmsTag implements Serializable {
     private Long id;
 
-    private Long roleId;
-
-    private Long resourceId;
+    @Schema(description = "标签")
+    private String label;
 
     private static final long serialVersionUID = 1L;
 
@@ -35,35 +34,19 @@ public class UmsRoleResourceRelation implements Serializable {
     }
 
     /**
-     * 
-     * @return role_id 
+     * 标签
+     * @return label 标签
      */
-    public Long getRoleId() {
-        return roleId;
+    public String getLabel() {
+        return label;
     }
 
     /**
-     * 
-     * @param roleId 
+     * 标签
+     * @param label 标签
      */
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    /**
-     * 
-     * @return resource_id 
-     */
-    public Long getResourceId() {
-        return resourceId;
-    }
-
-    /**
-     * 
-     * @param resourceId 
-     */
-    public void setResourceId(Long resourceId) {
-        this.resourceId = resourceId;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     /**
@@ -77,8 +60,7 @@ public class UmsRoleResourceRelation implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", roleId=").append(roleId);
-        sb.append(", resourceId=").append(resourceId);
+        sb.append(", label=").append(label);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

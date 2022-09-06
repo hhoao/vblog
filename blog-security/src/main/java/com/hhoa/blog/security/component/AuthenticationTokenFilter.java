@@ -38,13 +38,11 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith(jwtSecurityProperties.getTokenHead())) {
             String authToken = authHeader.substring(jwtSecurityProperties.getTokenHead().length());
             String username = jwtTokenService.getSubjectFromToken(authToken);
-            LOGGER.info("checking username:{}", username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 if (jwtTokenService.validateToken(authToken)) {
                     UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    LOGGER.info("authenticated user:{}", username);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }

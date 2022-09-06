@@ -48,8 +48,8 @@ public class OmsFileServiceImpl implements OmsFileService {
         OmsFileExample fileExample = new OmsFileExample();
         if (queryFile != null) {
             OmsFileExample.Criteria criteria = fileExample.createCriteria();
-            if (StringUtils.hasLength(queryFile.getFileName())) {
-                criteria.andFileNameEqualTo(queryFile.getFileName());
+            if (StringUtils.hasLength(queryFile.getName())) {
+                criteria.andNameEqualTo(queryFile.getName());
             }
             if (queryFile.getId() != null) {
                 criteria.andIdEqualTo(queryFile.getId());
@@ -108,7 +108,7 @@ public class OmsFileServiceImpl implements OmsFileService {
 
             //将文件存储到数据库
             OmsFile saveFile = new OmsFile();
-            saveFile.setFileName(originalFilename);
+            saveFile.setName(originalFilename);
             saveFile.setType(type);
             saveFile.setSize(size / 1024);//（单位：KB）
             saveFile.setUrl(url);

@@ -1,6 +1,7 @@
 package com.hhoa.blog.admin.service;
 
 import com.hhoa.blog.admin.bean.PageInfo;
+import com.hhoa.blog.mgb.model.AmsArticle;
 import com.hhoa.blog.mgb.model.AmsCatalog;
 
 import java.util.List;
@@ -40,5 +41,14 @@ public interface AmsCatalogService  {
      *
      * @param catalogId the catalog name
      */
-    void deleteCatalog(Integer catalogId);
+    void deleteCatalog(Long catalogId);
+
+    /**
+     * Gets catalog articles.
+     *
+     * @param catalogId the catalog id
+     * @param pageInfo  the page info
+     * @return the catalog articles
+     */
+    List<AmsArticle> getCatalogArticles(Long catalogId, PageInfo pageInfo);
 }

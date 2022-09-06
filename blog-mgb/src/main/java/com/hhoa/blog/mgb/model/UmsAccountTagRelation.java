@@ -4,32 +4,31 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 
 /**
- * 文章和目录关系
+ * 账户标签关系
  * @author hhoa 
  * @date 2022-09-06
  */
-@Schema(description = "文章和目录关系")
-public class AmsArticleCatalogRelation implements Serializable {
-    @Schema(description = "文件id")
+@Schema(description = "账户标签关系")
+public class UmsAccountTagRelation implements Serializable {
     private Long id;
 
-    private Long articleId;
+    private Long tagId;
 
-    private Long catalogId;
+    private Long accountId;
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 文件id
-     * @return id 文件id
+     * 
+     * @return id 
      */
     public Long getId() {
         return id;
     }
 
     /**
-     * 文件id
-     * @param id 文件id
+     * 
+     * @param id 
      */
     public void setId(Long id) {
         this.id = id;
@@ -37,34 +36,34 @@ public class AmsArticleCatalogRelation implements Serializable {
 
     /**
      * 
-     * @return article_id 
+     * @return tag_id 
      */
-    public Long getArticleId() {
-        return articleId;
+    public Long getTagId() {
+        return tagId;
     }
 
     /**
      * 
-     * @param articleId 
+     * @param tagId 
      */
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
+    public void setTagId(Long tagId) {
+        this.tagId = tagId;
     }
 
     /**
      * 
-     * @return catalog_id 
+     * @return account_id 
      */
-    public Long getCatalogId() {
-        return catalogId;
+    public Long getAccountId() {
+        return accountId;
     }
 
     /**
      * 
-     * @param catalogId 
+     * @param accountId 
      */
-    public void setCatalogId(Long catalogId) {
-        this.catalogId = catalogId;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
     /**
@@ -78,8 +77,8 @@ public class AmsArticleCatalogRelation implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", articleId=").append(articleId);
-        sb.append(", catalogId=").append(catalogId);
+        sb.append(", tagId=").append(tagId);
+        sb.append(", accountId=").append(accountId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * 文件
  * @author hhoa 
- * @date 2022-09-03
+ * @date 2022-09-06
  */
 @Schema(description = "文件")
 public class OmsFile implements Serializable {
@@ -14,7 +14,7 @@ public class OmsFile implements Serializable {
     private Long id;
 
     @Schema(description = "文件名称")
-    private String fileName;
+    private String name;
 
     @Schema(description = "文件类型")
     private String type;
@@ -51,18 +51,18 @@ public class OmsFile implements Serializable {
 
     /**
      * 文件名称
-     * @return file_name 文件名称
+     * @return name 文件名称
      */
-    public String getFileName() {
-        return fileName;
+    public String getName() {
+        return name;
     }
 
     /**
      * 文件名称
-     * @param fileName 文件名称
+     * @param name 文件名称
      */
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -156,7 +156,7 @@ public class OmsFile implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", fileName=").append(fileName);
+        sb.append(", name=").append(name);
         sb.append(", type=").append(type);
         sb.append(", size=").append(size);
         sb.append(", url=").append(url);

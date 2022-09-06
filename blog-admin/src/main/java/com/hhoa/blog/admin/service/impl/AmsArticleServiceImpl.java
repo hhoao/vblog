@@ -40,4 +40,9 @@ public class AmsArticleServiceImpl implements AmsArticleService {
     public void deleteArticle(Integer articleId) {
         articleDao.deleteById(articleId);
     }
+
+    @Override
+    public AmsArticle selectById(Long articleId) {
+        return articleDao.selectById(articleId);
+    }
 }

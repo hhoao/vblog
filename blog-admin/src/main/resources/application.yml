@@ -45,7 +45,7 @@ jwt:
       - /**/*.css
       - /**/*.png
       - /**/*.ico
-      - /administrators/auth/token
+      - /accounts/auth/token
 
 
 pagehelper:

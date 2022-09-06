@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hhoa.blog.mgb.mapper.UmsAdministratorMapper">
-  <resultMap id="BaseResultMap" type="com.hhoa.blog.mgb.model.UmsAdministrator">
+<mapper namespace="com.hhoa.blog.mgb.mapper.UmsAccountTagRelationMapper">
+  <resultMap id="BaseResultMap" type="com.hhoa.blog.mgb.model.UmsAccountTagRelation">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="status" jdbcType="BIT" property="status" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="tag_id" jdbcType="BIGINT" property="tagId" />
+    <result column="account_id" jdbcType="BIGINT" property="accountId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,15 +65,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, password, username, status, icon, role_id
+    id, tag_id, account_id
   </sql>
-  <select id="selectByExample" parameterType="com.hhoa.blog.mgb.model.UmsAdministratorExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.hhoa.blog.mgb.model.UmsAccountTagRelationExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_administrator
+    from ums_account_tag_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,94 +84,65 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_administrator
+    from ums_account_tag_relation
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from ums_administrator
+    delete from ums_account_tag_relation
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hhoa.blog.mgb.model.UmsAdministratorExample">
-    delete from ums_administrator
+  <delete id="deleteByExample" parameterType="com.hhoa.blog.mgb.model.UmsAccountTagRelationExample">
+    delete from ums_account_tag_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hhoa.blog.mgb.model.UmsAdministrator">
+  <insert id="insert" parameterType="com.hhoa.blog.mgb.model.UmsAccountTagRelation">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into ums_administrator (password, username, status, 
-      icon, role_id)
-    values (#{password,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
-      #{icon,jdbcType=VARCHAR}, #{roleId,jdbcType=BIGINT})
+    insert into ums_account_tag_relation (tag_id, account_id)
+    values (#{tagId,jdbcType=BIGINT}, #{accountId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.hhoa.blog.mgb.model.UmsAdministrator">
+  <insert id="insertSelective" parameterType="com.hhoa.blog.mgb.model.UmsAccountTagRelation">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into ums_administrator
+    insert into ums_account_tag_relation
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="password != null">
-        password,
+      <if test="tagId != null">
+        tag_id,
       </if>
-      <if test="username != null">
-        username,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="icon != null">
-        icon,
-      </if>
-      <if test="roleId != null">
-        role_id,
+      <if test="accountId != null">
+        account_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+      <if test="tagId != null">
+        #{tagId,jdbcType=BIGINT},
       </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=BIT},
-      </if>
-      <if test="icon != null">
-        #{icon,jdbcType=VARCHAR},
-      </if>
-      <if test="roleId != null">
-        #{roleId,jdbcType=BIGINT},
+      <if test="accountId != null">
+        #{accountId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hhoa.blog.mgb.model.UmsAdministratorExample" resultType="java.lang.Long">
-    select count(*) from ums_administrator
+  <select id="countByExample" parameterType="com.hhoa.blog.mgb.model.UmsAccountTagRelationExample" resultType="java.lang.Long">
+    select count(*) from ums_account_tag_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_administrator
+    update ums_account_tag_relation
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=BIGINT},
       </if>
-      <if test="row.password != null">
-        password = #{row.password,jdbcType=VARCHAR},
+      <if test="row.tagId != null">
+        tag_id = #{row.tagId,jdbcType=BIGINT},
       </if>
-      <if test="row.username != null">
-        username = #{row.username,jdbcType=VARCHAR},
-      </if>
-      <if test="row.status != null">
-        status = #{row.status,jdbcType=BIT},
-      </if>
-      <if test="row.icon != null">
-        icon = #{row.icon,jdbcType=VARCHAR},
-      </if>
-      <if test="row.roleId != null">
-        role_id = #{row.roleId,jdbcType=BIGINT},
+      <if test="row.accountId != null">
+        account_id = #{row.accountId,jdbcType=BIGINT},
       </if>
     </set>
     <if test="example != null">
@@ -182,45 +150,30 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_administrator
+    update ums_account_tag_relation
     set id = #{row.id,jdbcType=BIGINT},
-      password = #{row.password,jdbcType=VARCHAR},
-      username = #{row.username,jdbcType=VARCHAR},
-      status = #{row.status,jdbcType=BIT},
-      icon = #{row.icon,jdbcType=VARCHAR},
-      role_id = #{row.roleId,jdbcType=BIGINT}
+      tag_id = #{row.tagId,jdbcType=BIGINT},
+      account_id = #{row.accountId,jdbcType=BIGINT}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hhoa.blog.mgb.model.UmsAdministrator">
-    update ums_administrator
+  <update id="updateByPrimaryKeySelective" parameterType="com.hhoa.blog.mgb.model.UmsAccountTagRelation">
+    update ums_account_tag_relation
     <set>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
+      <if test="tagId != null">
+        tag_id = #{tagId,jdbcType=BIGINT},
       </if>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=BIT},
-      </if>
-      <if test="icon != null">
-        icon = #{icon,jdbcType=VARCHAR},
-      </if>
-      <if test="roleId != null">
-        role_id = #{roleId,jdbcType=BIGINT},
+      <if test="accountId != null">
+        account_id = #{accountId,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hhoa.blog.mgb.model.UmsAdministrator">
-    update ums_administrator
-    set password = #{password,jdbcType=VARCHAR},
-      username = #{username,jdbcType=VARCHAR},
-      status = #{status,jdbcType=BIT},
-      icon = #{icon,jdbcType=VARCHAR},
-      role_id = #{roleId,jdbcType=BIGINT}
+  <update id="updateByPrimaryKey" parameterType="com.hhoa.blog.mgb.model.UmsAccountTagRelation">
+    update ums_account_tag_relation
+    set tag_id = #{tagId,jdbcType=BIGINT},
+      account_id = #{accountId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

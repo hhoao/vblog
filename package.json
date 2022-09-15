@@ -1,5 +1,5 @@
 {
-  "name": "hhoa-blog-admin",
+  "name": "Vblog-Admin",
   "version": "1.00",
   "author": {
     "name": "hhoa",
@@ -150,13 +150,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anncwb/vue-vben-admin.git"
+    "url": "git+https://github.com/HHoao/VBlog-Admin"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/anncwb/vue-vben-admin/issues"
+    "url": "git@github.com:HHoao/VBlog-Admin.git/issues"
   },
-  "homepage": "https://github.com/anncwb/vue-vben-admin",
+  "homepage": "git@github.com:HHoao/VBlog-Admin.git",
   "engines": {
     "node": "^12 || >=14"
   },

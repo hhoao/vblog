@@ -29,7 +29,7 @@ export function createFakeUserList(): GetUserInfoModel[] {
   return [
     {
       id: 1,
-      username: 'Vben',
+      username: 'vblog',
       avatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
       password: '123456',
       email: 'test@gmail.com',

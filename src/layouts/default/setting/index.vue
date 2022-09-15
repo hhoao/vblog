@@ -1,26 +1,18 @@
 <template>
-  <div @click="openDrawer(true)">
-    <Icon icon="ion:settings-outline" />
+  <div @click="openDrawer(true)" :class="[prefixCls, `${prefixCls}--${theme}`]">
+    <Icon icon="ion:settings-outline" role="img" />
     <SettingDrawer @register="register" />
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent } from 'vue';
+<script lang="ts" setup>
   import SettingDrawer from './SettingDrawer';
   import Icon from '/@/components/Icon';
 
   import { useDrawer } from '/@/components/Drawer';
-
-  export default defineComponent({
-    name: 'SettingButton',
-    components: { SettingDrawer, Icon },
-    setup() {
-      const [register, { openDrawer }] = useDrawer();
-
-      return {
-        register,
-        openDrawer,
-      };
-    },
+  import { useDesign } from '/@/hooks/web/useDesign';
+  const { prefixCls } = useDesign('layout-setting');
+  const [register, { openDrawer }] = useDrawer();
+  defineExpose({
+    prefixCls,
   });
 </script>

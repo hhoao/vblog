@@ -18,26 +18,20 @@ import { PageEnum } from '/@/enums/pageEnum';
 import { RoleEnum } from '/@/enums/roleEnum';
 
 interface PermissionState {
-  // Permission code list
-  permCodeList: string[] | number[];
   // Whether the route has been dynamically added
   isDynamicAddedRoute: boolean;
   // To trigger a menu update
   lastBuildMenuTime: number;
   // Backstage menu list
-  backMenuList: Menu[];
   frontMenuList: Menu[];
 }
 export const usePermissionStore = defineStore({
   id: 'app-permission',
   state: (): PermissionState => ({
-    permCodeList: [],
     // Whether the route has been dynamically added
     isDynamicAddedRoute: false,
     // To trigger a menu update
     lastBuildMenuTime: 0,
-    // Backstage menu list
-    backMenuList: [],
     // menu List
     frontMenuList: [],
   }),
@@ -66,8 +60,6 @@ export const usePermissionStore = defineStore({
     },
     resetState(): void {
       this.isDynamicAddedRoute = false;
-      this.permCodeList = [];
-      this.backMenuList = [];
       this.lastBuildMenuTime = 0;
     },
     // async changePermissionCode() {

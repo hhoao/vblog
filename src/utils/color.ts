@@ -48,7 +48,6 @@ export function hexToRGB(hex: string) {
   }
   return sHex;
 }
-
 export function colorIsDark(color: string) {
   if (!isHexColor(color)) return;
   const [r, g, b] = hexToRGB(color)
@@ -56,6 +55,19 @@ export function colorIsDark(color: string) {
     .split(',')
     .map((item) => Number(item));
   return r * 0.299 + g * 0.578 + b * 0.114 < 192;
+}
+export function lightness(color: string) {
+  if (!isHexColor(color)) return;
+  const [r, g, b] = hexToRGB(color)
+    .replace(/(?:\(|\)|rgb|RGB)*/g, '')
+    .split(',')
+    .map((item) => Number(item));
+  return (
+    Math.pow(
+      Math.pow(r / 255.0, 2.2) + Math.pow(g / 170.0, 2.2) + Math.pow(b / 425.0, 2.2),
+      1 / 2.2,
+    ) * 0.547373141
+  );
 }
 
 /**

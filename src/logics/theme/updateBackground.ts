@@ -1,4 +1,4 @@
-import { colorIsDark, lighten, darken } from '/@/utils/color';
+import { lighten, darken, lightness } from '/@/utils/color';
 import { useAppStore } from '/@/store/modules/app';
 import { ThemeEnum } from '/@/enums/appEnum';
 import { setCssVar } from './util';
@@ -7,6 +7,7 @@ const HEADER_BG_COLOR_VAR = '--header-bg-color';
 const HEADER_BG_HOVER_COLOR_VAR = '--header-bg-hover-color';
 const HEADER_MENU_ACTIVE_BG_COLOR_VAR = '--header-active-menu-bg-color';
 
+const SIDER_ACTIVE_BG_COLOR = '--sider-active-bg-color';
 const SIDER_DARK_BG_COLOR = '--sider-dark-bg-color';
 const SIDER_DARK_DARKEN_BG_COLOR = '--sider-dark-darken-bg-color';
 const SIDER_LIGHTEN_BG_COLOR = '--sider-dark-lighten-bg-color';
@@ -25,20 +26,34 @@ export function updateHeaderBgColor(color?: string) {
       color = appStore.getHeaderSetting.bgColor;
     }
   }
+  const lightly = lightness(color!.toLowerCase());
+  let isDark = false;
+  if (lightly) {
+    isDark = lightly <= 0.5;
+    let hoverColor: string;
+    if (!isDark && lightly > 0.9) {
+      hoverColor = darken(color!, 6);
+    } else {
+      hoverColor = lighten(color!, 6);
+    }
+    setCssVar(HEADER_BG_COLOR_VAR, color);
+    setCssVar(HEADER_BG_HOVER_COLOR_VAR, hoverColor);
+    setCssVar(HEADER_MENU_ACTIVE_BG_COLOR_VAR, hoverColor);
+  }
   // bg color
-  setCssVar(HEADER_BG_COLOR_VAR, color);
+  // setCssVar(HEADER_BG_COLOR_VAR, color);
 
   // hover color
-  const hoverColor = lighten(color!, 6);
-  setCssVar(HEADER_BG_HOVER_COLOR_VAR, hoverColor);
-  setCssVar(HEADER_MENU_ACTIVE_BG_COLOR_VAR, hoverColor);
+  // const hoverColor = lighten(color!, 6);
+  // setCssVar(HEADER_BG_HOVER_COLOR_VAR, hoverColor);
+  // setCssVar(HEADER_MENU_ACTIVE_BG_COLOR_VAR, hoverColor);
 
   // Determine the depth of the color value and automatically switch the theme
-  const isDark = colorIsDark(color!);
+  // const isDark = colorIsDark(color!);
 
   appStore.setProjectConfig({
     headerSetting: {
-      theme: isDark || darkMode ? ThemeEnum.DARK : ThemeEnum.LIGHT,
+      theme: isDark ? ThemeEnum.DARK : ThemeEnum.LIGHT,
     },
   });
 }
@@ -59,17 +74,32 @@ export function updateSidebarBgColor(color?: string) {
       color = appStore.getMenuSetting.bgColor;
     }
   }
-  setCssVar(SIDER_DARK_BG_COLOR, color);
-  setCssVar(SIDER_DARK_DARKEN_BG_COLOR, darken(color!, 6));
-  setCssVar(SIDER_LIGHTEN_BG_COLOR, lighten(color!, 5));
-
-  // only #ffffff is light
-  // Only when the background color is #fff, the theme of the menu will be changed to light
-  const isLight = ['#fff', '#ffffff'].includes(color!.toLowerCase());
-
+  const lightly = lightness(color!.toLowerCase());
+  let isDark = true;
+  if (lightly) {
+    isDark = lightly <= 0.5;
+    let postColor: string;
+    let activeColor: string;
+    if (!isDark && !darkMode) {
+      if (lightly > 0.9) {
+        postColor = darken(color!, 4);
+        activeColor = darken(color!, 8);
+      } else {
+        postColor = darken(color!, 2);
+        activeColor = darken(color!, 6);
+      }
+    } else {
+      postColor = lighten(color!, 3);
+      activeColor = lighten(color!, 6);
+    }
+    setCssVar(SIDER_DARK_DARKEN_BG_COLOR, postColor);
+    setCssVar(SIDER_ACTIVE_BG_COLOR, activeColor);
+    setCssVar(SIDER_LIGHTEN_BG_COLOR, postColor);
+    setCssVar(SIDER_DARK_BG_COLOR, color);
+  }
   appStore.setProjectConfig({
     menuSetting: {
-      theme: isLight && !darkMode ? ThemeEnum.LIGHT : ThemeEnum.DARK,
+      theme: isDark ? ThemeEnum.DARK : ThemeEnum.LIGHT,
     },
   });
 }

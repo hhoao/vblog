@@ -136,6 +136,7 @@
 
   .@{prefix-cls} {
     z-index: @layout-sider-fixed-z-index;
+    background-color: @sider-dark-bg-color !important;
 
     &--fixed {
       position: fixed;
@@ -149,9 +150,19 @@
       height: calc(100% - @header-height);
     }
 
-    &.ant-layout-sider-dark {
-      background-color: @sider-dark-bg-color;
+    &.ant-layout-sider-light {
+      .ant-layout-sider-trigger {
+        color: lighten(@black, 25%);
+        background-color: @trigger-dark-bg-color;
 
+        &:hover {
+          color: @black;
+          background-color: @trigger-dark-hover-bg-color;
+        }
+      }
+    }
+
+    &.ant-layout-sider-dark {
       .ant-layout-sider-trigger {
         color: darken(@white, 25%);
         background-color: @trigger-dark-bg-color;

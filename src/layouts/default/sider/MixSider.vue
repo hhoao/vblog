@@ -195,7 +195,7 @@
 
       // Menu changes
       watch(
-        [() => permissionStore.getLastBuildMenuTime, () => permissionStore.getBackMenuList],
+        [() => permissionStore.getLastBuildMenuTime],
         async () => {
           menuModules.value = await getShallowMenus();
         },
@@ -424,8 +424,6 @@
         }
       }
       .@{prefix-cls}-menu-list {
-        background-color: @sider-dark-bg-color;
-
         &__title {
           color: @white;
           border-bottom: none;

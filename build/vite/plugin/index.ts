@@ -15,8 +15,8 @@ import { configVisualizerConfig } from './visualizer';
 import { configThemePlugin } from './theme';
 import { configImageminPlugin } from './imagemin';
 import { configSvgIconsPlugin } from './svgSprite';
-import Components from 'unplugin-vue-components/vite';
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+// import Components from 'unplugin-vue-components/vite';
+// import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const {
@@ -37,9 +37,9 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     VitePluginCertificate({
       source: 'coding',
     }),
-    Components({
-      resolvers: [AntDesignVueResolver()],
-    }),
+    // Components({
+    //   resolvers: [AntDesignVueResolver()],
+    // }),
   ];
 
   // vite-plugin-windicss

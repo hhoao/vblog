@@ -1,8 +1,8 @@
 <template>
   <div style="margin: 0 10px">
-    <a-form :model="formModel" ref="formRef" @finish="handleFinish" :rules="rules">
-      <a-row style="margin-top: 5px" ref="headRef">
-        <a-col :span="22">
+    <Form :model="formModel" ref="formRef" @finish="handleFinish" :rules="rules">
+      <Row style="margin-top: 5px" ref="headRef">
+        <Col :span="22">
           <a-input :class="prefixCls" v-model:value="formModel.title">
             <template #addonBefore>
               <div>
@@ -10,14 +10,14 @@
               </div>
             </template>
           </a-input>
-        </a-col>
-        <a-col :span="2" style="padding: 0 0 0 10px">
+        </Col>
+        <Col :span="2" style="padding: 0 0 0 10px">
           <a-button type="primary" style="border-radius: 20px; width: 100%" html-type="submit"
             >上传</a-button
           >
-        </a-col>
-      </a-row>
-    </a-form>
+        </Col>
+      </Row>
+    </Form>
     <div style="padding-top: 10px" ref="markdownContainerRef">
       <MarkDown
         ref="markDownRef"
@@ -35,7 +35,7 @@
   import { MarkDown, MarkDownActionType } from '/@/components/Markdown';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { Rule } from '/@/components/Form';
-  import { FormInstance } from 'ant-design-vue';
+  import { FormInstance, Col, Row, Form } from 'ant-design-vue';
   import { MarkdownEssay } from '/@/views/essay/writing/types/MarkdownEditorConfig';
 
   const formRef = ref<Nullable<FormInstance>>(null);

@@ -63,9 +63,9 @@ export function useMenuSetting() {
 
   const getCollapsedShowTitle = computed(() => appStore.getMenuSetting.collapsedShowTitle);
 
-  const getShowTopMenu = computed(() => {
-    return unref(getMenuMode) === MenuModeEnum.HORIZONTAL || unref(getSplit);
-  });
+  const getShowTopMenu = computed(
+    () => unref(getMenuMode) === MenuModeEnum.HORIZONTAL || unref(getSplit),
+  );
 
   const getShowHeaderTrigger = computed(() => {
     if (

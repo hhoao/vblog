@@ -12,11 +12,14 @@
   }
 
   &__sidebar-hor {
+    background: inherit;
+
     &.ant-menu-horizontal {
       display: flex;
       align-items: center;
 
-      &.ant-menu-dark {
+      &.ant-menu-dark,
+      &.ant-menu-light {
         background-color: transparent;
 
         .ant-menu-submenu:hover,
@@ -29,7 +32,7 @@
         .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
         .ant-menu-submenu-active,
         .ant-menu-submenu-title:hover {
-          color: #fff;
+          //color: #fff;
           background-color: @top-menu-active-bg-color !important;
         }
 

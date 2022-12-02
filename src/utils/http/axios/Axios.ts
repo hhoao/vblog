@@ -157,6 +157,7 @@ export class VAxios {
   }
 
   // support form-data
+  // transform get-request { c: 'b', a: 'd' } to c=b=d.
   supportFormData(config: AxiosRequestConfig) {
     const headers = config.headers || this.options.headers;
     const contentType = headers?.['Content-Type'] || headers?.['content-type'];

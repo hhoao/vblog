@@ -1,5 +1,5 @@
 <template>
-  <LoginFormTitle v-show="getShow" class="enter-x" />
+  <LoginFormTitle v-show="getShow" class="enter-x text-center" />
   <Form
     class="p-4 enter-x"
     :model="formData"
@@ -10,15 +10,13 @@
   >
     <FormItem name="account" class="enter-x">
       <Input
-        size="large"
         v-model:value="formData.account"
         :placeholder="t('sys.login.userName')"
-        class="fix-auto-fill"
+        class="fix-auto-fill rounded-lg"
       />
     </FormItem>
     <FormItem name="password" class="enter-x">
       <InputPassword
-        size="large"
         visibilityToggle
         v-model:value="formData.password"
         :placeholder="t('sys.login.password')"
@@ -45,7 +43,14 @@
     </ARow>
 
     <FormItem class="enter-x">
-      <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
+      <Button
+        type="primary"
+        class="h-50px"
+        block
+        @click="handleLogin"
+        :loading="loading"
+        style="border-radius: 6px; height: 50px"
+      >
         {{ t('sys.login.loginButton') }}
       </Button>
       <!-- <Button size="large" class="mt-4 enter-x" block @click="handleRegister">
@@ -69,29 +74,12 @@
         </Button>
       </ACol>
     </ARow>
-
-    <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
-
-    <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
-      <GithubFilled />
-      <WechatFilled />
-      <AlipayCircleFilled />
-      <GoogleCircleFilled />
-      <TwitterCircleFilled />
-    </div>
   </Form>
 </template>
 <script lang="ts" setup>
   import { reactive, ref, unref, computed } from 'vue';
 
-  import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
-  import {
-    GithubFilled,
-    WechatFilled,
-    AlipayCircleFilled,
-    GoogleCircleFilled,
-    TwitterCircleFilled,
-  } from '@ant-design/icons-vue';
+  import { Checkbox, Form, Input, Row, Col, Button } from 'ant-design-vue';
   import LoginFormTitle from './LoginFormTitle.vue';
 
   import { useI18n } from '/@/hooks/web/useI18n';

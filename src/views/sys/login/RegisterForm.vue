@@ -1,6 +1,6 @@
 <template>
   <template v-if="getShow">
-    <LoginFormTitle class="enter-x" />
+    <LoginFormTitle class="enter-x text-center mb-36px" />
     <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
       <FormItem name="account" class="enter-x">
         <Input
@@ -35,7 +35,6 @@
       </FormItem>
       <FormItem name="confirmPassword" class="enter-x">
         <InputPassword
-          size="large"
           visibilityToggle
           v-model:value="formData.confirmPassword"
           :placeholder="t('sys.login.confirmPassword')"

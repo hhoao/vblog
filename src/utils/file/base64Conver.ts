@@ -13,7 +13,6 @@ export function dataURLtoBlob(base64Buf: string): Blob {
   }
   return new Blob([u8arr], { type: mime });
 }
-
 /**
  * img url to base64
  * @param url

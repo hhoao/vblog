@@ -1,8 +1,8 @@
 <template>
   <div style="margin: 0 10px">
-    <Form :model="formModel" ref="formRef" @finish="handleFinish" :rules="rules">
-      <Row style="margin-top: 5px" ref="headRef">
-        <Col :span="22">
+    <a-form :model="formModel" ref="formRef">
+      <a-row style="margin-top: 5px" ref="headRef">
+        <a-col :span="22">
           <a-input :class="prefixCls" v-model:value="formModel.title">
             <template #addonBefore>
               <div>
@@ -10,14 +10,14 @@
               </div>
             </template>
           </a-input>
-        </Col>
-        <Col :span="2" style="padding: 0 0 0 10px">
-          <a-button type="primary" style="border-radius: 20px; width: 100%" html-type="submit"
-            >上传</a-button
-          >
-        </Col>
-      </Row>
-    </Form>
+        </a-col>
+        <a-col :span="2" style="padding: 0 0 0 10px">
+          <a-button type="primary" style="border-radius: 20px; width: 100%" @click="openModal"
+            >上传
+          </a-button>
+        </a-col>
+      </a-row>
+    </a-form>
     <div style="padding-top: 10px" ref="markdownContainerRef">
       <MarkDown
         ref="markDownRef"
@@ -28,52 +28,70 @@
         :changeStyleSetting="true"
       />
     </div>
+    <essay-writing-modal ref="modalRef" @public-essay="publicEssay" />
   </div>
 </template>
 <script lang="ts" setup>
   import { computed, onMounted, reactive, ref } from 'vue';
   import { MarkDown, MarkDownActionType } from '/@/components/Markdown';
   import { useDesign } from '/@/hooks/web/useDesign';
-  import { Rule } from '/@/components/Form';
-  import { FormInstance, Col, Row, Form } from 'ant-design-vue';
+  import { FormInstance, message } from 'ant-design-vue';
   import { MarkdownEssay } from '/@/views/essay/writing/types/MarkdownEditorConfig';
+  import EssayWritingModal from '/@/views/essay/writing/EssayWritingModal.vue';
+  import { EssayWritingModalType } from '/@/views/essay/writing/types/EssayWritingModalType';
+  import { addArticle } from '/@/api/article';
 
-  const formRef = ref<Nullable<FormInstance>>(null);
+  const formRef = ref<FormInstance>();
   const headRef = ref(null);
   const markDownRef = ref<Nullable<MarkDownActionType>>(null);
+  const modalRef = ref<Nullable<EssayWritingModalType>>(null);
   const markdownContainerRef = ref(null);
+
   const formModel = reactive<MarkdownEssay>({
     content: '',
     title: '',
   });
   const getMarkdownContainerRef = computed(() => markdownContainerRef);
   const { prefixCls } = useDesign('markdown');
-  const rules: Record<string, Rule[]> = {
-    title: [{ required: true }],
-    content: [{ required: true }],
-  };
 
-  function handleFinish(values: MarkdownEssay) {
-    console.log(values, formModel);
+  function openModal() {
+    if (formModel.content.length < 20) {
+      message.error('The content must be more than 20 words');
+      throw new Error('The content must be more than 20 words');
+    }
+    if (formModel.title.length < 2) {
+      message.error('The title must be more than 2 words');
+      throw new Error('The title must be more than 2 words');
+    }
+    modalRef.value?.open();
+  }
+  function closeModal() {
+    modalRef.value?.close();
+  }
+
+  async function publicEssay(data) {
+    addArticle({
+      ...data,
+      ...formModel,
+    }).then(() => {
+      closeModal();
+    });
   }
 
   onMounted(() => {
-    // if (markdownContainerRef.value) {
     markDownRef.value?.initAndMountEditor();
-    // } else {
-    //   watch(markdownContainerRef, () => {
-    //     markDownRef.value?.initAndMountEditor();
-    //   });
-    // }
   });
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+  //noinspection LessUnresolvedVariable
   @prefix-cls: ~'@{namespace}-markdown';
+
   .@{prefix-cls} {
     .ant-input-group-addon {
       border-radius: 20px 0 0 20px;
       width: 80px;
+      height: 10px;
     }
 
     .ant-input {

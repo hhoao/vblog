@@ -15,8 +15,9 @@ import { configVisualizerConfig } from './visualizer';
 import { configThemePlugin } from './theme';
 import { configImageminPlugin } from './imagemin';
 import { configSvgIconsPlugin } from './svgSprite';
-// import Components from 'unplugin-vue-components/vite';
-// import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+import Components from 'unplugin-vue-components/vite';
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+import fullImportPlugin from './fullImportComponent';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const {
@@ -37,9 +38,6 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     VitePluginCertificate({
       source: 'coding',
     }),
-    // Components({
-    //   resolvers: [AntDesignVueResolver()],
-    // }),
   ];
 
   // vite-plugin-windicss
@@ -81,6 +79,13 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
 
     // vite-plugin-pwa
     vitePlugins.push(configPwaConfig(viteEnv));
+    vitePlugins.push(
+      Components({
+        resolvers: [AntDesignVueResolver()],
+      }),
+    );
+  } else {
+    vitePlugins.push(fullImportPlugin());
   }
 
   return vitePlugins;

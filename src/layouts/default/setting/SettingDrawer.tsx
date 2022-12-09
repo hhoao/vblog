@@ -3,7 +3,7 @@ import { BasicDrawer } from '/@/components/Drawer';
 import { Divider } from 'ant-design-vue';
 import { TypePicker, SettingFooter, SwitchItem, SelectItem, InputNumberItem } from './components';
 
-import { MenuTypeEnum, TriggerEnum } from '/@/enums/menuEnum';
+import { TriggerEnum } from '/@/enums/menuEnum';
 
 import { useRootSetting } from '/@/hooks/setting/useRootSetting';
 import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
@@ -48,7 +48,6 @@ export default defineComponent({
       getMenuType,
       getTrigger,
       getCollapsedShowTitle,
-      getMenuFixed,
       getCollapsed,
       getCanDrag,
       getTopMenuAlign,
@@ -57,12 +56,12 @@ export default defineComponent({
       getIsTopMenu,
       getSplit,
       getIsMixSidebar,
-      getCloseMixSidebarOnChange,
       getMixSideTrigger,
       getMixSideFixed,
+      getShowSidebar,
     } = useMenuSetting();
 
-    const { getShowHeader, getFixed: getHeaderFixed, getShowSearch } = useHeaderSetting();
+    const { getShowHeader, getShowSearch } = useHeaderSetting();
 
     const getShowMenuRef = computed(() => {
       return unref(getShowMenu) && !unref(getIsHorizontal);
@@ -101,22 +100,9 @@ export default defineComponent({
       return (
         <>
           <SwitchItem
-            title={t('layout.setting.splitMenu')}
-            event={HandlerEnum.MENU_SPLIT}
-            def={unref(getSplit)}
-            disabled={!unref(getShowMenuRef) || unref(getMenuType) !== MenuTypeEnum.MIX}
-          />
-          <SwitchItem
             title={t('layout.setting.mixSidebarFixed')}
             event={HandlerEnum.MENU_FIXED_MIX_SIDEBAR}
             def={unref(getMixSideFixed)}
-            disabled={!unref(getIsMixSidebar)}
-          />
-
-          <SwitchItem
-            title={t('layout.setting.closeMixSidebarOnChange')}
-            event={HandlerEnum.MENU_CLOSE_MIX_SIDEBAR_ON_CHANGE}
-            def={unref(getCloseMixSidebarOnChange)}
             disabled={!unref(getIsMixSidebar)}
           />
           <SwitchItem
@@ -151,19 +137,6 @@ export default defineComponent({
             def={unref(getCollapsedShowTitle)}
             disabled={!unref(getShowMenuRef) || !unref(getCollapsed) || unref(getIsMixSidebar)}
           />
-
-          <SwitchItem
-            title={t('layout.setting.fixedHeader')}
-            event={HandlerEnum.HEADER_FIXED}
-            def={unref(getHeaderFixed)}
-            disabled={!unref(getShowHeader)}
-          />
-          <SwitchItem
-            title={t('layout.setting.fixedSideBar')}
-            event={HandlerEnum.MENU_FIXED}
-            def={unref(getMenuFixed)}
-            disabled={!unref(getShowMenuRef) || unref(getIsMixSidebar)}
-          />
           <SelectItem
             title={t('layout.setting.mixSidebarTrigger')}
             event={HandlerEnum.MENU_TRIGGER_MIX_SIDEBAR}
@@ -182,13 +155,6 @@ export default defineComponent({
               (!unref(getIsTopMenu) && !unref(getSplit)) ||
               unref(getIsMixSidebar)
             }
-          />
-          <SelectItem
-            title={t('layout.setting.menuCollapseButton')}
-            event={HandlerEnum.MENU_TRIGGER}
-            def={triggerDef}
-            options={triggerOptions}
-            disabled={!unref(getShowMenuRef) || unref(getIsMixSidebar)}
           />
           <SelectItem
             title={t('layout.setting.contentMode')}
@@ -231,13 +197,7 @@ export default defineComponent({
             title={t('layout.setting.sidebar')}
             event={HandlerEnum.MENU_SHOW_SIDEBAR}
             def={unref(getShowMenu)}
-            disabled={unref(getIsHorizontal)}
-          />
-
-          <SwitchItem
-            title={t('layout.setting.header')}
-            event={HandlerEnum.HEADER_SHOW}
-            def={unref(getShowHeader)}
+            disabled={!getShowSidebar.value}
           />
           <SwitchItem
             title="Logo"

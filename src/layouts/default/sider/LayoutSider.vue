@@ -1,10 +1,6 @@
 <template>
-  <div
-    v-if="getMenuFixed && !getIsMobile"
-    :style="getHiddenDomStyle"
-    v-show="showClassSideBarRef"
-  ></div>
-  <Sider
+  <div v-if="!getIsMobile" :style="getHiddenDomStyle" v-show="showClassSideBarRef"></div>
+  <a-layout-sider
     v-show="showClassSideBarRef"
     ref="sideRef"
     breakpoint="lg"
@@ -14,21 +10,15 @@
     :collapsed="getCollapsed"
     :collapsedWidth="getCollapsedWidth"
     @breakpoint="onBreakpointChange"
-    :trigger="getTrigger"
+    :trigger="null"
     v-bind="getTriggerAttr"
   >
-    <template #trigger v-if="getShowTrigger">
-      <LayoutTrigger />
-    </template>
     <LayoutMenu :menuMode="getMode" :splitType="getSplitType" />
     <DragBar ref="dragBarRef" />
-  </Sider>
+  </a-layout-sider>
 </template>
-<script lang="ts">
-  import { computed, defineComponent, ref, unref, CSSProperties, h } from 'vue';
-
-  import { Layout } from 'ant-design-vue';
-  import LayoutTrigger from '/@/layouts/default/trigger/index.vue';
+<script lang="ts" setup>
+  import { computed, ref, unref, CSSProperties } from 'vue';
 
   import { MenuModeEnum, MenuSplitTyeEnum } from '/@/enums/menuEnum';
 
@@ -39,93 +29,56 @@
 
   import DragBar from './DragBar.vue';
   import LayoutMenu from '/@/layouts/default/menu/index.vue';
-  export default defineComponent({
-    name: 'LayoutSideBar',
-    components: { LayoutMenu, Sider: Layout.Sider, DragBar, LayoutTrigger },
-    setup() {
-      const dragBarRef = ref<ElRef>(null);
-      const sideRef = ref<ElRef>(null);
+  import LayoutTrigger from '/@/layouts/default/trigger/index.vue';
 
-      const {
-        getCollapsed,
-        getMenuWidth,
-        getSplit,
-        getRealWidth,
-        getMenuHidden,
-        getMenuFixed,
-        getIsMixMode,
-        toggleCollapsed,
-      } = useMenuSetting();
+  const dragBarRef = ref<ElRef>(null);
+  const sideRef = ref<ElRef>(null);
 
-      const { prefixCls } = useDesign('layout-sideBar');
+  const { getCollapsed, getMenuWidth, getSplit, getRealWidth, getMenuHidden, getIsMixMode } =
+    useMenuSetting();
 
-      const { getIsMobile } = useAppInject();
+  const { prefixCls } = useDesign('layout-sideBar');
 
-      const { getTriggerAttr, getShowTrigger } = useTrigger(getIsMobile);
+  const { getIsMobile } = useAppInject();
 
-      useDragLine(sideRef, dragBarRef);
+  const { getTriggerAttr } = useTrigger(getIsMobile);
 
-      const { getCollapsedWidth, onBreakpointChange } = useSiderEvent();
+  useDragLine(sideRef, dragBarRef);
 
-      const getMode = computed(() => {
-        return unref(getSplit) ? MenuModeEnum.INLINE : null;
-      });
+  const { getCollapsedWidth, onBreakpointChange } = useSiderEvent();
 
-      const getSplitType = computed(() => {
-        return unref(getSplit) ? MenuSplitTyeEnum.LEFT : MenuSplitTyeEnum.NONE;
-      });
+  const getMode = computed(() => {
+    return unref(getSplit) ? MenuModeEnum.INLINE : null;
+  });
 
-      const showClassSideBarRef = computed(() => {
-        return unref(getSplit) ? !unref(getMenuHidden) : true;
-      });
+  const getSplitType = computed(() => {
+    return unref(getSplit) ? MenuSplitTyeEnum.LEFT : MenuSplitTyeEnum.NONE;
+  });
 
-      const getSiderClass = computed(() => {
-        return [
-          prefixCls,
-          {
-            [`${prefixCls}--fixed`]: unref(getMenuFixed),
-            [`${prefixCls}--mix`]: unref(getIsMixMode) && !unref(getIsMobile),
-          },
-        ];
-      });
+  const showClassSideBarRef = computed(() => {
+    return unref(getSplit) ? !unref(getMenuHidden) : true;
+  });
 
-      const getHiddenDomStyle = computed((): CSSProperties => {
-        const width = `${unref(getRealWidth)}px`;
-        return {
-          width: width,
-          overflow: 'hidden',
-          flex: `0 0 ${width}`,
-          maxWidth: width,
-          minWidth: width,
-          transition: 'all 0.2s',
-        };
-      });
+  const getSiderClass = computed(() => {
+    return [
+      prefixCls,
+      {
+        [`${prefixCls}--fixed`]: true,
+        [`${prefixCls}--mix`]: unref(getIsMixMode) && !unref(getIsMobile),
+      },
+    ];
+  });
 
-      // 在此处使用计算量可能会导致sider异常
-      // andv 更新后，如果trigger插槽可用，则此处代码可废弃
-      const getTrigger = h(LayoutTrigger);
-
-      return {
-        prefixCls,
-        sideRef,
-        dragBarRef,
-        getIsMobile,
-        getHiddenDomStyle,
-        getSiderClass,
-        getTrigger,
-        getTriggerAttr,
-        getCollapsedWidth,
-        getMenuFixed,
-        showClassSideBarRef,
-        getMenuWidth,
-        getCollapsed,
-        onBreakpointChange,
-        getMode,
-        getSplitType,
-        getShowTrigger,
-        toggleCollapsed,
-      };
-    },
+  const getHiddenDomStyle = computed((): CSSProperties => {
+    const width = `${unref(getRealWidth)}px`;
+    return {
+      width: width,
+      overflow: 'hidden',
+      flex: `0 0 ${width}`,
+      maxWidth: width,
+      minWidth: width,
+      transition: 'all 0.2s',
+    };
   });
 </script>
 <style lang="less" scoped>

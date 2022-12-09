@@ -8,6 +8,8 @@ import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
 import { useRootSetting } from '/@/hooks/setting/useRootSetting';
 import { useFullContent } from '/@/hooks/web/useFullContent';
 import { MenuModeEnum } from '/@/enums/menuEnum';
+import { router } from '/@/router';
+import { PageEnum } from '/@/enums/pageEnum';
 
 export function useHeaderSetting() {
   const { getFullContent } = useFullContent();
@@ -48,7 +50,11 @@ export function useHeaderSetting() {
 
   const getShowDoc = computed(() => appStore.getHeaderSetting.showDoc);
 
-  const getShowHeader = computed(() => appStore.getHeaderSetting.show);
+  const getShowHeader = computed(
+    () =>
+      appStore.getHeaderSetting.show &&
+      !router.currentRoute.value.path.startsWith(PageEnum.ARTICLE_PAGE),
+  );
 
   const getFixed = computed(() => appStore.getHeaderSetting.fixed);
 

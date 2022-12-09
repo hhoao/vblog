@@ -19,8 +19,7 @@ export function useMenuSetting() {
   const getShowSidebar = computed(() => {
     return (
       unref(getSplit) ||
-      (unref(getShowMenu) &&
-        unref(getMenuMode) !== MenuModeEnum.HORIZONTAL &&
+      (unref(getMenuMode) !== MenuModeEnum.HORIZONTAL &&
         !unref(fullContent) &&
         router.currentRoute.value.path.startsWith(PageEnum.ARTICLE_PAGE))
     );
@@ -32,9 +31,7 @@ export function useMenuSetting() {
 
   const getMenuMode = computed(() => appStore.getMenuSetting.mode);
 
-  const getMenuFixed = computed(() => appStore.getMenuSetting.fixed);
-
-  const getShowMenu = computed(() => appStore.getMenuSetting.show);
+  const getShowMenu = computed(() => appStore.getMenuSetting.show && getShowSidebar.value);
 
   const getMenuHidden = computed(() => appStore.getMenuSetting.hidden);
 
@@ -55,10 +52,6 @@ export function useMenuSetting() {
   const getMixSideFixed = computed(() => appStore.getMenuSetting.mixSideFixed);
 
   const getTopMenuAlign = computed(() => appStore.getMenuSetting.topMenuAlign);
-
-  const getCloseMixSidebarOnChange = computed(
-    () => appStore.getMenuSetting.closeMixSidebarOnChange,
-  );
 
   const getIsSidebarType = computed(() => unref(getMenuType) === MenuTypeEnum.SIDEBAR);
 
@@ -135,7 +128,6 @@ export function useMenuSetting() {
 
     toggleCollapsed,
 
-    getMenuFixed,
     getRealWidth,
     getMenuType,
     getMenuMode,
@@ -160,7 +152,6 @@ export function useMenuSetting() {
     getShowSidebar,
     getIsMixMode,
     getIsMixSidebar,
-    getCloseMixSidebarOnChange,
     getMixSideTrigger,
     getMixSideFixed,
     mixSideHasChildren,

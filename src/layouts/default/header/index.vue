@@ -3,11 +3,7 @@
     <!-- left start -->
     <div :class="`${prefixCls}-left`">
       <!-- logo -->
-      <AppLogo
-        v-if="getShowHeaderLogo || getIsMobile"
-        :class="`${prefixCls}-logo`"
-        :style="getLogoWidth"
-      />
+      <AppLogo v-if="true" :class="`${prefixCls}-logo`" :style="getLogoWidth" />
       <LayoutTrigger
         v-if="
           getShowContent && getShowHeaderTrigger && !getSplit && !getIsMixSidebar && getShowSidebar

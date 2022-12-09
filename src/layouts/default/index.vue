@@ -4,17 +4,8 @@
     <Layout :class="[layoutClass]">
       <LayoutSideBar v-if="getShowSidebar" />
       <Layout :class="`${prefixCls}-main`">
-        <LayoutMultipleHeader />
-        <LayoutTrigger
-          v-if="
-            getShowContent &&
-            !getShowHeaderTrigger &&
-            !getSplit &&
-            !getIsMixSidebar &&
-            getShowSidebar
-          "
-          :sider="false"
-        />
+        <LayoutMultipleHeader v-if="getShowHeader" />
+        <LayoutTrigger class="fixed z-1" v-if="getShowSidebar" :sider="false" />
         <LayoutContent />
         <LayoutFooter />
       </Layout>
@@ -32,13 +23,12 @@
   import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
-  import LayoutHeader from '/@/layouts/default/header/index.vue';
   import LayoutTrigger from '/@/layouts/default/trigger/index.vue';
   import LayoutFooter from '/@/layouts/default/footer/index.vue';
   import LayoutFeatures from '/@/layouts/default/feature/index.vue';
   import LayoutMultipleHeader from '/@/layouts/default/header/MultipleHeader.vue';
-  const { getShowHeaderTrigger, getSplit, getShowSidebar, getIsMixSidebar } = useMenuSetting();
-  const { getShowContent } = useHeaderSetting();
+  const { getShowSidebar } = useMenuSetting();
+  const { getShowHeader } = useHeaderSetting();
 
   const { prefixCls } = useDesign('default-layout');
 

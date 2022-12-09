@@ -29,7 +29,6 @@
 
   import DragBar from './DragBar.vue';
   import LayoutMenu from '/@/layouts/default/menu/index.vue';
-  import LayoutTrigger from '/@/layouts/default/trigger/index.vue';
 
   const dragBarRef = ref<ElRef>(null);
   const sideRef = ref<ElRef>(null);

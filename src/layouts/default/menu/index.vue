@@ -1,7 +1,7 @@
 <script lang="tsx">
   import type { PropType, CSSProperties } from 'vue';
 
-  import { computed, defineComponent, unref, watch, watchEffect } from 'vue';
+  import { computed, defineComponent, unref } from 'vue';
   import { BasicMenu } from '/@/components/Menu';
   import { SimpleMenu } from '/@/components/SimpleMenu';
   import { AppLogo } from '/@/components/Application';

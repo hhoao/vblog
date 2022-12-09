@@ -16,7 +16,7 @@
   import ArticleCard from './ArticleCard.vue';
   import ArticleComment from '/@/views/article/ArticleComment.vue';
   import ArticleContent from '/@/views/article/ArticleContent.vue';
-  const props = defineProps({
+  defineProps({
     id: String,
   });
 </script>

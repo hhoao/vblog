@@ -60,9 +60,11 @@
     cursor: pointer;
     transition: all 0.2s ease;
     color: @logo-color;
+
     &.collapsed-show-title {
       padding-left: 20px;
     }
+
     &__title {
       font-size: 16px;
       font-weight: 700;

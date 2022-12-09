@@ -1,5 +1,5 @@
 <template>
-  <div v-html="getHtmlData" :class="$props.class" class="markdown-viewer"></div>
+  <div v-dompurify-html="getHtmlData" :class="$props.class" class="markdown-viewer"></div>
 </template>
 
 <script lang="ts" setup>
@@ -7,7 +7,6 @@
   import showdown from 'showdown';
   import showdownToc from 'showdown-toc';
   import hljs from 'highlight.js';
-
   const props = defineProps<{
     tocWrapper: object;
     value?: string | undefined;
@@ -25,7 +24,7 @@
     () => props.value,
     (value) => {
       if (value) {
-        document.querySelectorAll('pre code').forEach((el) => {
+        document.querySelectorAll('pre code').forEach((el: HTMLElement) => {
           hljs.highlightElement(el);
         });
       }
@@ -41,6 +40,7 @@
 <style lang="less">
   .markdown-viewer {
     width: 100%;
+
     & h1,
     h2,
     h3,
@@ -48,9 +48,11 @@
     h5 {
       font-weight: bold;
     }
+
     & code {
       background: @code-bg-color;
     }
+
     & pre code {
       background: @code-block-bg-color;
     }

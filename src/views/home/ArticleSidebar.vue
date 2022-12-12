@@ -1,7 +1,7 @@
 <template>
-  <div class="sticky -top-200px">
+  <div class="sticky -top-800px">
     <div class="overflow-hidden">
-      <a-card :loading="loading" title="热门文章">
+      <a-card :loading="hotArticleLoading" title="热门文章">
         <a-list :data-source="hotArticleListData">
           <template #renderItem="{ item }">
             <a-list-item>
@@ -17,23 +17,21 @@
           </template>
         </a-list>
       </a-card>
-      <a-card :loading="loading" title="标签列表">
+      <a-card :loading="tagLoading" title="标签列表">
         <a-button v-for="tag of tagList" :key="tag.id" size="small">
           {{ tag.label }}
         </a-button>
       </a-card>
-      <a-card :loading="loading" title="最新留言">
+      <a-card :loading="commentLoading" title="最新留言">
         <a-list :data-source="newlyCommentListData">
           <template #renderItem="{ item }">
-            <a-list-item class="text-base display-inline overflow-hidden overflow-ellipsis">
-              <a-list-item-meta>
-                <template #datetime>
-                  <a-tooltip :title="item.datetime.format('YYYY-MM-DD HH:mm:ss')">
-                    <span>{{ item.lastModification }}</span>
-                  </a-tooltip>
-                </template>
+            <a-list-item>
+              <a-list-item-meta class="text-base display-inline overflow-hidden overflow-ellipsis">
                 <template #title>
-                  <a href="" class="truncate">{{ item.content }}</a>
+                  <p class="truncate m-0">{{ item.lastModification }}</p>
+                  <a href="" class="truncate text-base overflow-hidden overflow-ellipsis">
+                    {{ item.content }}</a
+                  >
                 </template>
                 <template #avatar>
                   <a-avatar src="" />
@@ -43,7 +41,7 @@
           </template>
         </a-list>
       </a-card>
-      <a-card :loading="loading" title="关于">about me</a-card>
+      <a-card :loading="aboutMeLoading" title="关于">about me</a-card>
     </div>
   </div>
 </template>
@@ -57,7 +55,11 @@
   import { getArticleCommentListApi } from '/@/api/comment';
   import { ArticleCommentModel } from '/@/api/models/ArticleCommentModel';
 
-  const loading = ref(false);
+  const hotArticleLoading = ref(true);
+  const tagLoading = ref(true);
+  const commentLoading = ref(true);
+  const aboutMeLoading = ref(false);
+
   const tagList = ref<TagModel[]>([]);
   const hotArticleListData = ref<BaseArticleModel[]>([]);
   const newlyCommentListData = ref<ArticleCommentModel[]>([]);
@@ -68,6 +70,7 @@
         tagList.value.push(tag);
       }
     });
+    tagLoading.value = false;
   }
 
   function getHotArticlePageList() {
@@ -75,24 +78,26 @@
       for (let article of res.list) {
         hotArticleListData.value.push(article);
       }
-      loading.value = false;
+      hotArticleLoading.value = false;
     });
   }
+
   function getNewlyComment() {
     getArticleCommentListApi().then((res) => {
       for (let comment of res.list) {
         newlyCommentListData.value.push(comment);
       }
     });
-    loading.value = false;
+    commentLoading.value = false;
   }
+
   onMounted(() => {
     getTagList();
     getHotArticlePageList();
     getNewlyComment();
   });
 </script>
-<style scoped>
+<style scoped lang="less">
   .ant-card {
     margin-bottom: 10px;
   }

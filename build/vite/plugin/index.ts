@@ -16,7 +16,7 @@ import Components from 'unplugin-vue-components/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 // import fullImportPlugin from './fullImportComponent';
 import windiCSS from 'vite-plugin-windicss';
-import {configMockPlugin} from "./mock";
+import { configMockPlugin } from './mock';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const {
@@ -63,10 +63,10 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   // rollup-plugin-visualizer
   vitePlugins.push(configVisualizerConfig());
   vitePlugins.push(
-      Components({
-        resolvers: [AntDesignVueResolver()],
-      }),
-    );
+    Components({
+      resolvers: [AntDesignVueResolver()],
+    }),
+  );
 
   // The following plugins only work in the production environment
   if (isBuild) {
@@ -80,7 +80,6 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
 
     // vite-plugin-pwa
     vitePlugins.push(configPwaConfig(viteEnv));
-
   } else {
     // vitePlugins.push(fullImportPlugin());
   }

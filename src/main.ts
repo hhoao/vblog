@@ -14,7 +14,6 @@ import { setupRouterGuard } from '/@/router/guard';
 import { setupStore } from '/@/store';
 import { setupI18n } from '/@/locales/setupI18n';
 import { setupGlobDirectives } from '/@/directives';
-import VueDOMPurifyHTML from 'vue-dompurify-html';
 
 async function bootstrap() {
   const app = createApp(App);
@@ -22,8 +21,6 @@ async function bootstrap() {
   // 配置 store
   setupStore(app);
 
-  // prevent XSS
-  app.use(VueDOMPurifyHTML);
   // Initialize internal system configuration
   // 初始化内部系统配置
   initAppConfigStore();

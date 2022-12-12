@@ -1,5 +1,5 @@
 <template>
-  <div v-dompurify-html="getHtmlData" :class="$props.class" class="markdown-viewer"></div>
+  <div v-html="getHtmlData" :class="$props.class" class="markdown-viewer"></div>
 </template>
 
 <script lang="ts" setup>
@@ -30,6 +30,7 @@
       }
     },
     {
+      immediate: true,
       flush: 'post',
     },
   );

@@ -1,11 +1,12 @@
-name: public-docker-image
+name: Deploy
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
 
 jobs:
-  push_to_registry:
+  push_to_docker_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
@@ -31,3 +32,13 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  deploy:
+    - name: ls -a via ssh
+      uses: fifsky/ssh-action@master
+      with:
+        command: |
+          cd /projects
+
+        host: ${{ secrets.SSH_HOST }}
+        user: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY}}

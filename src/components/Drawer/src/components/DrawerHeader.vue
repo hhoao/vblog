@@ -4,9 +4,9 @@
     {{ !$slots.title ? title : '' }}
   </BasicTitle>
 
-  <div :class="[prefixCls, `${prefixCls}--detail`]" v-else>
+  <div v-else :class="[prefixCls, `${prefixCls}--detail`]">
     <span :class="`${prefixCls}__twrap`">
-      <span @click="handleClose" v-if="showDetailBack">
+      <span v-if="showDetailBack" @click="handleClose">
         <ArrowLeftOutlined :class="`${prefixCls}__back`" />
       </span>
       <span v-if="title">{{ title }}</span>

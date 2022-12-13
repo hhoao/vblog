@@ -3,7 +3,7 @@
   <SubMenu
     v-if="menuHasChildren(item) && getShowMenu"
     :key="`submenu-${item.path}`"
-    popupClassName="app-top-menu-popup"
+    popup-class-name="app-top-menu-popup"
   >
     <template #title>
       <MenuItemContent v-bind="$props" :item="item" />

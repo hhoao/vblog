@@ -5,7 +5,7 @@
       <LayoutSideBar v-if="getShowSidebar" />
       <Layout :class="`${prefixCls}-main`">
         <LayoutMultipleHeader v-if="getShowHeader" />
-        <LayoutTrigger class="fixed z-1" v-if="getShowSidebar" :sider="false" />
+        <LayoutTrigger v-if="getShowSidebar" class="fixed z-1" :sider="false" />
         <LayoutContent />
         <LayoutFooter />
       </Layout>

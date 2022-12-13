@@ -14,6 +14,7 @@ import { setupRouterGuard } from '/@/router/guard';
 import { setupStore } from '/@/store';
 import { setupI18n } from '/@/locales/setupI18n';
 import { setupGlobDirectives } from '/@/directives';
+import VueDOMPurifyHTML from 'vue-dompurify-html';
 
 async function bootstrap() {
   const app = createApp(App);
@@ -25,6 +26,7 @@ async function bootstrap() {
   // 初始化内部系统配置
   initAppConfigStore();
 
+  app.use(VueDOMPurifyHTML);
   // Multilingual configuration
   // 多语言配置
   // Asynchronous case: language files may be obtained from the server side

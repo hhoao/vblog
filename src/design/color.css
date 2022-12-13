@@ -8,14 +8,15 @@ html {
   --header-bottom-border-color: #fff;
   --border-color: #fff;
   /* sider */
-  --sider-bg-color: #cbcbcb;
-  --sider-bg-active-color: #ff0000;
+  --sider-bg-color: #fff;
+  --sider-bg-active-color: #fff;
   --sider-color: #ebebeb;
+  --sider-border-color: #dbdbdb;
   --sider-active-color: #ff0000;
   /* menu */
   --menu-color: #3f3f3f;
-  --menu-bg-color: #ebebeb;
-  --menu-hover-color: #909090;
+  --menu-bg-color: #f1f2fa;
+  --menu-hover-color: #7456fb;
   /* content */
   --content-bg: #fff;
   /* base */

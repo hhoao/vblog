@@ -1,9 +1,9 @@
 <template>
   <section
+    v-show="loading"
     class="full-loading"
     :class="{ absolute }"
     :style="[background ? `background-color: ${background}` : '']"
-    v-show="loading"
   >
     <Spin v-bind="$attrs" :tip="tip" :size="size" :spinning="loading" />
   </section>

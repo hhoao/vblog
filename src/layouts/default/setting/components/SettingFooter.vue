@@ -1,6 +1,6 @@
 <template>
   <div :class="prefixCls">
-    <a-button color="warning" block @click="handleResetSetting" class="my-3">
+    <a-button color="warning" block class="my-3" @click="handleResetSetting">
       <RedoOutlined class="mr-2" />
       {{ t('common.resetText') }}
     </a-button>

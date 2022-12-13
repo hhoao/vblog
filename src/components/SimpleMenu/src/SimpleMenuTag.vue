@@ -1,5 +1,5 @@
 <template>
-  <span :class="getTagClass" v-if="getShowTag">{{ getContent }}</span>
+  <span v-if="getShowTag" :class="getTagClass">{{ getContent }}</span>
 </template>
 <script lang="ts">
   import type { Menu } from '/@/router/types';

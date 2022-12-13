@@ -2,7 +2,7 @@
   <div :class="[prefixCls]">
     <a-breadcrumb :routes="routes">
       <template #itemRender="{ route }">
-        <Icon :icon="getIcon(route)" v-if="getShowBreadCrumbIcon && getIcon(route)" />
+        <Icon v-if="getShowBreadCrumbIcon && getIcon(route)" :icon="getIcon(route)" />
       </template>
     </a-breadcrumb>
   </div>

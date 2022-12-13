@@ -4,10 +4,10 @@
     <Select
       v-bind="getBindValue"
       :class="`${prefixCls}-select`"
-      @change="handleChange"
       :disabled="disabled"
       size="small"
       :options="options"
+      @change="handleChange"
     />
   </div>
 </template>

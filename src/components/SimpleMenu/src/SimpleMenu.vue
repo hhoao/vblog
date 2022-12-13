@@ -1,17 +1,17 @@
 <template>
   <Menu
     v-bind="getBindValues"
-    :activeName="activeName"
-    :openNames="getOpenKeys"
+    :active-name="activeName"
+    :open-names="getOpenKeys"
     :class="prefixCls"
-    :activeSubMenuNames="activeSubMenuNames"
+    :active-sub-menu-names="activeSubMenuNames"
     @select="handleSelect"
   >
     <template v-for="item in items" :key="item.path">
       <SimpleSubMenu
         :item="item"
         :parent="true"
-        :collapsedShowTitle="collapsedShowTitle"
+        :collapsed-show-title="collapsedShowTitle"
         :collapse="collapse"
       />
     </template>

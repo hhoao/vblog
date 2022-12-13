@@ -3,10 +3,10 @@
     <span> {{ title }}</span>
     <Switch
       v-bind="getBindValue"
-      @change="handleChange"
       :disabled="disabled"
-      :checkedChildren="t('layout.setting.on')"
-      :unCheckedChildren="t('layout.setting.off')"
+      :checked-children="t('layout.setting.on')"
+      :un-checked-children="t('layout.setting.off')"
+      @change="handleChange"
     />
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!getIsMobile" :style="getHiddenDomStyle" v-show="showClassSideBarRef"></div>
+  <div v-if="!getIsMobile" v-show="showClassSideBarRef" :style="getHiddenDomStyle"></div>
   <a-layout-sider
     v-show="showClassSideBarRef"
     ref="sideRef"
@@ -8,12 +8,12 @@
     :class="getSiderClass"
     :width="getMenuWidth"
     :collapsed="getCollapsed"
-    :collapsedWidth="getCollapsedWidth"
-    @breakpoint="onBreakpointChange"
+    :collapsed-width="getCollapsedWidth"
     :trigger="null"
     v-bind="getTriggerAttr"
+    @breakpoint="onBreakpointChange"
   >
-    <LayoutMenu :menuMode="getMode" :splitType="getSplitType" />
+    <LayoutMenu :menu-mode="getMode" :split-type="getSplitType" />
     <DragBar ref="dragBarRef" />
   </a-layout-sider>
 </template>
@@ -84,8 +84,15 @@
   @prefix-cls: ~'@{namespace}-layout-sideBar';
 
   .@{prefix-cls} {
+    //border-right: 2px @sider-border-color solid;
+    --tw-shadow: 0 1px 3px 0 rgb(0 0 0/0.1), 0 1px 2px -1px rgb(0 0 0/0.1);
+    --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
     z-index: @layout-sider-fixed-z-index;
     background-color: @sider-bg-color !important;
+    -webkit-box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+      var(--tw-shadow);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+      var(--tw-shadow);
 
     &--fixed {
       position: fixed;

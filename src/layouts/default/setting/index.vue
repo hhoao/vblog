@@ -1,5 +1,5 @@
 <template>
-  <div @click="openDrawer(true)" :class="[prefixCls, `${prefixCls}`]">
+  <div :class="[prefixCls, `${prefixCls}`]" @click="openDrawer(true)">
     <Icon icon="ion:settings-outline" role="img" />
     <SettingDrawer @register="register" />
   </div>

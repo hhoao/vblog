@@ -6,10 +6,10 @@
   <Dropdown
     placement="bottom"
     :trigger="['click']"
-    :dropMenuList="localeList"
-    :selectedKeys="selectedKeys"
+    :drop-menu-list="localeList"
+    :selected-keys="selectedKeys"
+    overlay-class-name="app-locale-picker-overlay"
     @menu-event="handleMenuEvent"
-    overlayClassName="app-locale-picker-overlay"
   >
     <span class="cursor-pointer flex items-center">
       <Icon icon="ion:language" role="img" />

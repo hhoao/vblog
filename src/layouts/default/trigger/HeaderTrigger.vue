@@ -19,3 +19,6 @@
     },
   });
 </script>
+<style lang="less" scoped>
+  @prefix-cls: ~'@{namespace}-layout-header-trigger';
+</style>

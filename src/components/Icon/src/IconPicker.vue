@@ -1,24 +1,24 @@
 <template>
   <a-input
+    v-model:value="currentSelect"
     disabled
     :style="{ width }"
     :placeholder="t('component.icon.placeholder')"
     :class="prefixCls"
-    v-model:value="currentSelect"
   >
     <template #addonAfter>
       <a-popover
+        v-model="visible"
         placement="bottomLeft"
         trigger="click"
-        v-model="visible"
-        :overlayClassName="`${prefixCls}-popover`"
+        :overlay-class-name="`${prefixCls}-popover`"
       >
         <template #title>
           <div class="flex justify-between">
             <a-input
               :placeholder="t('component.icon.search')"
+              allow-clear
               @change="debounceHandleSearchChange"
-              allowClear
             />
           </div>
         </template>
@@ -32,20 +32,20 @@
                   :key="icon"
                   :class="currentSelect === icon ? 'border border-primary' : ''"
                   class="p-2 w-1/8 cursor-pointer mr-1 mt-1 flex justify-center items-center border border-solid hover:border-primary"
-                  @click="handleClick(icon)"
                   :title="icon"
+                  @click="handleClick(icon)"
                 >
                   <!-- <Icon :icon="icon" :prefix="prefix" /> -->
                   <SvgIcon v-if="isSvgMode" :name="icon" />
-                  <Icon :icon="icon" v-else />
+                  <Icon v-else :icon="icon" />
                 </li>
               </ul>
             </ScrollContainer>
-            <div class="flex py-2 items-center justify-center" v-if="getTotal >= pageSize">
+            <div v-if="getTotal >= pageSize" class="flex py-2 items-center justify-center">
               <a-pagination
-                showLessItems
+                show-less-items
                 size="small"
-                :pageSize="pageSize"
+                :page-size="pageSize"
                 :total="getTotal"
                 @change="handlePageChange"
               />
@@ -56,10 +56,10 @@
           </template>
         </template>
 
-        <span class="cursor-pointer px-2 py-1 flex items-center" v-if="isSvgMode && currentSelect">
+        <span v-if="isSvgMode && currentSelect" class="cursor-pointer px-2 py-1 flex items-center">
           <SvgIcon :name="currentSelect" />
         </span>
-        <Icon :icon="currentSelect || 'ion:apps-outline'" class="cursor-pointer px-2 py-1" v-else />
+        <Icon v-else :icon="currentSelect || 'ion:apps-outline'" class="cursor-pointer px-2 py-1" />
       </a-popover>
     </template>
   </a-input>

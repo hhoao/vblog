@@ -1,5 +1,5 @@
 <template>
-  <Tooltip :title="getTitle" placement="bottom" :mouseEnterDelay="0.5">
+  <Tooltip :title="getTitle" placement="bottom" :mouse-enter-delay="0.5">
     <span @click="toggle">
       <FullscreenOutlined v-if="!isFullscreen" />
       <FullscreenExitOutlined v-else />

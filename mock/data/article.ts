@@ -1,6 +1,63 @@
 import { BaseArticleModel, DetailArticleModel } from '/@/api/models/DetailArticleModel';
 import * as Mock from 'mockjs';
 
+function getMarkdownContent() {
+  return (
+    '# MarkdownContent Title1\n' +
+    '\n' +
+    'Describe Markdown Content\n' +
+    '\n' +
+    '---\n' +
+    '\n' +
+    "Let's run a Java programe.\n" +
+    '\n' +
+    '**Write it !**\n' +
+    '\n' +
+    '> HellWorld.java\n' +
+    '\n' +
+    '```java\n' +
+    'public class HelloWorld\n' +
+    '{\n' +
+    '    public static void main(String[] args){\n' +
+    '        System.out.println("HelloWorld")\n' +
+    '    }\n' +
+    '}\n' +
+    '```\n' +
+    '\n' +
+    '**Complie `HellWorld.java`**\n' +
+    '\n' +
+    '```bash\n' +
+    'javac HelloWorld.java\n' +
+    '```\n' +
+    '\n' +
+    '**Run `HelloWorld`**\n' +
+    '\n' +
+    '```bash\n' +
+    'java HelloWorld\n' +
+    '```\n' +
+    '\n' +
+    '## MarkDownContent Title2\n' +
+    '\n' +
+    'Describe a list\n' +
+    '\n' +
+    '- Item1\n' +
+    '  \n' +
+    '- Item2\n' +
+    '  \n' +
+    '  - Item3\n' +
+    '    \n' +
+    '  - Item4\n' +
+    '    \n' +
+    '\n' +
+    '### MarkDownContent Title3\n' +
+    '\n' +
+    'Describe Links\n' +
+    '\n' +
+    '[This is a Link](Link)\n' +
+    '\n' +
+    '[This is a anchor](#MarkDownContent Title1)'
+  );
+}
 export const getDetailsArticle = (): DetailArticleModel => {
   return {
     id: Mock.mock('@id'),
@@ -14,7 +71,7 @@ export const getDetailsArticle = (): DetailArticleModel => {
     lastModification: '@date("yyyy-MM-dd")',
     readingAmount: Mock.mock('@integer'),
     visible: true,
-    content: '@cparagraph' + '@cparagraph' + '@cparagraph',
+    content: getMarkdownContent(),
   };
 };
 export const getSimplerArticle = (): BaseArticleModel => {

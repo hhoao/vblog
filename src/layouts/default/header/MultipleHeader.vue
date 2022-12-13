@@ -1,5 +1,5 @@
 <template>
-  <div :style="getPlaceholderDomStyle" v-if="getIsShowPlaceholderDom"></div>
+  <div v-if="getIsShowPlaceholderDom" :style="getPlaceholderDomStyle"></div>
   <div :style="getWrapStyle" :class="getClass">
     <LayoutHeader v-if="getShowInsetHeaderRef" />
   </div>

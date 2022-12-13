@@ -1,18 +1,18 @@
 <template>
-  <div :class="prefixCls" :style="getStyle" v-if="showFooter || $slots.footer">
+  <div v-if="showFooter || $slots.footer" :class="prefixCls" :style="getStyle">
     <template v-if="!$slots.footer">
       <slot name="insertFooter"></slot>
-      <a-button v-bind="cancelButtonProps" @click="handleClose" class="mr-2" v-if="showCancelBtn">
+      <a-button v-if="showCancelBtn" v-bind="cancelButtonProps" class="mr-2" @click="handleClose">
         {{ cancelText }}
       </a-button>
       <slot name="centerFooter"></slot>
       <a-button
+        v-if="showOkBtn"
         :type="okType"
-        @click="handleOk"
         v-bind="okButtonProps"
         class="mr-2"
         :loading="confirmLoading"
-        v-if="showOkBtn"
+        @click="handleOk"
       >
         {{ okText }}
       </a-button>

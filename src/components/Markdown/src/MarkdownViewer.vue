@@ -1,5 +1,5 @@
 <template>
-  <div v-html="getHtmlData" :class="$props.class" class="markdown-viewer"></div>
+  <div :class="$props.class" class="markdown-viewer" v-html="getHtmlData"></div>
 </template>
 
 <script lang="ts" setup>
@@ -41,6 +41,10 @@
 <style lang="less">
   .markdown-viewer {
     width: 100%;
+
+    h1 {
+      font-size: 1.83em;
+    }
 
     & h1,
     h2,

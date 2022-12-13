@@ -1,5 +1,5 @@
 <template>
-  <div class="m-20px" ref="container">
+  <div ref="container" class="m-20px">
     <a-row v-if="!getIsMobile" :gutter="20">
       <a-col :span="4" />
       <a-col :span="12">

@@ -15,13 +15,13 @@
     <!-- left end -->
     <!-- action  -->
     <div :class="`${prefixCls}-action`">
-      <AppSearch :class="`${prefixCls}-action__item `" v-if="getShowSearch" />
+      <AppSearch v-if="getShowSearch" :class="`${prefixCls}-action__item `" />
       <FullScreen v-if="getShowFullScreen" :class="`${prefixCls}-action__item fullscreen-item`" />
 
       <AppLocalePicker
         v-if="getShowLocalePicker"
         :reload="true"
-        :showText="false"
+        :show-text="false"
         :class="`${prefixCls}-action__item`"
       />
       <SettingDrawer v-if="getShowSetting" :class="`${prefixCls}-action__item`" />

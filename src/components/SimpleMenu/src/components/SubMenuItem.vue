@@ -1,7 +1,7 @@
 <template>
   <li :class="getClass">
     <template v-if="!getCollapse">
-      <div :class="`${prefixCls}-submenu-title`" @click.stop="handleClick" :style="getItemStyle">
+      <div :class="`${prefixCls}-submenu-title`" :style="getItemStyle" @click.stop="handleClick">
         <slot name="title"></slot>
         <Icon
           icon="eva:arrow-ios-downward-outline"
@@ -10,20 +10,20 @@
         />
       </div>
       <CollapseTransition>
-        <ul :class="prefixCls" v-show="opened">
+        <ul v-show="opened" :class="prefixCls">
           <slot></slot>
         </ul>
       </CollapseTransition>
     </template>
 
     <Popover
-      placement="right"
-      :overlayClassName="`${prefixCls}-menu-popover`"
       v-else
+      placement="right"
+      :overlay-class-name="`${prefixCls}-menu-popover`"
       :visible="getIsOpend"
-      @visible-change="handleVisibleChange"
-      :overlayStyle="getOverlayStyle"
+      :overlay-style="getOverlayStyle"
       :align="{ offset: [0, 0] }"
+      @visible-change="handleVisibleChange"
     >
       <div :class="getSubClass" v-bind="getEvents(false)">
         <div

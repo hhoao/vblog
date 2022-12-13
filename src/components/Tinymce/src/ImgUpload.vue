@@ -3,10 +3,10 @@
     <Upload
       name="file"
       multiple
-      @change="handleChange"
       :action="uploadUrl"
-      :showUploadList="false"
+      :show-upload-list="false"
       accept=".jpg,.jpeg,.gif,.png,.webp"
+      @change="handleChange"
     >
       <a-button type="primary" v-bind="{ ...getButtonProps }">
         {{ t('component.upload.imgUpload') }}

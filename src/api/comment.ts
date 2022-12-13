@@ -1,6 +1,10 @@
 import { defHttp } from '/@/utils/http/axios';
 import { BasicFetchResult } from '/@/api/models/BaseModel';
-import { ArticleCommentModel } from '/@/api/models/ArticleCommentModel';
+import {
+  ArticleCommentModel,
+  ArticleCommentPageModelParams,
+} from '/@/api/models/ArticleCommentModel';
 
-export const getArticleCommentListApi = (params?: ArticleCommentModel) =>
-  defHttp.get<BasicFetchResult<ArticleCommentModel>>({ url: '/comments', params });
+export const getArticleCommentListApi = (
+  params: ArticleCommentPageModelParams = { pageNum: 1, pageSize: 5 },
+) => defHttp.get<BasicFetchResult<ArticleCommentModel>>({ url: '/comments', params });

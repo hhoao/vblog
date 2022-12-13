@@ -1,9 +1,9 @@
-rootProject.name = 'blog'
+rootProject.name = 'vblog'
 
-include  'blog-common'
-include 'blog-security'
-include 'blog-portal'
-include 'blog-admin'
-include 'blog-search'
-include 'blog-mgb'
+include  'vblog-common'
+include 'vblog-security'
+include 'vblog-portal'
+include 'vblog-admin'
+include 'vblog-search'
+include 'vblog-mgb'
 

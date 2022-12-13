@@ -2,42 +2,6 @@ DROP DATABASE IF EXISTS blog;
 CREATE DATABASE IF NOT EXISTS blog;
 USE blog;
 
-# 菜单表
-DROP TABLE IF EXISTS `ums_menu`;
-CREATE TABLE `ums_menu`
-(
-    `id`          BIGINT AUTO_INCREMENT,
-    `parent_id`   BIGINT       NULL COMMENT '父级id',
-    `create_time` TIMESTAMP    DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `title`       VARCHAR(100) NOT NULL COMMENT '菜单名称',
-    `level`       TINYINT      DEFAULT NULL COMMENT '菜单级数',
-    `sort`        TINYINT      DEFAULT NULL COMMENT '菜单排序',
-    `name`        VARCHAR(100) NOT NULL COMMENT '前端名称',
-    `icon`        VARCHAR(200) DEFAULT NULL COMMENT '前端图标',
-    `hidden`      BOOLEAN      DEFAULT FALSE COMMENT '前端隐藏',
-    PRIMARY KEY (`id`),
-    INDEX (`name`)
-) ENGINE = INNODB
-  AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8 COMMENT ='后台菜单表';
-INSERT INTO `ums_menu`
-VALUES ('1', 0, '2020-02-02 14:51:50', '首页', '0', '0', 'home', 'home', FALSE);
-INSERT INTO `ums_menu`
-VALUES ('2', 7, '2020-02-07 16:29:51', '管理员列表', '1', '0', 'admin', 'ums-admin', FALSE);
-INSERT INTO `ums_menu`
-VALUES ('3', 7, '2020-02-07 16:30:13', '角色列表', '1', '0', 'role', 'ums-role', FALSE);
-INSERT INTO `ums_menu`
-VALUES ('4', 7, '2020-02-07 16:30:53', '菜单列表', '1', '0', 'menu', 'ums-menu', FALSE);
-INSERT INTO `ums_menu`
-VALUES ('5', 7, '2020-02-07 16:31:13', '资源列表', '1', '0', 'resource', 'ums-resource', FALSE);
-INSERT INTO `ums_menu`
-VALUES ('6', 0, '2020-02-07 16:31:13', '营销', '0', '0', 'sms', 'sms', FALSE);
-INSERT INTO `ums_menu`
-VALUES ('7', 12, '2020-02-07 16:31:13', '反馈列表', '1', '0', 'feedback', 'sms-feedback', FALSE);
-INSERT INTO `ums_menu`
-VALUES ('8', 0, '2020-02-07 16:31:13', '其他', '1', '0', 'oms', 'oms', FALSE);
-INSERT INTO `ums_menu`
-VALUES ('9', 20, '2020-02-07 16:31:13', '文件列表', '1', '0', 'file', 'file', FALSE);
 
 -- 资源表
 DROP TABLE IF EXISTS ums_resource;
@@ -87,37 +51,6 @@ CREATE TABLE `ums_role`
 INSERT INTO ums_role(id, name)
 VALUES (1, 'ROLE_ADMIN');
 
-
--- 角色菜单关系表
-DROP TABLE IF EXISTS ums_role_menu_relation;
-CREATE TABLE IF NOT EXISTS ums_role_menu_relation
-(
-    id      BIGINT AUTO_INCREMENT PRIMARY KEY,
-    role_id BIGINT NOT NULL,
-    menu_id BIGINT NOT NULL,
-    UNIQUE (menu_id, role_id),
-    FOREIGN KEY (menu_id) REFERENCES ums_menu (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (`role_id`) REFERENCES ums_role (`id`) ON UPDATE CASCADE ON DELETE CASCADE
-) COMMENT '资源角色关系表';
-INSERT INTO ums_role_menu_relation(role_id, menu_id)
-VALUES ('1', '1');
-INSERT INTO ums_role_menu_relation(role_id, menu_id)
-VALUES ('1', '2');
-INSERT INTO ums_role_menu_relation(role_id, menu_id)
-VALUES ('1', '3');
-INSERT INTO ums_role_menu_relation(role_id, menu_id)
-VALUES ('1', '4');
-INSERT INTO ums_role_menu_relation(role_id, menu_id)
-VALUES ('1', '5');
-INSERT INTO ums_role_menu_relation(role_id, menu_id)
-VALUES ('1', '6');
-INSERT INTO ums_role_menu_relation(role_id, menu_id)
-VALUES ('1', '7');
-INSERT INTO ums_role_menu_relation(role_id, menu_id)
-VALUES ('1', '8');
-INSERT INTO ums_role_menu_relation(role_id, menu_id)
-VALUES ('1', '9');
-
 -- 资源角色关系表
 DROP TABLE IF EXISTS ums_role_resource_relation;
 CREATE TABLE IF NOT EXISTS ums_role_resource_relation
@@ -126,7 +59,7 @@ CREATE TABLE IF NOT EXISTS ums_role_resource_relation
     role_id     BIGINT NOT NULL,
     resource_id BIGINT NOT NULL,
     UNIQUE (resource_id, role_id),
-    FOREIGN KEY (resource_id) REFERENCES ums_resource (`id`) ON UPDATE CASCADE ON DELETE CASCADE ,
+    FOREIGN KEY (resource_id) REFERENCES ums_resource (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (`role_id`) REFERENCES ums_role (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) AUTO_INCREMENT = 1 COMMENT '资源角色关系表';
 INSERT INTO ums_role_resource_relation(role_id, resource_id)
@@ -150,15 +83,16 @@ create table IF NOT EXISTS ums_account
     `status`      BOOLEAN      DEFAULT TRUE COMMENT '账号启用状态: FALSE->禁言， TRUE->启用',
     `create_time` TIMESTAMP    DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `latest_time` TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后登录时间',
-    `icon`        VARCHAR(512) DEFAULT NULL COMMENT '头像',
+    `avatar`        VARCHAR(512) DEFAULT NULL COMMENT '头像',
     `role_id`     BIGINT       DEFAULT 2 NOT NULL COMMENT '角色id',
     `title`       VARCHAR(64)  DEFAULT NULL COMMENT '头衔',
     `introduce`   VARCHAR(255) DEFAULT NULL COMMENT '介绍',
-    `unreadCount` INT          DEFAULT 0 COMMENT '未阅读消息数',
-    `notifyCount` INT          DEFAULT 0 COMMENT '消息数',
+    `unread_count` INT          DEFAULT 0 COMMENT '未阅读消息数',
+    `notify_count` INT          DEFAULT 0 COMMENT '消息数',
     `country`     VARCHAR(16)  DEFAULT NULL COMMENT '国家',
     `address`     VARCHAR(64)  DEFAULT NULL COMMENT '地址',
     `phone`       VARCHAR(32)  DEFAULT NULL COMMENT '电话号码',
+    `email`       VARCHAR(64)  DEFAULT NULL COMMENT '电子邮箱',
     `signature`   VARCHAR(255) DEFAULT NULL COMMENT '个性签名',
     PRIMARY KEY (`id`),
     FOREIGN KEY (`role_id`) REFERENCES `ums_role` (`id`),
@@ -171,7 +105,7 @@ VALUES ('1', '$2a$10$xDpwrinpPCImweyjDMl.0.xIo9hbOXYu1xOOenyERJndMzWnmonqG', 'te
 INSERT INTO ums_account(`id`, password, username, status, role_id)
 VALUES ('2', '$2a$10$xDpwrinpPCImweyjDMl.0.xIo9hbOXYu1xOOenyERJndMzWnmonqG', 'admin', TRUE, 1);
 
-#文件表
+#用户标签
 DROP TABLE IF EXISTS `ums_tag`;
 CREATE TABLE `ums_tag`
 (
@@ -181,8 +115,10 @@ CREATE TABLE `ums_tag`
 ) ENGINE = INNODB
   AUTO_INCREMENT = 1
     COMMENT = '标签表';
-INSERT INTO `ums_tag` VALUES ('1', '辣妹子');
-INSERT INTO `ums_tag` VALUES ('2', 'Geek');
+INSERT INTO `ums_tag`
+VALUES ('1', '辣妹子');
+INSERT INTO `ums_tag`
+VALUES ('2', 'Geek');
 
 
 
@@ -199,7 +135,8 @@ CREATE TABLE `ums_account_tag_relation`
 ) ENGINE = INNODB
   AUTO_INCREMENT = 1
     COMMENT = '账户标签关系表';
-INSERT INTO `ums_account_tag_relation` VALUES(1, 1, 1);
+INSERT INTO `ums_account_tag_relation`
+VALUES (1, 1, 1);
 
 
 #文件表
@@ -208,13 +145,13 @@ CREATE TABLE `oms_file`
 (
     `id`          BIGINT        NOT NULL AUTO_INCREMENT COMMENT '文件id',
     `name`        VARCHAR(255)  NOT NULL COMMENT '文件名称',
-    `type`        VARCHAR(255)  NULL     DEFAULT NULL COMMENT '文件类型',
-    `size`        DOUBLE(32, 2) NULL     DEFAULT NULL COMMENT '文件大小（KB）',
+    `type`        VARCHAR(255)  DEFAULT NULL COMMENT '文件类型',
+    `size`        DOUBLE(32, 2) DEFAULT NULL COMMENT '文件大小（KB）',
     `url`         VARCHAR(255)  NOT NULL COMMENT '下载链接',
     `uuid`        VARCHAR(255)  NOT NULL COMMENT '文件uuid',
-    `enable`      BOOLEAN       NOT NULL DEFAULT TRUE COMMENT '链接是否可用（1：是 0：否）',
-    `create_time` TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_time` TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `enable`      BOOLEAN       DEFAULT TRUE COMMENT '链接是否可用（1：是 0：否）',
+    `create_time` TIMESTAMP     NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` TIMESTAMP     NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `name` (`name`) USING BTREE
 ) ENGINE = INNODB
@@ -244,6 +181,21 @@ CREATE TABLE `ams_article`
 ) ENGINE = INNODB
   AUTO_INCREMENT = 1
     COMMENT = '文章';
+SELECT * FROM ams_article;
+
+DROP TABLE IF EXISTS `ams_tag`;
+CREATE TABLE `ams_tag`
+(
+    `id`    BIGINT       NOT NULL AUTO_INCREMENT,
+    `label` VARCHAR(255) NOT NULL COMMENT '标签',
+    PRIMARY KEY (`id`)
+) ENGINE = INNODB
+  AUTO_INCREMENT = 37
+    COMMENT = '标签表';
+INSERT INTO `ams_tag`
+VALUES ('1', 'Java');
+INSERT INTO `ams_tag`
+VALUES ('2', '前端');
 
 # 目录表
 DROP TABLE IF EXISTS `ams_catalog`;
@@ -270,7 +222,6 @@ INSERT INTO `ams_catalog`(id, name, description, level, parent_id, sort, enable)
 VALUES (2, '科技1', '科技', 1, NULL, NULL, TRUE);
 INSERT INTO `ams_catalog`(id, name, description, level, parent_id, sort, enable)
 VALUES (3, '科技2', '科技', 1, NULL, NULL, TRUE);
-
 
 
 # 文章目录关系表
@@ -301,7 +252,7 @@ CREATE TABLE `ams_comment`
     `reference`   VARCHAR(255) NOT NULL COMMENT '引用',
     PRIMARY KEY (`id`),
     INDEX (`nickname`),
-    FOREIGN KEY (`article_id`) REFERENCES `ams_article` (`id`) ON UPDATE CASCADE ON DELETE CASCADE ,
+    FOREIGN KEY (`article_id`) REFERENCES `ams_article` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (`reference`) REFERENCES ams_comment (`nickname`)
 ) ENGINE = INNODB
   AUTO_INCREMENT = 1

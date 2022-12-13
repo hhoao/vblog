@@ -7,7 +7,7 @@ services:
       - portal
     image: nginx:1.21.6
     ports:
-      - ${RARE_EARTH_TRACK_WEB}:80
+      - ${VBLOG_WEB}:80
     volumes:
       - /data/uploads:/data/uploads
       - web-data:/usr/share/nginx/html/release
@@ -15,7 +15,7 @@ services:
   web-portal-setup:
     depends_on:
       - web
-    image: hhoao/ret-web-portal-setup:${RARE_EARTH_TRACK_WEB_PORTAL_VERSION}
+    image: hhoao/vblog-setup:${RARE_EARTH_TRACK_WEB_PORTAL_VERSION}
     tty: true
     command: >
       sh -c "

@@ -1,0 +1,31 @@
+spring:
+  profiles:
+    active: dev #默认为开发环境
+  jackson:
+    default-property-inclusion: non_null
+
+  mvc:
+    hiddenmethod:
+      filter:
+        #设置restful风格
+        enabled: true
+    format:
+      #设置日期格式
+      date: iso
+      date-time: yyyy-MM-dd HH:mm:ss
+# 配置mybatis
+mybatis:
+  mapper-locations:
+    - classpath:mybatis/dao/*.xml
+    - classpath:com/rare_earth_track/mgb/mapper/*.xml
+logging:
+  level:
+    root: info
+    com.rare_earth_track.: debug
+
+pagehelper:
+  pageSizeZero: true
+#加密相关配置
+jasypt:
+  encryptor:
+    password: ${JASYPT_PASSWORD}

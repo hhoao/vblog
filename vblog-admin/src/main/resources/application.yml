@@ -1,0 +1,58 @@
+spring:
+  profiles:
+    active: dev #默认为开发环境
+  jackson:
+    default-property-inclusion: non_null
+
+  mvc:
+    hiddenmethod:
+      filter:
+        #设置restful风格
+        enabled: true
+    format:
+      #设置日期格式
+      date: iso
+      date-time: yyyy-MM-dd HH:mm:ss
+
+# 配置mybatis
+mybatis:
+  mapper-locations:
+    - classpath:com/hhoa/blog/mgb/mapper/*.xml
+# 项目配置
+ret:
+  redis:
+    database: ret
+    key:
+      administrator: administrator
+      role: role
+      resource-role: resource-role
+    expire:
+      common: 86400 # 24小时
+      token: 86400
+# 配置security
+jwt:
+  secret: ENC(12TJmQ4Reu4FXZhHZnfxgfpDTXSwx9K5)
+  expiration: 604800
+  token-Header: Authorization
+  token-head: 'Bearer'
+  refresh-time: 30
+  ignored:
+    urls:
+      - /swagger-ui/**
+      - /swagger-ui.html
+      - /v3/api-docs
+      - /v3/api-docs/**
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /accounts/auth/token
+
+
+pagehelper:
+  pageSizeZero: true
+
+#加密相关配置
+jasypt:
+  encryptor:
+    password: ${JASYPT_PASSWORD}

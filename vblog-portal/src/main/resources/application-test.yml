@@ -1,0 +1,19 @@
+server:
+  port: 8890
+spring:
+  # 配置mysql数据库
+  datasource:
+    url: jdbc:mysql://120.48.118.129:3406/blog?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ENC(F6BQrplI6kVqMA724mqn7U95rnYc7TOL)
+  # 配置缓存
+  cache:
+    redis:
+      time-to-live: 1d
+
+
+file:
+  upload:
+    path: /data/uploads/  #文件上传目标路径
+    baseUrl: http://localhost/uploads/

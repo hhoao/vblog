@@ -13,6 +13,37 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
 
+      - name: Sed Config Base
+        shell: bash
+        run: |
+          sed -i  's#VITE_PUBLIC_PATH\s*=.*#VITE_PUBLIC_PATH = /vue-vben-admin/#g' ./.env.production
+          sed -i  "s#VITE_BUILD_COMPRESS\s*=.*#VITE_BUILD_COMPRESS = 'gzip'#g" ./.env.production
+          cat ./.env.production
+
+      - name: use Node.js 16
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: '16.x'
+
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Build
+        run: |
+          yarn install
+          yarn run build
+          touch dist/.nojekyll
+          cp dist/index.html dist/404.html
+
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:

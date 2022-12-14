@@ -72,36 +72,6 @@
   @prefix-cls: ~'@{namespace}-login';
   @logo-prefix-cls: ~'@{namespace}-app-logo';
   @countdown-prefix-cls: ~'@{namespace}-countdown-input';
-  @dark-bg: #293146;
-
-  html[data-theme='dark'] {
-    .@{prefix-cls} {
-      background-color: @dark-bg;
-
-      .ant-input,
-      .ant-input-password {
-        background-color: #232a3b;
-      }
-
-      .ant-btn:not(.ant-btn-link):not(.ant-btn-primary) {
-        border: 1px solid #4a5569;
-      }
-
-      &-form {
-        background: transparent !important;
-      }
-
-      .app-iconify {
-        color: #fff;
-      }
-    }
-
-    input.fix-auto-fill,
-    .fix-auto-fill input {
-      -webkit-text-fill-color: #c9d1d9 !important;
-      box-shadow: inherit !important;
-    }
-  }
   .@{prefix-cls} {
     min-height: 100%;
     overflow: hidden;
@@ -119,25 +89,25 @@
         width: 44px;
       }
     }
-  }
 
-  .ant-form-item-control-input-content {
-    .ant-input {
-      height: 46px;
-      border-radius: 6px;
-      font-size: 14px;
-      padding: 6px 18px;
-    }
-
-    .ant-input-affix-wrapper {
-      border-radius: 6px;
-      padding: 0 18px;
-
+    .ant-form-item-control-input-content {
       .ant-input {
         height: 46px;
-        line-height: 46px;
+        border-radius: 6px;
         font-size: 14px;
-        padding: 10px 0px;
+        padding: 6px 18px;
+      }
+
+      .ant-input-affix-wrapper {
+        border-radius: 6px;
+        padding: 0 18px;
+
+        .ant-input {
+          height: 46px;
+          line-height: 46px;
+          font-size: 14px;
+          padding: 10px 0px;
+        }
       }
     }
   }

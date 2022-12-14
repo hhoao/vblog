@@ -39,7 +39,7 @@
   import { MarkdownEssay } from '/@/views/essay/writing/types/MarkdownEditorConfig';
   import EssayWritingModal from '/@/views/essay/writing/EssayWritingModal.vue';
   import { EssayWritingModalType } from '/@/views/essay/writing/types/EssayWritingModalType';
-  import { addArticle } from '/@/api/article';
+  import { addArticleApi } from '/@/api/article';
 
   const formRef = ref<FormInstance>();
   const headRef = ref(null);
@@ -70,7 +70,7 @@
   }
 
   async function publicEssay(data) {
-    addArticle({
+    addArticleApi({
       ...data,
       ...formModel,
     }).then(() => {

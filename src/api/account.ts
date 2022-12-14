@@ -21,7 +21,7 @@ export const getAccountPageList = (params: AccountPageParams) =>
 
 export const getAccountList = (params: AccountParams) => {
   return getAccountPageList({
-    page: 1,
+    pageNum: 1,
     pageSize: 0,
     ...params,
   });

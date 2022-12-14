@@ -1,11 +1,12 @@
 import { defHttp } from '/@/utils/http/axios';
 
-import { ArticleModel } from '/@/api/model/articleModel';
+import { ArticlePageParams, ArticleParam } from '/@/api/model/articleModel';
 
-export const getArticlePageList = (params: ArticleModel) =>
+export const getArticlePageListApi = (params: ArticlePageParams = { pageNum: 1, pageSize: 5 }) =>
   defHttp.get({ url: '/articles', params });
 
-export const addArticle = (params: ArticleModel) => defHttp.post({ url: '/articles', params });
+export const addArticleApi = (params: ArticleParam) => defHttp.post({ url: '/articles', params });
 
-export const updateArticle = (params: ArticleModel) => defHttp.put({ url: '/articles', params });
-export const deleteArticle = (params: ArticleModel) => defHttp.delete({ url: '/articles', params });
+export const updateArticleApi = (params: ArticleParam) => defHttp.put({ url: '/articles', params });
+export const deleteArticleApi = (params: ArticleParam) =>
+  defHttp.delete({ url: '/articles', params });

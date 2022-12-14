@@ -7,7 +7,9 @@ import {
   resultSuccess,
 } from '../_util';
 import { accountList, createFakeUserList, generateToken, getUserByToken } from '../data/user';
+import { GetUserInfoModel } from '/@/api/model/userModel';
 
+const tokenHead = 'Bearer';
 export default [
   {
     url: '/basic-api/accounts',
@@ -24,8 +26,12 @@ export default [
     method: 'get',
     response: (request: requestParams) => {
       const token = getRequestToken(request);
+
       if (!token) return resultError('Invalid token');
-      const checkUser = getUserByToken(token);
+      let checkUser: undefined | GetUserInfoModel = undefined;
+      if (token.startsWith(tokenHead)) {
+        checkUser = getUserByToken(token.substring(tokenHead.length));
+      }
       if (!checkUser) {
         return resultError('The corresponding user information was not obtained!');
       }
@@ -47,6 +53,7 @@ export default [
       const token = generateToken(checkUser.id);
       return resultSuccess({
         token,
+        tokenHead,
       });
     },
   },
@@ -57,7 +64,10 @@ export default [
     response: (request: requestParams) => {
       const token = getRequestToken(request);
       if (!token) return resultError('Invalid token');
-      const checkUser = getUserByToken(token);
+      let checkUser: undefined | GetUserInfoModel = undefined;
+      if (token.startsWith(tokenHead)) {
+        checkUser = getUserByToken(token.substring(tokenHead.length));
+      }
       if (!checkUser) {
         return resultError('Invalid token!');
       }

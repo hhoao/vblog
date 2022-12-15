@@ -102,4 +102,66 @@ export const articleFormSchema: FormSchema[] = [
     component: 'Input',
     required: true,
   },
+  {
+    field: 'cover',
+    label: '封面',
+    component: 'Input',
+    required: true,
+  },
+  {
+    field: 'type',
+    label: '类型',
+    component: 'Select',
+    componentProps: {
+      options: [
+        {
+          value: '0',
+          label: '原创',
+        },
+        {
+          value: '1',
+          label: '转载',
+        },
+        {
+          value: '2',
+          label: '翻译',
+        },
+      ],
+    },
+    required: true,
+  },
+  {
+    field: 'level',
+    label: '等级',
+    component: 'Select',
+    componentProps: {
+      options: [
+        {
+          value: '0',
+          label: '初级',
+        },
+        {
+          value: '1',
+          label: '中级',
+        },
+        {
+          value: '2',
+          label: '高级',
+        },
+      ],
+    },
+    required: true,
+  },
+  {
+    field: 'top',
+    label: '置顶',
+    component: 'Switch',
+    required: true,
+  },
+  {
+    field: 'visible',
+    label: '是否可见',
+    component: 'Switch',
+    required: true,
+  },
 ];

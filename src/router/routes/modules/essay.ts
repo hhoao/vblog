@@ -30,6 +30,14 @@ const markdown: AppRouteModule = {
         title: t('routes.essay.list'),
       },
     },
+    {
+      path: 'tag',
+      name: 'Tag',
+      component: () => import('/@/views/essay/tag/index.vue'),
+      meta: {
+        title: t('routes.essay.tag'),
+      },
+    },
   ],
 };
 

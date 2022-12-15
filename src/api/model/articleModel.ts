@@ -4,6 +4,7 @@ export interface ArticleModel extends BaseArticleModel {
   content: string;
 }
 export interface ArticleParam {
+  id?: string;
   title?: string;
   author?: string;
   type?: string;

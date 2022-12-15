@@ -40,12 +40,13 @@
   import { PageWrapper } from '/@/components/Page';
 
   import { useModal } from '/@/components/Modal';
-  import AccountModal from './ArticleModal.vue';
+  import AccountModal from './TagModal.vue';
 
-  import { columns, searchFormSchema } from './article.data';
+  import { columns, searchFormSchema } from './tag.data';
   import { useGo } from '/@/hooks/web/usePage';
   import { deleteArticleApi, getArticlePageListApi } from '/@/api/article';
   import { ArticleParam } from '/@/api/model/articleModel';
+  import { addTagApi } from '/@/api/tag';
 
   const go = useGo();
   const [register, { openModal }] = useModal();
@@ -76,7 +77,9 @@
   });
 
   function handleCreate() {
-    go('/essay/writing');
+    openModal(true, {
+      isUpdate: false,
+    });
   }
 
   function handleEdit(record: Recordable) {
@@ -96,10 +99,10 @@
       // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
       updateTableDataRecord(values.id, values);
     } else {
+      addTagApi(values);
       reload();
     }
   }
-
   function handleView(record: Recordable) {
     go('/system/account_detail/' + record.id);
   }

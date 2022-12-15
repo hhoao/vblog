@@ -7,6 +7,7 @@ export const getArticlePageListApi = (params: ArticlePageParams = { pageNum: 1, 
 
 export const addArticleApi = (params: ArticleParam) => defHttp.post({ url: '/articles', params });
 
-export const updateArticleApi = (params: ArticleParam) => defHttp.put({ url: '/articles', params });
+export const updateArticleApi = (params: ArticleParam) =>
+  defHttp.put({ url: `/articles/${params.id}`, params });
 export const deleteArticleApi = (params: ArticleParam) =>
-  defHttp.delete({ url: '/articles', params });
+  defHttp.delete({ url: `/articles/${params.id}`, params });

@@ -11,6 +11,38 @@ export default [
   {
     url: '/basic-api/articles',
     timeout: 100,
+    method: 'delete',
+    response: () => {
+      return resultSuccess();
+    },
+  },
+  {
+    url: '/basic-api/articles/:id',
+    timeout: 100,
+    method: 'delete',
+    response: () => {
+      return resultSuccess();
+    },
+  },
+  {
+    url: '/basic-api/articles/:id',
+    timeout: 100,
+    method: 'put',
+    response: () => {
+      return resultSuccess();
+    },
+  },
+  {
+    url: '/basic-api/articles',
+    timeout: 100,
+    method: 'put',
+    response: () => {
+      return resultSuccess();
+    },
+  },
+  {
+    url: '/basic-api/articles',
+    timeout: 100,
     method: 'get',
     response: ({ query }) => {
       const { page = 1, pageSize = 8, base = false } = query;

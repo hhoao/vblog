@@ -9,9 +9,24 @@ on:
         type: string
 
 jobs:
-  push_to_docker_registry:
+  check-update:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Check project update
+        run: |
+          if [ -n "$(git diff HEAD^ ${{ inputs.project-name }})" ];
+          then
+            echo "is_update=true" >> $GITHUB_OUTPUT
+          fi
+
+  push-to-docker-registry:
+    needs: check-update
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    if: ${{ fromJSON(needs.push_to_docker_registry.outputs.is_update) == 'true' }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -22,19 +37,18 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Check project update
-        run: |
-          if [ -n "$(git diff HEAD^ ${{ inputs.project-name }})" ]; 
-          then
-            echo "is_update=true" >> $GITHUB_OUTPUT
-          fi
+#      - name: Check project update
+#        run: |
+#          if [ -n "$(git diff HEAD^ ${{ inputs.project-name }})" ];
+#          then
+#            echo "is_update=true" >> $GITHUB_OUTPUT
+#          fi
 
       - name: Run build with Gradle wrapper
-        if: ${{ fromJSON(needs.push_to_docker_registry.outputs.is_update) == 'true' }}
+#        if: ${{ fromJSON(needs.push_to_docker_registry.outputs.is_update) == 'true' }}
         run: |
           ./gradlew :${{ inputs.project-name }}:test;
-          ./gradlew :${{ inputs.project-name }}:bootJar; 
-
+          ./gradlew :${{ inputs.project-name }}:bootJar;
       - name: Upload build reports
         uses: actions/upload-artifact@v3
         with:

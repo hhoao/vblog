@@ -8,9 +8,9 @@ on:
 
 jobs:
   deploy-project:
+    uses: ./.github/workflows/deploy.yml
     strategy:
       matrix:
         project-name: [ vblog-server-admin, vblog-server-portal ]
-    uses: ./.github/workflows/deploy.yml
     with:
-    project-name: ${{ matrix.project-name }}
+      project-name: ${{ matrix.project-name }}

@@ -11,8 +11,6 @@ jobs:
     strategy:
       matrix:
         project-name: [ vblog-server-admin, vblog-server-portal ]
-    steps:
-      - name: Deploy project
-        uses: ./.github/workflows/deploy.yml
-        with:
-          project-name: ${{ matrix.project-name }}
+    uses: ./.github/workflows/deploy.yml
+    with:
+    project-name: ${{ matrix.project-name }}

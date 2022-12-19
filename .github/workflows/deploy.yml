@@ -28,7 +28,7 @@ jobs:
     needs: check-update
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-    if: ${{ fromJSON(needs.push_to_docker_registry.outputs.is_update) == 'true' }}
+    if: ${{ needs.push_to_docker_registry.outputs.is_update == 'true'}}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3

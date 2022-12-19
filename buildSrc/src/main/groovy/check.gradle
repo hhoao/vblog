@@ -1,0 +1,30 @@
+plugins {
+    id 'checkstyle'
+    id 'com.github.spotbugs'
+}
+
+spotbugs {
+    showStackTraces = true
+    omitVisitors = [ 'FindNonShortCircuit' ]
+    reportsDir = file("$buildDir/spotbugs")
+    File includeFile = new File("$rootDir/config/findbugs/include.xml")
+    if (includeFile.exists()) {
+        includeFilter = file("$rootDir/config/findbugs/include.xml")
+    }
+    File excludeFile = new File("$rootDir/config/findbugs/exclude.xml")
+    if (excludeFile.exists()) {
+        excludeFilter = file("$rootDir/config/findbugs/exclude.xml")
+    }
+    maxHeapSize = '1g'
+}
+
+spotbugsMain {
+    reports {
+        html {
+            required = true
+            outputLocation = file("$buildDir/reports/spotbugs/main/spotbugs.html")
+            stylesheet = 'fancy-hist.xsl'
+        }
+    }
+}
+

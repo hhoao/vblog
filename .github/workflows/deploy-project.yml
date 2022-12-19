@@ -1,0 +1,20 @@
+#file: noinspection YAMLSchemaValidation
+name: Deploy Project
+
+on:
+  push:
+    branches:
+     - main
+
+jobs:
+  deploy-project:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project-name: [ vblog-server-admin, vblog-server-portal ]
+    steps:
+      - name: Deploy vblog-server-admin project
+        uses: ./.github/workflows/deploy.yml
+        with:
+          project-name: ${{ matrix.project-name }}

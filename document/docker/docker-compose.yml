@@ -1,21 +1,10 @@
 version: "3.9"
 
 services:
-  web:
-    depends_on:
-      - admin
-      - portal
-    image: nginx:1.21.6
-    ports:
-      - ${VBLOG_WEB}:80
-    volumes:
-      - /data/uploads:/data/uploads
-      - web-data:/usr/share/nginx/html/release
-      - ./default.conf:/etc/nginx/conf.d/default.conf
   web-portal-setup:
     depends_on:
       - web
-    image: hhoao/vblog-setup:${RARE_EARTH_TRACK_WEB_PORTAL_VERSION}
+    image: ${DOCKER_HUB_USER_NAME}/vblog-setup:${VBLOG_WEB_VERSION}
     tty: true
     command: >
       sh -c "
@@ -25,9 +14,9 @@ services:
         mkdir /usr/share/nginx/html/release/portal;
         cp -r /data/* /usr/share/nginx/html/release/portal"
     volumes:
-      - web-data:/usr/share/nginx/html/release
+      - env-web-data:/usr/share/nginx/html/release
   web-admin-setup:
-    image: hhoao/ret-web-admin-setup:${RARE_EARTH_TRACK_WEB_ADMIN_VERSION}
+    image: ${DOCKER_HUB_USER_NAME}/vblog-web-admin-setup:${VBLOG_WEB_ADMIN_VERSION}
     depends_on:
       - web
     command: >
@@ -39,55 +28,30 @@ services:
         mkdir /usr/share/nginx/html/release/admin;
         cp -r /data/* /usr/share/nginx/html/release/admin"
     volumes:
-      - web-data:/usr/share/nginx/html/release
-  portal:
-    image: hhoao/rare-earth-track-portal:${RARE_EARTH_TRACK_PORTAL_VERSION}
+      - env-web-data:/usr/share/nginx/html/release
+  server-portal:
+    image: ${DOCKER_HUB_USER_NAME}/vblog-server-portal:${VBLOG_SERVER_PORTAL_VERSION}
     environment:
       - JASYPT_PASSWORD=${JASYPT_PASSWORD}
     volumes:
       - /data/uploads:/data/uploads
     ports:
-      - ${RARE_EARTH_TRACK_PORTAL_PORT}:8889
+      - ${VBLOG_SERVER_PORTAL_PORT}:8889
 
-  admin:
-    image: hhoao/rare-earth-track-admin:${RARE_EARTH_TRACK_ADMIN_VERSION}
+  server-admin:
+    image: ${DOCKER_HUB_USER_NAME}/vblog-server-admin:${VBLOG_SERVER_ADMIN_VERSION}
     environment:
       - JASYPT_PASSWORD=${JASYPT_PASSWORD}
     volumes:
       - /data/uploads:/data/uploads
     ports:
-      - ${RARE_EARTH_TRACK_ADMIN_PORT}:8888
-
-  filebeat:
-    image: ${FILEBEAT_IMAGE_NAME}:${FILEBEAT_IMAGE_VERSION}
-    user: "0"
-    environment:
-      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-    volumes:
-      - type: volume
-        source: es-certs
-        target: /usr/share/filebeat/config/certs
-      - type: bind
-        source: /var/lib/docker/containers
-        target: /var/lib/docker/containers
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-      - type: bind
-        source: filebeat.yml
-        target: /usr/share/filebeat/filebeat.yml
-  logstash:
-    image: ${LOGSTASH_IMAGE_NAME}:${LOGSTASH_IMAGE_VERSION}
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-      - MYSQL_HOSTS=mysql:3306
-      - ES_HOSTS=https://es01:9200
-    volumes:
-      - es-certs:/data/elastic
+      - ${VBLOG_SERVER_ADMIN_PORT}:8888
 
 volumes:
   es-certs:
     driver: local
-  web-data:
-    driver: local
+  env-web-data:
+    external: true
+networks:
+  env-network:
+    external: true

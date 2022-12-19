@@ -1,8 +1,8 @@
 [versions]
 aspectjweaver = "1.9.9"
 pagehelper-sprint-boot-starter = "1.4.2"
-springdoc-openapi-webmvc-core = "1.6.9"
-springdoc-openapi-ui = "1.6.9"
+springdoc-openapi-webmvc-core = "1.6.14"
+springdoc-openapi-ui = "1.6.14"
 jjwt = "0.9.0"
 jasypt-spring-boot-starter = "2.1.0"
 mysql-connector-java = "8.0.28"
@@ -34,6 +34,6 @@ mybatis-spring-boot-starter = { module = "org.mybatis.spring.boot:mybatis-spring
 springdoc = ["springdoc-openapi-webmvc-core", "springdoc-openapi-ui"]
 
 [plugins]
-boot = { id = "org.springframework.boot", version = "2.6.4" }
+boot = { id = "org.springframework.boot", version = "2.7.1" }
 io-spring-dependency-management = { id = "io.spring.dependency-management", version = "1.0.12.RELEASE" }
 org-asciidoctor-convert = { id = "org.asciidoctor.convert", version = "1.5.8" }

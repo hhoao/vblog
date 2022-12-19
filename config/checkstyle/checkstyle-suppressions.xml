@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+        "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<!--checkstyle排除项-->
+<!--需要过滤协议文件, 注解文件等等-->
+<!--也可以对某个java文件的某段代码过滤某个规则的检查
+  <suppress checks="JavadocStyleCheck" files="GeneratedObject.java" lines="50-9999"/>
+-->
+<suppressions>
+    <suppress checks="[a-zA-Z0-9]*" files="vblog-mgb/*"/>
+</suppressions>

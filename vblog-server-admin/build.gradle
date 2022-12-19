@@ -1,0 +1,35 @@
+plugins {
+    alias(libs.plugins.boot)
+    alias(libs.plugins.io.spring.dependency.management)
+    id 'springboot-dev-conventions'
+    id 'check'
+}
+
+group 'com.hhoa'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    repositories {
+        // ...
+        maven { url 'https://repo.spring.io/release' }
+    }
+}
+
+dependencies {
+    implementation project(':vblog-server-security')
+    implementation project(':vblog-server-mgb')
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation libs.mybatis.spring.boot.starter
+    implementation libs.mysql.connector.java
+    implementation libs.jasypt.spring.boot.starter
+    implementation libs.mybatis.plus.boot.starter
+}
+
+test {
+    useJUnitPlatform()
+}
+tasks.named("bootBuildImage") {
+//    imageName = "hhoao/library/${project.name}:${project.version}"
+    publish = false
+}

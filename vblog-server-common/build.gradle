@@ -1,0 +1,23 @@
+plugins {
+    alias(libs.plugins.boot)
+    alias(libs.plugins.io.spring.dependency.management)
+    id 'springboot-dev-conventions'
+    id 'check'
+}
+
+group 'com.hhoa'
+version '0.0.1-SNAPSHOT'
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    api 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    api libs.pagehelper.spring.boot.starter
+    api libs.aspectjweaver
+    api libs.springdoc.openapi.webmvc.core
+    api libs.springdoc.openapi.ui
+    api libs.hutool.all
+}

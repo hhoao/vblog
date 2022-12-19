@@ -7,9 +7,6 @@ on:
       project-name:
         required: true
         type: string
-      secrets:
-        token:
-          required: false
 
 jobs:
   push_to_docker_registry:

@@ -35,7 +35,7 @@ public class AmsTagServiceImpl implements AmsTagService {
     }
 
     @Override
-    public void deleteTag(Integer tagId) {
+    public void deleteTag(Long tagId) {
         amsTagDao.deleteById(tagId);
     }
 

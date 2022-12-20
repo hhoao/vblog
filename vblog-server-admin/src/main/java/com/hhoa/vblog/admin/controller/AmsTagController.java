@@ -55,7 +55,7 @@ public class AmsTagController {
 
     @Operation(summary = "删除标签")
     @DeleteMapping("/tags/{tagId}")
-    public CommonResult<String> delTag(@PathVariable Integer tagId) {
+    public CommonResult<String> delTag(@PathVariable Long tagId) {
         tagService.deleteTag(tagId);
         return CommonResult.success(null);
     }

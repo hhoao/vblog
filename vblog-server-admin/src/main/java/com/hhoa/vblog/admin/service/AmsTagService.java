@@ -33,7 +33,7 @@ public interface AmsTagService {
      *
      * @param tagId the tag id
      */
-    void deleteTag(Integer tagId);
+    void deleteTag(Long tagId);
 
     /**
      * Update tag.

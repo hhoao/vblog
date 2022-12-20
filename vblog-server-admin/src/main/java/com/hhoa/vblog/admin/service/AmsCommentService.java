@@ -40,5 +40,5 @@ public interface AmsCommentService {
      *
      * @param commentId the comment id
      */
-    void deleteComment(Integer commentId);
+    void deleteComment(Long commentId);
 }

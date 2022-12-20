@@ -39,7 +39,7 @@ public class AmsCommentServiceImpl implements AmsCommentService {
     }
 
     @Override
-    public void deleteComment(Integer commentId) {
+    public void deleteComment(Long commentId) {
         commentDao.deleteById(commentId);
     }
 }

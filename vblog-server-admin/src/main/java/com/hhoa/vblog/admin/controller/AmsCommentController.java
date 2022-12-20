@@ -57,7 +57,7 @@ public class AmsCommentController {
 
     @Operation(summary = "删除评论")
     @DeleteMapping("/comments/{commentId}")
-    public CommonResult<String> delComment(@PathVariable Integer commentId) {
+    public CommonResult<String> delComment(@PathVariable Long commentId) {
         commentService.deleteComment(commentId);
         return CommonResult.success(null);
     }

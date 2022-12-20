@@ -13,7 +13,7 @@ jobs:
     name: Check if the project is updated
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.step2.outputs.is_update}}
+      is_update: ${{ steps.step2.outputs.is_update }}
     steps:
       - id: step1
         name: Check out the repository
@@ -31,7 +31,7 @@ jobs:
     needs: check-update
     name: Build, test and push docker image to docker hub
     runs-on: ubuntu-latest
-    if: ${{ needs.push_to_docker_registry.outputs.is_update == 'true'}}
+    if: ${{ needs.check-update.outputs.is_update == 'true' }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3

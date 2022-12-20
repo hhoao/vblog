@@ -249,7 +249,7 @@ CREATE TABLE `ams_comment`
     `create_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `email`       VARCHAR(255) COMMENT '电子邮箱',
     `nickname`    VARCHAR(255) NOT NULL COMMENT '昵称',
-    `reference`   VARCHAR(255) NOT NULL COMMENT '引用',
+    `reference`   VARCHAR(255) NULL COMMENT '引用',
     PRIMARY KEY (`id`),
     INDEX (`nickname`),
     FOREIGN KEY (`article_id`) REFERENCES `ams_article` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,

@@ -17,7 +17,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
-      - ${MYSQL_PORT}:3306
+      - "3406:3306"
     volumes:
       - /projects/mysql/data:/var/lib/mysql
       - mysql-config:/etc/mysql
@@ -44,7 +44,7 @@ services:
       timeout: 3s
       retries: 30
   setup:
-    image: bachue/elasticsearch-ik:${ES_IMAGE_VERSION}
+    image: ${ES_IMAGE_NAME}:${ES_IMAGE_VERSION}
     volumes:
       - es-certs:/usr/share/elasticsearch/config/certs
     user: "0"

@@ -18,7 +18,6 @@ jobs:
 
       - name: Check out project update
         run: |
-          echo $(git diff)
           if [ -n "$(git diff ${{ inputs.project-name }})" ];
           then
             echo "is_update=true" >> $GITHUB_OUTPUT

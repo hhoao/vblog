@@ -20,10 +20,9 @@ spring:
 ret:
   mail:
     from: haunghao@foxmail.com
-#logging:
-#  level:
-#    root: info
-#    com.rare_earth_track.: debug
+logging:
+  level:
+    com.hhoa.vblog: debug
 file:
   upload:
     path: /data/uploads/  #文件上传目标路径

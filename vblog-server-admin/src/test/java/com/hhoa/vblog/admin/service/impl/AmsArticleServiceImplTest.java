@@ -51,4 +51,36 @@ class AmsArticleServiceImplTest extends TransactionTest {
             Assertions.assertNotNull(amsArticle);
         }
     }
+
+    @Test
+    void addArticle() {
+        articleService.addArticle(getArticleExample());
+        AmsArticle article = new AmsArticle();
+        List<AmsArticle> list = articleService.list(article, new PageInfo(1, 5));
+        Assertions.assertTrue(list.size() > 0);
+    }
+
+    @Test
+    void updateArticle() {
+        AmsArticle articleExample = getArticleExample();
+        articleService.addArticle(articleExample);
+        List<AmsArticle> list = articleService.list(articleExample,
+                new PageInfo(1, 0));
+        AmsArticle amsArticle = list.get(0);
+        amsArticle.setTitle("TestArticle");
+        articleService.updateArticle(amsArticle);
+        AmsArticle amsArticle1 = articleService.selectById(amsArticle.getId());
+        Assertions.assertEquals(amsArticle1.getTitle(), amsArticle.getTitle());
+    }
+
+    @Test
+    void deleteArticle() {
+        AmsArticle articleExample = getArticleExample();
+        articleService.addArticle(articleExample);
+        List<AmsArticle> list = articleService.list(articleExample,
+                new PageInfo(1, 0));
+        AmsArticle amsArticle = list.get(0);
+        articleService.deleteArticle(amsArticle.getId());
+        Assertions.assertNull(articleService.selectById(amsArticle.getId()));
+    }
 }

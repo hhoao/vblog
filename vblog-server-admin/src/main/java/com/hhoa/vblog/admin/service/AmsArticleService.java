@@ -40,7 +40,7 @@ public interface AmsArticleService {
      *
      * @param articleId the article id
      */
-    void deleteArticle(Integer articleId);
+    void deleteArticle(Long articleId);
 
     /**
      * Select by id ams article.

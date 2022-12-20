@@ -60,7 +60,7 @@ public class AmsArticleController {
 
     @Operation(summary = "删除文章")
     @DeleteMapping("/articles/{articleId}")
-    public CommonResult<String> delArticle(@PathVariable Integer articleId) {
+    public CommonResult<String> delArticle(@PathVariable Long articleId) {
         articleService.deleteArticle(articleId);
         return CommonResult.success(null);
     }

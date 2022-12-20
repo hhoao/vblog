@@ -14,10 +14,11 @@ spring:
       date: iso
       date-time: yyyy-MM-dd HH:mm:ss
 
+
 # 配置mybatis
 mybatis:
   mapper-locations:
-    - classpath:com/hhoa/blog/mgb/mapper/*.xml
+    - classpath:com/hhoa/vblog/mgb/mapper/*.xml
 # 项目配置
 ret:
   redis:
@@ -56,3 +57,9 @@ pagehelper:
 jasypt:
   encryptor:
     password: ${JASYPT_PASSWORD}
+logging:
+  level:
+    sql: debug
+  config:
+
+

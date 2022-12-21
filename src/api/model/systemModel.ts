@@ -28,14 +28,6 @@ export interface AccountListItem {
   status: number;
 }
 
-export interface DeptListItem {
-  id: string;
-  orderNo: string;
-  createTime: string;
-  remark: string;
-  status: number;
-}
-
 export interface MenuListItem {
   id: string;
   orderNo: string;
@@ -59,6 +51,9 @@ export interface RoleListItem {
   status: number;
   // orderNo: string;
   createTime: string;
+}
+export interface TrafficParams {
+  time: 'day' | 'month' | 'year';
 }
 
 /**

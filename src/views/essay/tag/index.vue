@@ -30,7 +30,7 @@
         />
       </template>
     </BasicTable>
-    <AccountModal @register="register" @success="handleUpdateSuccess" />
+    <TagModal @register="register" @success="handleUpdateSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -40,20 +40,19 @@
   import { PageWrapper } from '/@/components/Page';
 
   import { useModal } from '/@/components/Modal';
-  import AccountModal from './TagModal.vue';
+  import TagModal from './TagModal.vue';
 
   import { columns, searchFormSchema } from './tag.data';
   import { useGo } from '/@/hooks/web/usePage';
-  import { deleteArticleApi, getArticlePageListApi } from '/@/api/article';
-  import { ArticleParam } from '/@/api/model/articleModel';
-  import { addTagApi } from '/@/api/tag';
+  import { addTagApi, deleteTagApi, getTagListApi } from '/@/api/tag';
+  import { TagParams } from '/@/api/model/TagModel';
 
   const go = useGo();
   const [register, { openModal }] = useModal();
   const searchInfo = reactive<Recordable>({});
   const [registerTable, { reload, updateTableDataRecord }] = useTable({
     title: '文章列表',
-    api: getArticlePageListApi,
+    api: getTagListApi,
     rowKey: 'id',
     columns,
     formConfig: {
@@ -89,8 +88,8 @@
     });
   }
 
-  function handleDelete(record: ArticleParam) {
-    deleteArticleApi({ id: record.id });
+  function handleDelete(record: TagParams) {
+    deleteTagApi({ id: record.id });
   }
 
   function handleUpdateSuccess({ isUpdate, values }) {

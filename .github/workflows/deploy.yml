@@ -45,6 +45,11 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Run build with Gradle wrapper
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          MYSQL_ROOT_PASSWORD: ${ secrets.MYSQL_ROOT_PASSWORD }}
+          JWT_SECRET: ${ secrets.JWT_SECRET }
+          ELASTIC_PASSWORD: ${ secrets.ELASTIC_PASSWORD }
         run: |
           ./gradlew :${{ inputs.project-name }}:test;
           ./gradlew :${{ inputs.project-name }}:bootJar;

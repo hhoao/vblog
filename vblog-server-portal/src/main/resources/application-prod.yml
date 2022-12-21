@@ -3,10 +3,10 @@ server:
 spring:
   # 配置mysql数据库
   datasource:
-    url: jdbc:mysql://mysql:3406/blog
+    url: jdbc:mysql://${SERVER_HOST}:3406/vblog
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: ENC(F6BQrplI6kVqMA724mqn7U95rnYc7TOL)
+    password: ${MYSQL_ROOT_PASSWORD}
   # 配置缓存
   cache:
     redis:
@@ -14,5 +14,5 @@ spring:
 #文件配置
 file:
   upload:
-    path: /data/uploads/  #文件上传目标路径
-    baseUrl: http://120.48.118.129/uploads/
+    path: /projects/public/data/uploads/  #文件上传目标路径
+    baseUrl: http://localhost/uploads/

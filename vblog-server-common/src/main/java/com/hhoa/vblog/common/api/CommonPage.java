@@ -1,7 +1,7 @@
 package com.hhoa.vblog.common.api;
 
 
-import com.github.pagehelper.Page;
+import org.springframework.data.domain.Page;
 import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -59,11 +59,11 @@ public class CommonPage<T> {
      */
     public static <T> CommonPage<T> restPage(Page<T> pageInfo) {
         CommonPage<T> result = new CommonPage<>();
-        result.setTotalPage(pageInfo.getPages());
-        result.setPageNum(pageInfo.getPageNum());
-        result.setPageSize(pageInfo.getPageSize());
-        result.setTotal(pageInfo.getTotal());
-        result.setList(pageInfo.getResult());
+        result.setTotalPage(pageInfo.getTotalPages());
+        result.setPageNum(pageInfo.getNumber());
+        result.setPageSize(pageInfo.getSize());
+        result.setTotal(pageInfo.getTotalElements());
+        result.setList(pageInfo.getContent());
         return result;
     }
 

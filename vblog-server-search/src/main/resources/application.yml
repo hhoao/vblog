@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev #默认为开发环境
+    active: dev #默认开发环境
   jackson:
     default-property-inclusion: non_null
   mvc:
@@ -12,16 +12,11 @@ spring:
       #设置日期格式
       date: iso
       date-time: yyyy-MM-dd HH:mm:ss
-
-# 配置mybatis
-mybatis:
-  mapper-locations:
-    - classpath:mybatis/dao/*.xml
-
-logging:
-  level:
-    root: info
-    com.hhoa.vblog: debug
+  elasticsearch:
+    username: elastic
+    uris: https://${SERVER_HOST}:9200
+    password: ${ELASTIC_PASSWORD}
 
 pagehelper:
   pageSizeZero: true
+

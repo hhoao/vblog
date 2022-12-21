@@ -1,9 +1,8 @@
 spring:
   profiles:
-    active: dev #默认为开发环境
+    active: dev #默认开发环境
   jackson:
     default-property-inclusion: non_null
-
   mvc:
     hiddenmethod:
       filter:
@@ -14,11 +13,11 @@ spring:
       date: iso
       date-time: yyyy-MM-dd HH:mm:ss
 
-
 # 配置mybatis
 mybatis:
   mapper-locations:
     - classpath:com/hhoa/vblog/mgb/mapper/*.xml
+
 # 项目配置
 ret:
   redis:
@@ -32,7 +31,7 @@ ret:
       token: 86400
 # 配置security
 jwt:
-  secret: ENC(12TJmQ4Reu4FXZhHZnfxgfpDTXSwx9K5)
+  secret: ${JWT_SECRET}
   expiration: 604800
   token-Header: Authorization
   token-head: 'Bearer'
@@ -49,17 +48,6 @@ jwt:
       - /**/*.ico
       - /accounts/auth/token
 
-
 pagehelper:
   pageSizeZero: true
-
-#加密相关配置
-jasypt:
-  encryptor:
-    password: ${JASYPT_PASSWORD}
-logging:
-  level:
-    sql: debug
-  config:
-
 

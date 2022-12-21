@@ -13,10 +13,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-}
-
-test {
-    useJUnitPlatform()
+    implementation project(':vblog-server-common')
+    implementation project(':vblog-server-mgb')
+    implementation libs.mybatis.spring.boot.starter
+    implementation libs.mysql.connector.java
+    implementation libs.mybatis.plus.boot.starter
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 }

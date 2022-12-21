@@ -23,7 +23,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation libs.mybatis.spring.boot.starter
     implementation libs.mysql.connector.java
-    implementation libs.jasypt.spring.boot.starter
     implementation libs.mybatis.plus.boot.starter
 }
 

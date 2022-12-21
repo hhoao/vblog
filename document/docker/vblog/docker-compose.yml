@@ -36,20 +36,34 @@ services:
     command: sh -c "cp /vblog-web-nginx.conf /etc/nginx/conf.d/default-locations"
 
   server-portal:
+    container_name: vblog-server-portal
     image: ${DOCKER_HUB_USER_NAME}/vblog-server-portal:${VBLOG_SERVER_PORTAL_VERSION}
     environment:
-      - JASYPT_PASSWORD=${JASYPT_PASSWORD}
+      - SERVER_HOST=${SERVER_HOST}
     volumes:
-      - /data/uploads:/data/uploads
+      - /projects/public/data/uploads:/projects/public/data/uploads
     ports:
       - ${VBLOG_SERVER_PORTAL_PORT}:8889
 
   server-admin:
+    container_name: vblog-server-admin
     image: ${DOCKER_HUB_USER_NAME}/vblog-server-admin:${VBLOG_SERVER_ADMIN_VERSION}
     environment:
-      - JASYPT_PASSWORD=${JASYPT_PASSWORD}
+      - SERVER_HOST=${SERVER_HOST}
+      - JWT_SECRET=${JWT_SECRET}
     volumes:
-      - /data/uploads:/data/uploads
+      - /projects/public/data/uploads:/projects/public/data/uploads
+    ports:
+      - ${VBLOG_SERVER_ADMIN_PORT}:8888
+
+  server-search:
+    container_name: vblog-server-search
+    image: ${DOCKER_HUB_USER_NAME}/vblog-server-search:${VBLOG_SERVER_SEARCH_VERSION}
+    environment:
+      - SERVER_HOST=${SERVER_HOST}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+    volumes:
+      - /projects/public/data/uploads:/projects/public/data/uploads
     ports:
       - ${VBLOG_SERVER_ADMIN_PORT}:8888
 
@@ -57,22 +71,31 @@ services:
     depends_on:
       - server-admin
       - server-portal
+      - server-search
     image: nginx:1.23.3-alpine
     volumes:
       - env_nginx-conf:/etc/nginx/conf.d/
       - ./vblog-server-nginx.conf:/vblog-server-nginx.conf
     command: sh -c "cp /vblog-server-nginx.conf /etc/nginx/conf.d/default-locations"
-#
-#  logstash-setup:
-#    image: ${LOGSTASH_IMAGE_NAME}:${LOGSTASH_IMAGE_VERSION}
-#    volumes:
-#      - env_logstash-pipeline:/usr/share/logstash/pipeline
-#      - ./vblog-logstash.conf:/vblog-logstash.conf
-#    command: "cp /vblog-logstash.conf /usr/share/logstash/pipeline/"
+
+  logstash-setup:
+    depends_on:
+      - server-search
+    image: ${LOGSTASH_IMAGE_NAME}:${LOGSTASH_IMAGE_VERSION}
+    volumes:
+      - env_es-certs:/data/elastic
+      - env_logstash-pipeline:/usr/share/logstash/pipeline
+      - ./elasticsearch/vblog-logstash.conf:/vblog-logstash.conf
+      - ./elasticsearch/articles.sh:/articles.sh
+    command: >
+      bash -c '
+        cp /vblog-logstash.conf /usr/share/logstash/pipeline/
+        /articles.sh
+      '
 
 volumes:
-  es-certs:
-    driver: local
+  env_es-certs:
+    external: true
   env_web-data:
     external: true
   env_logstash-pipeline:

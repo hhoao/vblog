@@ -1,0 +1,8 @@
+server:
+  port: 8890
+
+spring:
+  elasticsearch:
+    username: elastic
+    uris: https://${SERVER_HOST}:9200
+    password: ${ELASTIC_PASSWORD}

@@ -6,27 +6,11 @@
       v-if="!sessionTimeout && showLocale"
     />
     <AppDarkModeToggle class="absolute top-3 right-7 enter-x" v-if="!sessionTimeout" />
-    <div
-      class="absolute w-full h:full inset-0 bg-cover"
-      style="background-image: url(/@/assets/images/login-bg.png)"
-    ></div>
+    <div class="absolute w-full h:full inset-0 bg-cover login-bg"></div>
     <span class="-enter-x">
       <AppLogo :alwaysShowTitle="true" />
     </span>
-    <div
-      class="bg-cover"
-      style="
-        background-image: url(/@/assets/images/login-show.png);
-        position: absolute;
-        width: 900px;
-        height: 500px;
-        top: 50%;
-        margin-top: -220px;
-        left: 0;
-        cursor: pointer;
-      "
-    >
-    </div>
+    <div class="bg-cover login-show-bg"> </div>
     <div
       class="left-1/2 absolute rounded-lg bg-white ml-160px"
       style="
@@ -76,6 +60,21 @@
     min-height: 100%;
     overflow: hidden;
     padding-left: 30px;
+
+    .login-bg {
+      background-image: url(/@/assets/images/login-bg.png);
+    }
+
+    .login-show-bg {
+      background-image: url(/@/assets/images/login-show.png);
+      position: absolute;
+      width: 900px;
+      height: 500px;
+      top: 50%;
+      margin-top: -220px;
+      left: 0;
+      cursor: pointer;
+    }
     .@{logo-prefix-cls} {
       position: absolute;
       top: 12px;

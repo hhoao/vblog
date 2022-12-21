@@ -16,7 +16,7 @@ public class PortalSwaggerConfig extends BaseSwaggerConfig {
     public SwaggerProperties swaggerProperties() {
         return SwaggerProperties.builder()
                 .apiBasePackage("com.demo.vblog.portal.controller")
-                .title("RETrack后台系统")
+                .title("vblog后端后台管理")
                 .description("任何值得到达的地方，都没有捷径!")
                 .contactName("hhoao")
                 .contactUrl("")

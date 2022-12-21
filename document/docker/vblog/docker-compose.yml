@@ -1,0 +1,85 @@
+version: "3.9"
+
+services:
+  web-portal-setup:
+    image: ${DOCKER_HUB_USER_NAME}/vblog-web:${VBLOG_WEB_VERSION}
+    command: >
+      sh -c '
+        if [ -d /usr/share/nginx/html/release/vblog-web ]; then
+          rm -rf /usr/share/nginx/html/release/vblog-web;
+        fi;
+        mkdir /usr/share/nginx/html/release/vblog-web;
+        cp -r /data/* /usr/share/nginx/html/release/vblog-web
+      '
+    volumes:
+      - env_web-data:/usr/share/nginx/html/release
+
+  web-admin-setup:
+    image: ${DOCKER_HUB_USER_NAME}/vblog-web-admin:${VBLOG_WEB_ADMIN_VERSION}
+    command: >
+      sh -c '
+        if [ -d /usr/share/nginx/html/release/vblog-web-admin ]; then
+          rm -rf /usr/share/nginx/html/release/vblog-web-admin;
+          echo portal existed;
+        fi;
+        mkdir /usr/share/nginx/html/release/vblog-web-admin;
+        cp -r /data/* /usr/share/nginx/html/release/vblog-web-admin
+      '
+    volumes:
+      - env_web-data:/usr/share/nginx/html/release
+
+  web-setup:
+    image: nginx:1.23.3-alpine
+    volumes:
+      - env_nginx-conf:/etc/nginx/conf.d/
+      - ./vblog-web-nginx.conf:/vblog-web-nginx.conf
+    command: sh -c "cp /vblog-web-nginx.conf /etc/nginx/conf.d/default-locations"
+
+  server-portal:
+    image: ${DOCKER_HUB_USER_NAME}/vblog-server-portal:${VBLOG_SERVER_PORTAL_VERSION}
+    environment:
+      - JASYPT_PASSWORD=${JASYPT_PASSWORD}
+    volumes:
+      - /data/uploads:/data/uploads
+    ports:
+      - ${VBLOG_SERVER_PORTAL_PORT}:8889
+
+  server-admin:
+    image: ${DOCKER_HUB_USER_NAME}/vblog-server-admin:${VBLOG_SERVER_ADMIN_VERSION}
+    environment:
+      - JASYPT_PASSWORD=${JASYPT_PASSWORD}
+    volumes:
+      - /data/uploads:/data/uploads
+    ports:
+      - ${VBLOG_SERVER_ADMIN_PORT}:8888
+
+  server-setup:
+    depends_on:
+      - server-admin
+      - server-portal
+    image: nginx:1.23.3-alpine
+    volumes:
+      - env_nginx-conf:/etc/nginx/conf.d/
+      - ./vblog-server-nginx.conf:/vblog-server-nginx.conf
+    command: sh -c "cp /vblog-server-nginx.conf /etc/nginx/conf.d/default-locations"
+#
+#  logstash-setup:
+#    image: ${LOGSTASH_IMAGE_NAME}:${LOGSTASH_IMAGE_VERSION}
+#    volumes:
+#      - env_logstash-pipeline:/usr/share/logstash/pipeline
+#      - ./vblog-logstash.conf:/vblog-logstash.conf
+#    command: "cp /vblog-logstash.conf /usr/share/logstash/pipeline/"
+
+volumes:
+  es-certs:
+    driver: local
+  env_web-data:
+    external: true
+  env_logstash-pipeline:
+    external: true
+  env_nginx-conf:
+    external: true
+
+networks:
+  env_network:
+    external: true

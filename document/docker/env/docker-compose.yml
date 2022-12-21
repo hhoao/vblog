@@ -1,16 +1,49 @@
 version: "3.9"
 services:
+  nginx-setup:
+    image: nginx:1.23.3-alpine
+    volumes:
+      - nginx-conf:/etc/nginx/conf.d
+      - ./default.conf:/default.conf
+      - ./update.sh:/update.sh
+    command: >
+      sh -c '
+        cp /default.conf /etc/nginx/conf.d;
+        cp /update.sh /etc/nginx/conf.d;
+        if [ ! -d /etc/nginx/conf.d/default-locations ]
+        then
+            mkdir /etc/nginx/conf.d/default-locations;
+        fi
+        until curl -s http://nginx | grep -q "<"; do sleep 2; done;
+        echo "DONE nginx-setup!"
+      '
+    networks:
+      - network
+    healthcheck:
+      test: [ "CMD-SHELL", "[ -f /default.conf ]" ]
+      interval: 1s
+      timeout: 5s
+      retries: 120
+
   nginx:
+    depends_on:
+      nginx-setup:
+        condition: service_healthy
     image: nginx:1.23.3-alpine
     ports:
-      - ${NGINX_WEB}:80
+      - ${NGINX_PORT}:80
     volumes:
       - /projects/public/data/uploads:/projects/public/data/uploads
       - web-data:/usr/share/nginx/html/release
-      - ./default.conf:/etc/nginx/conf.d/default.conf
-    command: sh -c "/update.sh /etc/nginx/conf.d 1 & nginx -g 'daemon off;'";
+      - nginx-conf:/etc/nginx/conf.d
+    command: >
+      sh -c '
+        /etc/nginx/conf.d/update.sh /etc/nginx/conf.d/default-locations 1 &
+        nginx -g "daemon off;"
+      '
     networks:
       - network
+
   mysql:
     image: mysql:${MYSQL_VERSION}
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
@@ -43,7 +76,8 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
-  setup:
+
+  es-setup:
     image: ${ES_IMAGE_NAME}:${ES_IMAGE_VERSION}
     volumes:
       - es-certs:/usr/share/elasticsearch/config/certs
@@ -96,7 +130,7 @@ services:
       retries: 120
   es01:
     depends_on:
-      setup:
+      es-setup:
         condition: service_healthy
     image: ${ES_IMAGE_NAME}:${ES_IMAGE_VERSION}
     volumes:
@@ -196,14 +230,19 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-      - MYSQL_HOSTS=mysql:3306
-      - ES_HOSTS=https://es01:9200
+      - MYSQL_HOST=mysql:3306
+      - ES_HOST=https://es01:9200
     volumes:
+      - logstash-pipeline:/usr/share/logstash/pipeline
       - es-certs:/data/elastic
     networks:
       - network
 
 volumes:
+  nginx-conf:
+    driver: local
+  logstash-pipeline:
+    driver: local
   web-data:
     driver: local
   es-certs:

@@ -18,6 +18,8 @@ jobs:
       - id: step1
         name: Check out the repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
 
       - id: step2
         name: Check out project update
@@ -46,6 +48,7 @@ jobs:
         run: |
           ./gradlew :${{ inputs.project-name }}:test;
           ./gradlew :${{ inputs.project-name }}:bootJar;
+
       - name: Upload build reports
         uses: actions/upload-artifact@v3
         with:

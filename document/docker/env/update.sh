@@ -8,7 +8,7 @@ whether_changed(){
         sleep "${check_time}"
         file_new_stat="$(stat -c%Y "${file_path}")"
         if [ "${file_new_stat}" -gt "${file_old_stat}" ]; then
-            echo "File ${file_path} has modified" > modified.log;
+            echo "$(stat -c%y "${file_path}") File ${file_path} has modified"  > modified.log;
             nginx -s reload
             file_old_stat=${file_new_stat};
         fi

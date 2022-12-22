@@ -9,10 +9,6 @@ group 'com.hhoa'
 version '0.0.1-SNAPSHOT'
 
 repositories {
-    repositories {
-        // ...
-        maven { url 'https://repo.spring.io/release' }
-    }
     mavenCentral()
 }
 

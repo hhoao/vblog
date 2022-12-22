@@ -15,6 +15,6 @@ jobs:
     with:
       project-name: ${{ matrix.project-name }}
       server-host: ${{ secrets.SERVER_HOST }}
-      mysql-root-password: ${ secrets.MYSQL_ROOT_PASSWORD }}
-      jwt-secret: ${ secrets.JWT_SECRET }
-      elastic_password: ${ secrets.ELASTIC_PASSWORD }
+      mysql-root-password: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+      jwt-secret: ${{ secrets.JWT_SECRET }}
+      elastic_password: ${{ secrets.ELASTIC_PASSWORD }}

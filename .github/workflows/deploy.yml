@@ -38,7 +38,7 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
 
-      - name: Set up JDK 11
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
@@ -52,9 +52,9 @@ jobs:
       - name: echo env
         env:
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          MYSQL_ROOT_PASSWORD: ${ secrets.MYSQL_ROOT_PASSWORD }}
-          JWT_SECRET: ${ secrets.JWT_SECRET }
-          ELASTIC_PASSWORD: ${ secrets.ELASTIC_PASSWORD }
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          ELASTIC_PASSWORD: ${{ secrets.ELASTIC_PASSWORD }}
         run: |
           echo SERVER_HOST: ${SERVER_HOST}, \
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD},\

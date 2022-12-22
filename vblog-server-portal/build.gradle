@@ -15,6 +15,7 @@ repositories {
 dependencies {
     implementation project(':vblog-server-common')
     implementation project(':vblog-server-mgb')
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation libs.mybatis.spring.boot.starter
     implementation libs.mysql.connector.java
     implementation libs.mybatis.plus.boot.starter

@@ -9,7 +9,7 @@ spring:
     password:
   # 配置mysql数据库
   datasource:
-    url: jdbc:mysql://${SERVER_HOST}:3406/vblog-test
+    url: jdbc:mysql://${SERVER_HOST}:3406/vblog_test
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: ${MYSQL_ROOT_PASSWORD}

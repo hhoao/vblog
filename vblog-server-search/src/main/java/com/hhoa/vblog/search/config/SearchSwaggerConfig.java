@@ -5,7 +5,7 @@ import com.hhoa.vblog.common.domain.SwaggerProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Swagger配置.
+ * search Swagger配置.
  *
  * @author hhoa
  * @since 2022/5/11

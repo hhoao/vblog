@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.boot)
-    alias(libs.plugins.io.spring.dependency.management)
     id 'springboot-dev-conventions'
     id 'check'
 }
@@ -21,4 +20,7 @@ dependencies {
     api libs.springdoc.openapi.webmvc.core
     api libs.springdoc.openapi.ui
     api libs.hutool.all
+}
+tasks.named("bootJar") {
+    enabled false
 }

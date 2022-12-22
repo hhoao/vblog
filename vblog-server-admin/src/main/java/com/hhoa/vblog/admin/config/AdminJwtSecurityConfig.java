@@ -120,7 +120,8 @@ public class AdminJwtSecurityConfig {
         /**
          * 资源权限变动动态刷新DataSource.
          */
-        @Pointcut("execution(* com.hhoa.vblog.admin.service.impl.UmsResourceServiceImpl.delete*(..))"
+        @Pointcut("execution(* com.hhoa.vblog.admin.service.impl."
+                + "UmsResourceServiceImpl.delete*(..))"
                 + "|| execution(* com.hhoa.vblog.admin.service.impl."
                 + "UmsResourceServiceImpl.update*(..))"
                 + "|| execution(* com.hhoa.vblog.admin.service.impl."

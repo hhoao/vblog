@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 /**
+ * AmsArticleServiceImplTest.
+ *
  * @author hhoa
  * @since 2022/12/13
  **/
@@ -25,7 +27,7 @@ class AmsArticleServiceImplTest {
     @Test
     void list() {
         AmsArticle article = new AmsArticle();
-        List<AmsArticle> list = articleService.list(article, new PageInfo(1, 5));
+        articleService.list(article, new PageInfo(1, 5));
     }
 
     @Test

@@ -18,9 +18,6 @@ import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 
 @SpringBootTest(classes = BlogAdminApplication.class)
 public abstract class TransactionTest {
-    public Long testUserId = 1L;
-    public String testRegisterMail = "huanghaohhoa@163.com";
-    public String testUsername = "test";
     @Autowired
     PlatformTransactionManager transactionManager;
     TransactionStatus transactionStatus;

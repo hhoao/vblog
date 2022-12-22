@@ -58,8 +58,6 @@ jobs:
           ELASTIC_PASSWORD: ${ secrets.ELASTIC_PASSWORD }
         run: |
           ./gradlew :${{ inputs.project-name }}:build;
-          ./gradlew :${{ inputs.project-name }}:test;
-          ./gradlew :${{ inputs.project-name }}:bootJar;
 
       - name: Upload build reports
         uses: actions/upload-artifact@v3

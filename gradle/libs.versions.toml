@@ -8,7 +8,7 @@ jasypt-spring-boot-starter = "2.1.0"
 mysql-connector-java = "8.0.28"
 hutool-all = "5.8.5"
 jackson-datatype-jsr310 = "2.13.2"
-spotbugs-gradle-plugin = "4.7.2"
+spotbugs-gradle-plugin = "5.0.13"
 spock-bom = "2.1-groovy-3.0"
 mybatis-plus-boot-starter = "3.5.1"
 mybatis-generator-core = "1.4.1"
@@ -24,7 +24,7 @@ jasypt-spring-boot-starter = { module = "com.github.ulisesbocchio:jasypt-spring-
 mysql-connector-java = { module = "mysql:mysql-connector-java", version.ref = "mysql-connector-java" }
 hutool-all = { module = "cn.hutool:hutool-all", version.ref = "hutool-all" }
 jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson-datatype-jsr310" }
-spotbugs-gradle-plugin = { module = "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin", version.ref = "spotbugs-gradle-plugin" }
+spotbugs-gradle-plugin = { module = "com.github.spotbugs.snom:spotbugs-gradle-plugin", version.ref = "spotbugs-gradle-plugin" }
 spock-bom = {module = "org.spockframework:spock-bom", version.ref = "spock-bom"}
 mybatis-plus-boot-starter = { module = "com.baomidou:mybatis-plus-boot-starter", version.ref = "mybatis-plus-boot-starter"}
 mybatis-generator-core = { module = "org.mybatis.generator:mybatis-generator-core", version.ref = "mybatis-generator-core" }

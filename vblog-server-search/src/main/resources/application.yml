@@ -13,6 +13,3 @@ spring:
       date: iso
       date-time: yyyy-MM-dd HH:mm:ss
 
-pagehelper:
-  pageSizeZero: true
-

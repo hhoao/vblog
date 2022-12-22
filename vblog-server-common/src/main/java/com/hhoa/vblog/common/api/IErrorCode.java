@@ -1,9 +1,12 @@
 package com.hhoa.vblog.common.api;
 
 /**
+ * IErrorCode.
+ *
  * @author hhoa
  * @since 2022/4/7
  **/
+@SuppressWarnings("checkstyle:AbbreviationAsWordInName")
 public interface IErrorCode {
     /**
      * 获取码.

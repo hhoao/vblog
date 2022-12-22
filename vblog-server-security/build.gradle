@@ -17,3 +17,7 @@ dependencies {
     api libs.jackson.datatype.jsr310
     api libs.jjwt
 }
+
+tasks.named("bootJar") {
+    enabled false
+}

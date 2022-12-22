@@ -20,6 +20,11 @@ import java.util.Map;
  */
 public abstract class BaseSwaggerConfig {
 
+    /**
+     * Create rest api open api.
+     *
+     * @return the open api
+     */
     @Bean
     public OpenAPI createRestApi() {
         SwaggerProperties swaggerProperties = swaggerProperties();
@@ -63,6 +68,8 @@ public abstract class BaseSwaggerConfig {
 
     /**
      * 自定义Swagger配置.
+     *
+     * @return the swagger properties
      */
     public abstract SwaggerProperties swaggerProperties();
 }

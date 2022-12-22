@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hhoa
  * @since 2022/8/4
  **/
-@Tags({@Tag(name = "材料管理", description = "RetArticleController")})
+@Tags({@Tag(name = "文章搜索管理", description = "RetArticleController")})
 @RestController
 @RequiredArgsConstructor
 public class EsArticleController {
     private final EsArticleService esArticleService;
 
-    @GetMapping("/materials")
+    @GetMapping("/search/article")
     public CommonResult<CommonPage<EsArticle>> search(String queryInfo, EsPage page) {
         Page<EsArticle> search = esArticleService.search(queryInfo, page);
         return CommonResult.success(CommonPage.restPage(search));

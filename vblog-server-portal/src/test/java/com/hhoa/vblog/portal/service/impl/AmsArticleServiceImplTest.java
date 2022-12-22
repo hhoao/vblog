@@ -1,6 +1,7 @@
 package com.hhoa.vblog.portal.service.impl;
 
 import com.hhoa.vblog.mgb.model.AmsArticle;
+import com.hhoa.vblog.portal.TransactionTest;
 import com.hhoa.vblog.portal.bean.PageInfo;
 import com.hhoa.vblog.portal.service.AmsArticleService;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +21,7 @@ import java.util.List;
 
 
 @SpringBootTest
-class AmsArticleServiceImplTest {
+class AmsArticleServiceImplTest extends TransactionTest {
     @Autowired
     private AmsArticleService articleService;
 

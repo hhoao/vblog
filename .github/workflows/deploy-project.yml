@@ -19,5 +19,5 @@ jobs:
       mysql-root-password: ${{ secrets.MYSQL_ROOT_PASSWORD }}
       jwt-secret: ${{ secrets.JWT_SECRET }}
       elastic-password: ${{ secrets.ELASTIC_PASSWORD }}
-      docker-password: ${{ secrets.DOCKER_USERNAME }}
-      docker-username: ${{ secrets.DOCKER_PASSWORD }}
+      docker-username: ${{ secrets.DOCKER_USERNAME }}
+      docker-password: ${{ secrets.DOCKER_PASSWORD }}

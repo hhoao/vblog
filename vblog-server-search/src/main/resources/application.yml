@@ -3,13 +3,3 @@ spring:
     active: dev #默认开发环境
   jackson:
     default-property-inclusion: non_null
-  mvc:
-    hiddenmethod:
-      filter:
-        #设置restful风格
-        enabled: true
-    format:
-      #设置日期格式
-      date: iso
-      date-time: yyyy-MM-dd HH:mm:ss
-

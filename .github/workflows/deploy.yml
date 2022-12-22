@@ -6,6 +6,7 @@ on:
     inputs:
       project-name:
         required: true
+        type: string
     secrets:
       server-host:
         required: true

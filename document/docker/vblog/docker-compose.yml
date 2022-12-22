@@ -65,7 +65,7 @@ services:
     volumes:
       - /projects/public/data/uploads:/projects/public/data/uploads
     ports:
-      - ${VBLOG_SERVER_ADMIN_PORT}:8888
+      - ${VBLOG_SERVER_SEARCH_PORT}:8890
 
   server-setup:
     depends_on:

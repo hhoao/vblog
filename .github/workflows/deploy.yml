@@ -62,13 +62,12 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-      - name: echo env
-        run: |
-          echo SERVER_HOST: ${{ secrets.server-host }}, \
-            MYSQL_ROOT_PASSWORD: ${{ secrets.mysql-root-password }},\
-            JWT_SECRET: ${{ secrets.jwt-secret }},\
-            ELASTIC_PASSWORD: ${{ secrets.elastic-password }}
+
       - name: Run build with Gradle wrapper
+        SERVER_HOST: ${{ secrets.server-host }}
+        MYSQL_ROOT_PASSWORD: ${{ secrets.mysql-root-password  }}
+        JWT_SECRET: ${{ secrets.jwt-secret }}
+        ELASTIC_PASSWORD: ${{ secrets.elastic-password }}
         run: |
           ./gradlew :${{ inputs.project-name }}:build;
 

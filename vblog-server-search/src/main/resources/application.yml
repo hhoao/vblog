@@ -12,10 +12,6 @@ spring:
       #设置日期格式
       date: iso
       date-time: yyyy-MM-dd HH:mm:ss
-  elasticsearch:
-    username: elastic
-    uris: https://${SERVER_HOST}:9200
-    password: ${ELASTIC_PASSWORD}
 
 pagehelper:
   pageSizeZero: true

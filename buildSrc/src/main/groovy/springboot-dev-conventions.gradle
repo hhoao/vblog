@@ -15,4 +15,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
+test {
+    useJUnitPlatform()
+    jvmArgs '-Dspring.profiles.active=test'
+}
+
+
 

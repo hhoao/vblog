@@ -13,12 +13,6 @@ repositories {
     mavenCentral()
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-}
-
 dependencies {
     implementation project(':vblog-server-common')
     implementation project(':vblog-server-mgb')
@@ -26,8 +20,4 @@ dependencies {
     implementation libs.mybatis.spring.boot.starter
     implementation libs.mysql.connector.java
     implementation libs.mybatis.plus.boot.starter
-}
-
-test {
-    useJUnitPlatform()
 }

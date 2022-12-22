@@ -11,17 +11,9 @@ version '0.0.1-SNAPSHOT'
 repositories {
     mavenCentral()
 }
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-}
+
 
 dependencies {
-    implementation project(':vblog-server-common')
-    implementation project(':vblog-server-mgb')
-    implementation libs.mybatis.spring.boot.starter
-    implementation libs.mysql.connector.java
-    implementation libs.mybatis.plus.boot.starter
+    implementation project(':vblog-server-common') exclude(group: 'com.github.pagehelper', module: 'pagehelper-spring-boot-starter')
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 }

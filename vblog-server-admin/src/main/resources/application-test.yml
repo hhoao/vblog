@@ -5,8 +5,9 @@ spring:
   # 配置redis
   redis:
     database: 3
-    port: 6379
+    port: 6480
     password:
+    host: ${SERVER_HOST}
   # 配置mysql数据库
   datasource:
     url: jdbc:mysql://${SERVER_HOST}:3406/vblog_test

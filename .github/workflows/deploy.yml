@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - main
+      - web-admin
 
 jobs:
   push_to_docker_registry:

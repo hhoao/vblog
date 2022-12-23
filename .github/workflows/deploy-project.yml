@@ -2,6 +2,9 @@
 name: Deploy Project
 
 on:
+  merge:
+    branches:
+      - main
   push:
     branches:
      - main

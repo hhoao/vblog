@@ -41,28 +41,11 @@ services:
     networks:
       - env-network
 
-  server-portal:
-    container_name: vblog-server-portal
-    image: ${DOCKER_HUB_USER_NAME}/vblog-server-portal:${VBLOG_SERVER_PORTAL_VERSION}
-    environment:
-      - MYSQL_SERVER_HOST=${MYSQL_SERVER_HOST}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    volumes:
-      - /projects/public/data/uploads:/projects/public/data/uploads
-    ports:
-      - ${VBLOG_SERVER_PORTAL_PORT}:8889
-    healthcheck:
-      test: [ "CMD", "curl -s http//localhost:8889 | grep '^{'" ]
-      interval: 1s
-      timeout: 5s
-      retries: 120
-    networks:
-      - env-network
-
   server-admin:
     container_name: vblog-server-admin
     image: ${DOCKER_HUB_USER_NAME}/vblog-server-admin:${VBLOG_SERVER_ADMIN_VERSION}
     environment:
+      - SERVER_HOST=${SERVER_HOST}
       - REDIS_SERVER_HOST=${REDIS_SERVER_HOST}
       - MYSQL_SERVER_HOST=${MYSQL_SERVER_HOST}
       - JWT_SECRET=${JWT_SECRET}
@@ -78,6 +61,25 @@ services:
       interval: 1s
       timeout: 5s
       retries: 120
+
+  server-portal:
+    container_name: vblog-server-portal
+    image: ${DOCKER_HUB_USER_NAME}/vblog-server-portal:${VBLOG_SERVER_PORTAL_VERSION}
+    environment:
+      - SERVER_HOST=${SERVER_HOST}
+      - MYSQL_SERVER_HOST=${MYSQL_SERVER_HOST}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - /projects/public/data/uploads:/projects/public/data/uploads
+    ports:
+      - ${VBLOG_SERVER_PORTAL_PORT}:8889
+    healthcheck:
+      test: [ "CMD", "curl -s http//localhost:8889 | grep '^{'" ]
+      interval: 1s
+      timeout: 5s
+      retries: 120
+    networks:
+      - env-network
 
   server-search:
     container_name: vblog-server-search

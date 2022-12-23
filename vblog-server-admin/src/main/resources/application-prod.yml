@@ -10,7 +10,7 @@ spring:
     host: ${REDIS_SERVER_HOST}
   # 配置mysql数据库
   datasource:
-    url: jdbc:mysql://${MYSQL_SERVER_HOST}:3406/vblog
+    url: jdbc:mysql://${MYSQL_SERVER_HOST}:3406/vblog&autoReconnect=true&failOverReadOnly=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: ${MYSQL_ROOT_PASSWORD}
@@ -23,4 +23,4 @@ spring:
 file:
   upload:
     path: /project/public/data/uploads/  #文件上传目标路径
-    baseUrl: http://${SERVER_HOST}/uploads/
+    baseUrl: http://localhost/uploads/

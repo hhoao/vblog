@@ -8,7 +8,11 @@ on:
         required: true
         type: string
     secrets:
-      server-host:
+      redis-server-host:
+        required: true
+      elastic-server-host:
+        required: true
+      mysql-server-host:
         required: true
       mysql-root-password:
         required: true
@@ -65,7 +69,9 @@ jobs:
 
       - name: Run build with Gradle wrapper
         env:
-          SERVER_HOST: ${{ secrets.server-host }}
+          MYSQL_SERVER_HOST: ${{ secrets.mysql-server-host }}
+          ELASTIC_SERVER_HOST: ${{ secrets.elastic-server-host }}
+          REDIS_SERVER_HOST: ${{ secrets.redis-server-host }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.mysql-root-password  }}
           JWT_SECRET: ${{ secrets.jwt-secret }}
           ELASTIC_PASSWORD: ${{ secrets.elastic-password }}

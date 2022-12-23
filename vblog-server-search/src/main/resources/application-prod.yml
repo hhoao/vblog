@@ -4,5 +4,5 @@ server:
 spring:
   elasticsearch:
     username: elastic
-    uris: https://${SERVER_HOST}:9200
+    uris: https://${ELASTIC_SERVER_HOST}:9200
     password: ${ELASTIC_PASSWORD}

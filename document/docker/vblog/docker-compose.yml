@@ -40,10 +40,16 @@ services:
     image: ${DOCKER_HUB_USER_NAME}/vblog-server-portal:${VBLOG_SERVER_PORTAL_VERSION}
     environment:
       - SERVER_HOST=${SERVER_HOST}
+      - PORT=${VBLOG_SERVER_PORTAL_PORT}
     volumes:
       - /projects/public/data/uploads:/projects/public/data/uploads
     ports:
       - ${VBLOG_SERVER_PORTAL_PORT}:8889
+    healthcheck:
+      test: [ "CMD", "curl -s http//localhost:8889 | grep '^{'" ]
+      interval: 1s
+      timeout: 5s
+      retries: 120
 
   server-admin:
     container_name: vblog-server-admin
@@ -51,10 +57,16 @@ services:
     environment:
       - SERVER_HOST=${SERVER_HOST}
       - JWT_SECRET=${JWT_SECRET}
+      - PORT=${VBLOG_SERVER_ADMIN_PORT}
     volumes:
       - /projects/public/data/uploads:/projects/public/data/uploads
     ports:
       - ${VBLOG_SERVER_ADMIN_PORT}:8888
+    healthcheck:
+      test: [ "CMD", "curl -s http//localhost:8888 | grep '^{'" ]
+      interval: 1s
+      timeout: 5s
+      retries: 120
 
   server-search:
     container_name: vblog-server-search
@@ -66,12 +78,20 @@ services:
       - /projects/public/data/uploads:/projects/public/data/uploads
     ports:
       - ${VBLOG_SERVER_SEARCH_PORT}:8890
+    healthcheck:
+      test: [ "CMD", "curl -s http//localhost:8890 | grep '^{'" ]
+      interval: 1s
+      timeout: 5s
+      retries: 120
 
   server-setup:
     depends_on:
-      - server-admin
-      - server-portal
-      - server-search
+      server-admin:
+        condition: service_healthy
+      server-portal:
+        condition: service_healthy
+      server-search:
+        condition: service_healthy
     image: nginx:1.23.3-alpine
     volumes:
       - env_nginx-conf:/etc/nginx/conf.d/

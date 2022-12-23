@@ -16,7 +16,11 @@ import lombok.Data;
 @Builder
 public class PageInfo {
     @Schema(description = "页码", defaultValue = "1")
-    private int pageNum;
+    private Integer  pageNum;
+
     @Schema(description = "页面大小", defaultValue = "5")
-    private int pageSize;
+    private Integer pageSize;
+
+    public PageInfo() {
+    }
 }

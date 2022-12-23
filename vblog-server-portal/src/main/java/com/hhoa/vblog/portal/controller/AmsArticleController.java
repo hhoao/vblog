@@ -8,11 +8,15 @@ import com.hhoa.vblog.portal.service.AmsArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.Null;
 import java.util.List;
 
 /**
@@ -29,7 +33,7 @@ public class AmsArticleController {
 
     @Operation(description = "分页获取文章列表", summary = "分页获取文章列表")
     @GetMapping("/articles")
-    public CommonResult<CommonPage<AmsArticle>> list(PageInfo pageInfo,
+    public CommonResult<CommonPage<AmsArticle>> list(@Nullable PageInfo pageInfo,
                                                      AmsArticle articleParams,
                                                      @Parameter(name = "base") String base) {
         List<AmsArticle> amsArticles = articleService.list(articleParams, pageInfo);

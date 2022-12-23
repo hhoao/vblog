@@ -7,10 +7,10 @@ spring:
     database: 3
     port: 6480
     password:
-    host: ${SERVER_HOST}
+    host: ${REDIS_SERVER_HOST}
   # 配置mysql数据库
   datasource:
-    url: jdbc:mysql://${SERVER_HOST}:3406/vblog_test
+    url: jdbc:mysql://${MYSQL_SERVER_HOST}:3406/vblog_test
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: ${MYSQL_ROOT_PASSWORD}

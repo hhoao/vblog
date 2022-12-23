@@ -69,6 +69,8 @@ services:
     command: redis-server
     ports:
       - ${REDIS_PORT}:6379
+    networks:
+      - network
     volumes:
       - /projects/redis/data:/data
     healthcheck:
@@ -255,7 +257,7 @@ volumes:
     driver: local
 networks:
   network:
-    name: network
+    name: env-network
     attachable: true
     ipam:
       driver: default

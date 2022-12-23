@@ -13,6 +13,8 @@ services:
       '
     volumes:
       - env_web-data:/usr/share/nginx/html/release
+    networks:
+      - env-network
 
   web-admin-setup:
     image: ${DOCKER_HUB_USER_NAME}/vblog-web-admin:${VBLOG_WEB_ADMIN_VERSION}
@@ -27,6 +29,8 @@ services:
       '
     volumes:
       - env_web-data:/usr/share/nginx/html/release
+    networks:
+      - env-network
 
   web-setup:
     image: nginx:1.23.3-alpine
@@ -34,13 +38,15 @@ services:
       - env_nginx-conf:/etc/nginx/conf.d/
       - ./vblog-web-nginx.conf:/vblog-web-nginx.conf
     command: sh -c "cp /vblog-web-nginx.conf /etc/nginx/conf.d/default-locations"
+    networks:
+      - env-network
 
   server-portal:
     container_name: vblog-server-portal
     image: ${DOCKER_HUB_USER_NAME}/vblog-server-portal:${VBLOG_SERVER_PORTAL_VERSION}
     environment:
-      - SERVER_HOST=${SERVER_HOST}
-      - PORT=${VBLOG_SERVER_PORTAL_PORT}
+      - MYSQL_SERVER_HOST=${MYSQL_SERVER_HOST}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - /projects/public/data/uploads:/projects/public/data/uploads
     ports:
@@ -50,14 +56,19 @@ services:
       interval: 1s
       timeout: 5s
       retries: 120
+    networks:
+      - env-network
 
   server-admin:
     container_name: vblog-server-admin
     image: ${DOCKER_HUB_USER_NAME}/vblog-server-admin:${VBLOG_SERVER_ADMIN_VERSION}
     environment:
-      - SERVER_HOST=${SERVER_HOST}
+      - REDIS_SERVER_HOST=${REDIS_SERVER_HOST}
+      - MYSQL_SERVER_HOST=${MYSQL_SERVER_HOST}
       - JWT_SECRET=${JWT_SECRET}
-      - PORT=${VBLOG_SERVER_ADMIN_PORT}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    networks:
+      - env-network
     volumes:
       - /projects/public/data/uploads:/projects/public/data/uploads
     ports:
@@ -72,7 +83,7 @@ services:
     container_name: vblog-server-search
     image: ${DOCKER_HUB_USER_NAME}/vblog-server-search:${VBLOG_SERVER_SEARCH_VERSION}
     environment:
-      - SERVER_HOST=${SERVER_HOST}
+      - ELASTIC_SERVER_HOST=${ELASTIC_SERVER_HOST}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
     volumes:
       - /projects/public/data/uploads:/projects/public/data/uploads
@@ -83,6 +94,8 @@ services:
       interval: 1s
       timeout: 5s
       retries: 120
+    networks:
+      - env-network
 
   server-setup:
     depends_on:
@@ -92,6 +105,8 @@ services:
         condition: service_healthy
       server-search:
         condition: service_healthy
+    networks:
+      - env-network
     image: nginx:1.23.3-alpine
     volumes:
       - env_nginx-conf:/etc/nginx/conf.d/
@@ -112,6 +127,8 @@ services:
         cp /vblog-logstash.conf /usr/share/logstash/pipeline/
         /articles.sh
       '
+    networks:
+      - env-network
 
 volumes:
   env_es-certs:
@@ -124,5 +141,5 @@ volumes:
     external: true
 
 networks:
-  env_network:
+  env-network:
     external: true

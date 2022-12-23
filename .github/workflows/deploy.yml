@@ -32,7 +32,6 @@ jobs:
   check-update:
     name: Check if the project is updated
     runs-on: ubuntu-latest
-    if: ${{ ! inputs.force-deploy }}
     outputs:
       is_update: ${{ steps.step2.outputs.is_update }}
     steps:

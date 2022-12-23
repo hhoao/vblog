@@ -4,6 +4,9 @@ name: Deploy
 on:
   workflow_call:
     inputs:
+      force-deploy:
+        required: false
+        type: boolean
       project-name:
         required: true
         type: string
@@ -29,6 +32,7 @@ jobs:
   check-update:
     name: Check if the project is updated
     runs-on: ubuntu-latest
+    if: ${{ ! inputs.force-deploy }}
     outputs:
       is_update: ${{ steps.step2.outputs.is_update }}
     steps:
@@ -50,7 +54,7 @@ jobs:
     needs: check-update
     name: Build, test and push docker image to docker hub
     runs-on: ubuntu-latest
-    if: ${{ needs.check-update.outputs.is_update == 'true' }}
+    if: ${{ needs.check-update.outputs.is_update == 'true' || inputs.force-deploy }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3

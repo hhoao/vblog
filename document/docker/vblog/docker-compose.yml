@@ -57,7 +57,7 @@ services:
     ports:
       - ${VBLOG_SERVER_ADMIN_PORT}:8888
     healthcheck:
-      test: [ "CMD-SHELL", "wget -q --spider localhost:8888" ]
+      test: [ "CMD-SHELL", "wget -q --spider localhost:8888/actuator/health" ]
       interval: 1s
       timeout: 5s
       retries: 120
@@ -74,7 +74,7 @@ services:
     ports:
       - ${VBLOG_SERVER_PORTAL_PORT}:8889
     healthcheck:
-      test: [ "CMD-SHELL", "wget -q --spider localhost:8889" ]
+      test: [ "CMD-SHELL", "wget -q --spider localhost:8889/actuator/health" ]
       interval: 1s
       timeout: 5s
       retries: 120
@@ -92,7 +92,7 @@ services:
     ports:
       - ${VBLOG_SERVER_SEARCH_PORT}:8890
     healthcheck:
-      test: [ "CMD-SHELL", "wget -q --spider localhost:8890" ]
+      test: [ "CMD-SHELL", "wget -q --spider localhost:8890/actuator/health" ]
       interval: 1s
       timeout: 5s
       retries: 120

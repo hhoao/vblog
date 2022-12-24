@@ -13,6 +13,13 @@ spring:
       date: iso
       date-time: yyyy-MM-dd HH:mm:ss
 
+# actuator
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
 # 配置mybatis
 mybatis:
   mapper-locations:
@@ -36,8 +43,9 @@ jwt:
   token-Header: Authorization
   token-head: 'Bearer'
   refresh-time: 30
-  ignored:
-    urls:
+  filter:
+    authenticated: true
+    ignored:
       - /swagger-ui/**
       - /swagger-ui.html
       - /v3/api-docs
@@ -47,6 +55,7 @@ jwt:
       - /**/*.png
       - /**/*.ico
       - /accounts/auth/token
+      - /actuator/**
 
 pagehelper:
   pageSizeZero: true

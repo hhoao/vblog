@@ -22,5 +22,7 @@ public class PageInfo {
     private Integer pageSize;
 
     public PageInfo() {
+        pageNum = 1;
+        pageSize = 0;
     }
 }

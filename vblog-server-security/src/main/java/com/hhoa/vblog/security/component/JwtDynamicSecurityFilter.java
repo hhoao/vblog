@@ -1,5 +1,6 @@
 package com.hhoa.vblog.security.component;
 
+import com.hhoa.vblog.security.config.DynamicSecurityFilterProperties;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.SecurityMetadataSource;
@@ -17,28 +18,28 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * 动态权限过滤器，用于实现基于路径的动态权限过滤.
  */
 public class JwtDynamicSecurityFilter extends AbstractSecurityInterceptor implements Filter {
     private final DynamicSecurityMetadataSource dynamicSecurityMetadataSource;
-    private final List<String> ignoredUrls;
+    //    private final List<String> ignoredUrls;
+    private final DynamicSecurityFilterProperties filterProperties;
 
     /**
      * 设置jwt过滤器constructor.
      *
-     * @param dynamicAcc 决定者
+     * @param dynamicAcc                    决定者
      * @param dynamicSecurityMetadataSource 安全信息
-     * @param ignoredUrls 白名单
      */
     public JwtDynamicSecurityFilter(AccessDecisionManager dynamicAcc,
                                     DynamicSecurityMetadataSource dynamicSecurityMetadataSource,
-                                    List<String> ignoredUrls) {
+                                    DynamicSecurityFilterProperties filterProperties
+    ) {
         setAccessDecisionManager(dynamicAcc);
         this.dynamicSecurityMetadataSource = dynamicSecurityMetadataSource;
-        this.ignoredUrls = ignoredUrls;
+        this.filterProperties = filterProperties;
     }
 
 
@@ -53,6 +54,7 @@ public class JwtDynamicSecurityFilter extends AbstractSecurityInterceptor implem
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         FilterInvocation fi = new FilterInvocation(servletRequest, servletResponse, filterChain);
+        InterceptorStatusToken token = null;
         //OPTIONS请求直接放行
         if (request.getMethod().equals(HttpMethod.OPTIONS.toString())) {
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
@@ -60,14 +62,26 @@ public class JwtDynamicSecurityFilter extends AbstractSecurityInterceptor implem
         }
         //白名单请求直接放行
         PathMatcher pathMatcher = new AntPathMatcher();
-        for (String path : ignoredUrls) {
+        for (String path : filterProperties.getIgnored()) {
             if (pathMatcher.match(path, request.getRequestURI())) {
                 fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
                 return;
             }
         }
-        //此处会调用AccessDecisionManager中的decide方法进行鉴权操作
-        InterceptorStatusToken token = super.beforeInvocation(fi);
+
+        // 默认需要验证
+        if (filterProperties.getAuthenticated()) {
+            //此处会调用AccessDecisionManager中的decide方法进行鉴权操作
+            token = super.beforeInvocation(fi);
+        // 默认不需要验证，验证需要验证的请求
+        } else {
+            for (String path : filterProperties.getInclude()) {
+                if (pathMatcher.match(path, request.getRequestURI())) {
+                    token = super.beforeInvocation(fi);
+                    break;
+                }
+            }
+        }
         try {
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
         } finally {

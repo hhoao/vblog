@@ -16,7 +16,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,7 +23,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -47,10 +45,8 @@ public class JwtSecurityAutoConfiguration {
     private UserDetailsService userDetailsService;
     private DynamicSecurityService dynamicSecurityService;
     private AuthenticationTokenFilter authenticationTokenFilter;
-    private PasswordEncoder passwordEncoder;
 
-
-    private JwtTokenService jwtTokenService;
+    private final JwtTokenService jwtTokenService;
     private List<AccessDecisionVoter<?>> voters;
 
     public JwtSecurityAutoConfiguration(
@@ -61,13 +57,7 @@ public class JwtSecurityAutoConfiguration {
         this.jwtTokenService = jwtTokenService;
     }
 
-    private void configureJwtTokenService() {
-        this.jwtTokenService.setTokenHead(jwtSecurityProperties.getTokenHead());
-        this.jwtTokenService.setExpiration(jwtSecurityProperties.getExpiration());
-        Assert.hasText(jwtSecurityProperties.getSecret());
-        this.jwtTokenService.setSecret(jwtSecurityProperties.getSecret());
-        this.jwtTokenService.setRefreshTime(jwtSecurityProperties.getRefreshTime());
-    }
+
 
     /**
      * custom filterChain.
@@ -80,20 +70,11 @@ public class JwtSecurityAutoConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry
                 = httpSecurity.authorizeRequests();
-        // 不需要保护的资源路径允许访问
-        if (jwtSecurityProperties.getIgnored().getUrls() != null) {
-            for (String url : jwtSecurityProperties.getIgnored().getUrls()) {
-                registry.antMatchers(url).permitAll();
-            }
-        }
-        // 允许跨域的OPTIONS请求
-        registry.antMatchers(HttpMethod.OPTIONS)
-                .permitAll();
         // 其他任何请求都需要身份认证
         registry.and()
                 .authorizeRequests()
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 // 关闭跨站请求防护及不使用session
                 .and()
                 .csrf()
@@ -125,11 +106,16 @@ public class JwtSecurityAutoConfiguration {
     @Bean
     @Order
     @ConditionalOnMissingBean(JwtTokenService.class)
-    public JwtTokenService jwtTokenService() {
-        this.jwtTokenService = new DefaultJwtTokenServiceImpl();
-        configureJwtTokenService();
-        return this.jwtTokenService;
+    public static JwtTokenService jwtTokenService(JwtSecurityProperties jwtSecurityProperties) {
+        JwtTokenService jwtTokenService = new DefaultJwtTokenServiceImpl();
+        jwtTokenService.setTokenHead(jwtSecurityProperties.getTokenHead());
+        jwtTokenService.setExpiration(jwtSecurityProperties.getExpiration());
+        Assert.hasText(jwtSecurityProperties.getSecret());
+        jwtTokenService.setSecret(jwtSecurityProperties.getSecret());
+        jwtTokenService.setRefreshTime(jwtSecurityProperties.getRefreshTime());
+        return jwtTokenService;
     }
+
 
     private AuthenticationTokenFilter jwtAuthenticationTokenFilter() {
         if (this.authenticationTokenFilter == null) {
@@ -154,13 +140,9 @@ public class JwtSecurityAutoConfiguration {
         return new JwtDynamicSecurityFilter(//new DynamicAccessDecisionManager(voters),
                 new AffirmativeBased(voters),
                 new DynamicSecurityMetadataSource(dynamicSecurityService),
-                jwtSecurityProperties.getIgnored().getUrls());
+                jwtSecurityProperties.getFilter());
     }
 
-    @Autowired(required = false)
-    public void passwordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Autowired(required = false)
     public void userDetailsService(UserDetailsService userDetailsService) {

@@ -1,6 +1,12 @@
 server:
   port: 8889
 spring:
+  # 配置redis
+  redis:
+    database: 0
+    port: 6480
+    password:
+    host: ${REDIS_SERVER_HOST}
   # 配置mysql数据库
   datasource:
     url: jdbc:mysql://${MYSQL_SERVER_HOST}:3406/vblog?autoReconnect=true&failOverReadOnly=false

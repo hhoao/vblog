@@ -3,8 +3,6 @@ package com.hhoa.vblog.security.config;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.List;
-
 /**
  * Jwt配置属性.
  *
@@ -15,15 +13,31 @@ import java.util.List;
 @Data
 @ConfigurationProperties("jwt")
 public class JwtSecurityProperties {
+    /**
+     * token头部.
+     */
     public String tokenHeader = "Authorization";
-    private String secret;
-    private Long expiration = 604800L;
-    private String tokenHead = "Bearer";
-    private Integer refreshTime = 30;
-    private IgnoreUrlsConfig ignored = new IgnoreUrlsConfig();
 
-    @Data
-    public static class IgnoreUrlsConfig {
-        private List<String> urls;
-    }
+    /*
+     * JWT需要设置的密钥(必须)。
+     */
+    private String secret;
+
+    /**
+     * token过期时间.
+     */
+    private Long expiration = 604800L;
+
+    /**
+     * 载荷.
+     */
+    private String tokenHead = "Bearer";
+
+    /**
+     * 刷新时间.
+     */
+    private Integer refreshTime = 30;
+
+    private DynamicSecurityFilterProperties filter;
+
 }

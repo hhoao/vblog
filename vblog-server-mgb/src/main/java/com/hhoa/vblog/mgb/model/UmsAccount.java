@@ -1,11 +1,14 @@
 package com.hhoa.vblog.mgb.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 账户
+ * 账户.
+ *
  * @author hhoa
  * @date 2022-12-12
  */
@@ -61,6 +64,7 @@ public class UmsAccount implements Serializable {
     @Schema(description = "个性签名")
     private String signature;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

@@ -1,6 +1,8 @@
 package com.hhoa.vblog.mgb.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,6 +30,7 @@ public class UmsResource implements Serializable {
     @Schema(description = "描述")
     private String description;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

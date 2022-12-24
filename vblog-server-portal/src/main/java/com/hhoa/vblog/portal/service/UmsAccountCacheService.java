@@ -11,6 +11,13 @@ import com.hhoa.vblog.portal.bean.UmsAccountDetails;
  */
 public interface UmsAccountCacheService {
     /**
+     * 延长时间.
+     *
+     * @param username 用户名
+     */
+    void expire(String username);
+
+    /**
      * 通过角色名和资源设置token.
      *
      * @param username             用户名

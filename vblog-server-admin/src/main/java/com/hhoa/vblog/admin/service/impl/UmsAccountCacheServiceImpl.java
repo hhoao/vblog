@@ -1,9 +1,12 @@
 package com.hhoa.vblog.admin.service.impl;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hhoa.vblog.admin.bean.UmsAccountDetails;
 import com.hhoa.vblog.admin.service.UmsAccountCacheService;
 import com.hhoa.vblog.common.service.RedisService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -25,6 +28,14 @@ public class UmsAccountCacheServiceImpl implements UmsAccountCacheService {
     @Value("${ret.redis.key.administrator}")
     private String redisKey;
     private RedisService redisService;
+
+    private ObjectMapper objectMapper;
+
+    @Lazy
+    @Autowired
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Autowired
     @Lazy
@@ -48,7 +59,13 @@ public class UmsAccountCacheServiceImpl implements UmsAccountCacheService {
 
     @Override
     public void setKey(String username, UmsAccountDetails userDetails) {
-        redisService.set(getUserNameKey(username), userDetails, redisExpire);
+        try {
+            redisService.set(getUserNameKey(username),
+                    this.objectMapper.writeValueAsString(userDetails),
+                    redisExpire);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -56,9 +73,14 @@ public class UmsAccountCacheServiceImpl implements UmsAccountCacheService {
         return redisService.hasKey(getUserNameKey(username));
     }
 
+    @SneakyThrows
     @Override
     public UmsAccountDetails getKey(String username) {
-        return (UmsAccountDetails) redisService.get(getUserNameKey(username));
+        String o = (String) redisService.get(getUserNameKey(username));
+        if (o == null) {
+            return null;
+        }
+        return this.objectMapper.readValue(o, UmsAccountDetails.class);
     }
 
     @Override

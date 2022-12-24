@@ -2,14 +2,22 @@ package com.hhoa.vblog.portal.config;
 
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.jwt.JWT;
 import com.hhoa.vblog.mgb.model.UmsResource;
+import com.hhoa.vblog.portal.service.UmsAccountCacheService;
 import com.hhoa.vblog.portal.service.UmsAccountService;
 import com.hhoa.vblog.portal.service.UmsResourceService;
 import com.hhoa.vblog.security.component.DynamicSecurityService;
+import com.hhoa.vblog.security.config.JwtSecurityProperties;
+import com.hhoa.vblog.security.util.DefaultJwtTokenServiceImpl;
+import com.hhoa.vblog.security.util.JwtTokenService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionVoter;
@@ -23,6 +31,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -164,5 +174,53 @@ public class AdminJwtSecurityConfig {
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * token服务.
+     *
+     * @param administratorCacheService token缓存服务
+     * @param jwtSecurityProperties     jwt安全配置属性
+     * @return jwtToken服务 jwt token service
+     */
+    @Bean
+    public static JwtTokenService jwtTokenService(UmsAccountCacheService administratorCacheService,
+                                                  JwtSecurityProperties jwtSecurityProperties) {
+        DefaultJwtTokenServiceImpl defaultJwtTokenService = new DefaultJwtTokenServiceImpl() {
+            @Override
+            public String generateToken(Object subject) {
+                Map<String, Object> claims = new HashMap<>(2);
+                claims.put(CLAIM_KEY_CREATED, new Date());
+                claims.put(JWT.SUBJECT, subject);
+                return Jwts.builder()
+                        .setClaims(claims)
+                        .signWith(SignatureAlgorithm.HS512, getSecret())
+                        .compact();
+            }
+
+
+            @Override
+            public boolean isTokenExpired(String token) {
+                String username = getSubjectFromToken(token);
+                return administratorCacheService.hasKey(username);
+            }
+
+            @Override
+            public boolean validateToken(String token) {
+                return isTokenExpired(token);
+            }
+
+            @Override
+            public String refreshHeadToken(String oldToken) {
+                if (tokenRefreshJustBefore(oldToken, getRefreshTime())) {
+                    return oldToken;
+                }
+                String username = getSubjectFromToken(oldToken);
+                administratorCacheService.expire(username);
+                return oldToken;
+            }
+        };
+        BeanUtils.copyProperties(jwtSecurityProperties, defaultJwtTokenService);
+        return defaultJwtTokenService;
     }
 }

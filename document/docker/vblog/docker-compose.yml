@@ -89,9 +89,18 @@ services:
       - ELASTIC_SERVER_HOST=${ELASTIC_SERVER_HOST}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
     volumes:
+      - env_es-certs:/data/elastic
       - /projects/public/data/uploads:/projects/public/data/uploads
     ports:
       - ${VBLOG_SERVER_SEARCH_PORT}:8890
+    entrypoint: >
+      sh -c '
+        cp /data/elastic/ca/ca.crt /opt/openjdk-17/lib/security;
+        keytool -import -noprompt -keystore /opt/openjdk-17/lib/security/cacerts -storepass changeit -keypass changeit -alias es01-cas -file /data/elastic/ca/ca.crt
+        echo "DONE!"
+        java -jar -Dspring.profiles.active=prod /vblog-server-search-0.0.1-SNAPSHOT.jar
+        ./
+      '
     healthcheck:
       test: [ "CMD-SHELL", "wget -q --spider localhost:8890/actuator/health" ]
       interval: 1s
@@ -118,6 +127,7 @@ services:
       sh -c "
         cp /vblog-server-nginx.conf /etc/nginx/conf.d/default-locations;
         echo down;
+        java -jar -Dspring.profiles.active=prod /vblog-server-search-0.0.1-SNAPSHOT.jar
       "
 
   logstash-setup:

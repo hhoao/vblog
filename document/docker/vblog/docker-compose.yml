@@ -67,6 +67,7 @@ services:
     image: ${DOCKER_HUB_USER_NAME}/vblog-server-portal:${VBLOG_SERVER_PORTAL_VERSION}
     environment:
       - SERVER_HOST=${SERVER_HOST}
+      - REDIS_SERVER_HOST=${REDIS_SERVER_HOST}
       - MYSQL_SERVER_HOST=${MYSQL_SERVER_HOST}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:

@@ -1,7 +1,6 @@
 package com.hhoa.vblog.search.bean;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.AbstractPageRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

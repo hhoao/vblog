@@ -30,8 +30,8 @@ public class EsArticle implements Serializable {
     @Schema(description = "摘要")
     @Size(min = 10)
     private String digest;
-
-    @Schema(description = "内容")
-    @Size(min = 20)
-    private String content;
+//
+//    @Schema(description = "内容")
+//    @Size(min = 20)
+//    private String content;
 }

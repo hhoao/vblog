@@ -1,6 +1,7 @@
 package com.hhoa.vblog.search.bean;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.AbstractPageRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -27,7 +28,7 @@ public class EsPage extends PageRequest {
      * @param pageNum must not be less than zero.
      * @param pageSize must not be less than one.
      */
-    public EsPage(int pageNum, int pageSize) {
+    public EsPage(Integer pageNum, Integer pageSize) {
         super(pageNum, pageSize, Sort.unsorted());
     }
 }

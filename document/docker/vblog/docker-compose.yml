@@ -134,6 +134,10 @@ services:
     depends_on:
       - server-search
     image: ${LOGSTASH_IMAGE_NAME}:${LOGSTASH_IMAGE_VERSION}
+    user: '0'
+    environment:
+      - SERVER_HOST=${SERVER_HOST}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
     volumes:
       - env_es-certs:/data/elastic
       - env_logstash-pipeline:/usr/share/logstash/pipeline
@@ -141,8 +145,8 @@ services:
       - ./elasticsearch/articles.sh:/articles.sh
     command: >
       bash -c '
-        cp /vblog-logstash.conf /usr/share/logstash/pipeline/
         /articles.sh
+        cp /vblog-logstash.conf /usr/share/logstash/pipeline/
       '
     networks:
       - env-network

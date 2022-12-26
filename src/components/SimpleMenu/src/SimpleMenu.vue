@@ -126,22 +126,22 @@
         setOpenKeys(path);
       }
 
-      async function handleSelect(key: string) {
-        if (isUrl(key)) {
-          openWindow(key);
+      async function handleSelect(menu: string) {
+        if (isUrl(menu)) {
+          openWindow(menu);
           return;
         }
         const { beforeClickFn } = props;
         if (beforeClickFn && isFunction(beforeClickFn)) {
-          const flag = await beforeClickFn(key);
+          const flag = await beforeClickFn(menu);
           if (!flag) return;
         }
 
-        emit('menuClick', key);
+        emit('menuClick', menu);
 
         isClickGo.value = true;
-        setOpenKeys(key);
-        menuState.activeName = key;
+        // setOpenKeys(menu);
+        // menuState.activeName = menu;
       }
 
       return {

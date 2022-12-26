@@ -19,6 +19,8 @@
   import { useAppInject } from '/@/hooks/web/useAppInject';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useMenuStoreWithOut } from '/@/store/modules/menu';
+  import { router } from '/@/router';
+  import { Menu } from '/@/router/types';
 
   export default defineComponent({
     name: 'LayoutMenu',
@@ -103,8 +105,35 @@
        * @param menu
        */
 
-      function handleMenuClick(path: string) {
-        go(path);
+      function handleMenuClick(menu: Menu) {
+        if (menu && menu.meta?.anchorJump) {
+          let anchorName = '';
+          let s = menu.name.replaceAll(' ', '-').toLowerCase();
+          for (let ch of s) {
+            let code = ch.charCodeAt(0);
+            if (
+              ch.charCodeAt(0) > 127 ||
+              (code >= 97 && code <= 122) ||
+              (code >= 65 && code <= 90) ||
+              (code >= 48 && code <= 57) ||
+              ch == '-'
+            ) {
+              anchorName += ch;
+            }
+          }
+          const anchor = document.getElementById(anchorName);
+          history.replaceState(
+            router.currentRoute.value.path,
+            '',
+            router.currentRoute.value.path + '#' + anchorName,
+          );
+          if (anchor) {
+            const body = document.body;
+            body.scrollTo({ left: 0, top: anchor.offsetTop, behavior: 'smooth' });
+          }
+        } else {
+          go(menu.path);
+        }
       }
 
       /**

@@ -17,20 +17,21 @@
 </template>
 
 <script lang="ts">
-  import { PropType } from 'vue';
-  import { defineComponent, ref, computed, unref, getCurrentInstance, watch } from 'vue';
+  import { computed, defineComponent, getCurrentInstance, PropType, ref, unref, watch } from 'vue';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { propTypes } from '/@/utils/propTypes';
   import { useMenuItem } from './useMenu';
   import { Tooltip } from 'ant-design-vue';
   import { useSimpleRootMenuContext } from './useSimpleMenuContext';
+  import { Menu } from '/@/router/types';
+
   export default defineComponent({
     name: 'MenuItem',
     components: { Tooltip },
     props: {
-      name: {
-        type: [String, Number] as PropType<string | number>,
-        required: true,
+      meta: {
+        type: Object as PropType<Menu>,
+        default: () => ({}),
       },
       disabled: propTypes.bool,
     },
@@ -69,7 +70,7 @@
           return;
         }
 
-        rootMenuEmitter.emit('on-menu-item-select', props.name);
+        rootMenuEmitter.emit('on-menu-item-select', props.meta);
         if (unref(getCollapse)) {
           return;
         }
@@ -84,7 +85,7 @@
       watch(
         () => activeName.value,
         (name: string) => {
-          if (name === props.name) {
+          if (name === props.meta?.path) {
             const { list, uidList } = getParentList();
             active.value = true;
             list.forEach((item) => {

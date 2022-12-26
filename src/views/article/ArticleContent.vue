@@ -8,7 +8,11 @@
     <span> <message-outlined /></span>
     <span> {{ articleData?.lastModification }}</span>
   </a-space>
-  <markdown-viewer :value="articleData?.content" :toc-wrapper="tocWrapper" />
+  <markdown-viewer
+    ref="markdownViewerRef"
+    :value="articleData?.content"
+    :toc-wrapper="tocWrapper"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -19,6 +23,7 @@
   import { getDetailsArticle } from '/@/api/article';
   import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons-vue';
   import MarkdownViewer from '/@/components/Markdown/src/MarkdownViewer.vue';
+  import { router } from '/@/router';
 
   interface TocItem {
     anchor: string;
@@ -36,7 +41,7 @@
   });
   const tocWrapper = reactive<{ toc: TocItem[] }>({ toc: [] });
   const { setMenus } = useMenuStoreWithOut();
-
+  const markdownViewerRef = ref<Nullable<{ getIsRendered }>>(null);
   const articleData = ref<Nullable<DetailArticleModel>>(null);
   const loading = ref<boolean>(true);
 
@@ -48,9 +53,11 @@
       if (tocWrapper.toc.length == 0) {
         return;
       }
+      // console.log(router.currentRoute.value.params);
       let curMenu: MenuWrapper = {
         name: tocWrapper.toc[0].text,
-        path: tocWrapper.toc[0].text,
+        path: router.currentRoute.value.hash,
+        meta: { anchorJump: true },
         children: [],
         level: tocWrapper.toc[0].level,
       };
@@ -58,7 +65,8 @@
       for (let i = 1; i < tocWrapper.toc.length; i++) {
         let nextMenu: MenuWrapper = {
           name: tocWrapper.toc[i].text,
-          path: tocWrapper.toc[i].text,
+          path: router.currentRoute.value.hash,
+          meta: { anchorJump: true },
           children: [],
           level: tocWrapper.toc[i].level,
         };
@@ -67,8 +75,10 @@
         }
         if (nextMenu.level > curMenu.level) {
           curMenu.children?.push(nextMenu);
+          nextMenu.parent = curMenu;
+        } else {
+          menus.push(nextMenu);
         }
-        nextMenu.parent = curMenu;
         curMenu = nextMenu;
       }
       setMenus(menus);
@@ -86,6 +96,21 @@
     loading.value = false;
   }
   onMounted(() => {
+    watch(
+      () => markdownViewerRef.value?.getIsRendered,
+      (value) => {
+        if (value == true) {
+          const anchor = document.getElementById(router.currentRoute.value.hash.substring(1));
+          if (anchor) {
+            const body = document.body;
+            body.scrollTo({ left: 0, top: anchor.offsetTop, behavior: 'smooth' });
+          }
+        }
+      },
+      {
+        immediate: true,
+      },
+    );
     props.id && getDetailsArticlePageList({ id: props.id });
   });
 </script>

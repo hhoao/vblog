@@ -1,26 +1,19 @@
 <template>
   <div class="sticky -top-800px">
     <div class="overflow-hidden">
-      <a-card :loading="hotArticleLoading" title="热门文章">
-        <a-list :data-source="hotArticleListData">
-          <template #renderItem="{ item }">
-            <a-list-item>
-              <a-list-item-meta>
-                <template #title>
-                  <a href="">{{ item.title }}</a>
-                </template>
-                <template #avatar>
-                  <a-avatar src="" />
-                </template>
-              </a-list-item-meta>
-            </a-list-item>
-          </template>
-        </a-list>
+      <a-card :loading="hotArticleLoading" style="font-size: 0.5rem">
+        <p> 热门文章 </p>
+        <div v-for="item in hotArticleListData" :key="item.id">
+          <router-link :to="`/article/${item.id}`" class="text-current">
+            {{ item.title }}
+          </router-link>
+        </div>
       </a-card>
-      <a-card :loading="tagLoading" title="标签列表">
-        <a-button v-for="tag of tagList" :key="tag.id" size="small">
-          {{ tag.label }}
-        </a-button>
+      <a-card :loading="tagLoading" style="font-size: 0.5rem">
+        <p>标签列表</p>
+        <a-tag v-for="tag of tagList" :key="tag.id" color="blue">
+          <a href="">{{ tag.label }}</a>
+        </a-tag>
       </a-card>
       <a-card :loading="commentLoading" title="最新留言">
         <a-list :data-source="newlyCommentListData">

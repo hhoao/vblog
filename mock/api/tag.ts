@@ -4,7 +4,7 @@ import { tagList } from '../data/tag';
 
 export default [
   {
-    url: '/basic-api/tags',
+    url: '/api/tags',
     timeout: 100,
     method: 'get',
     response: ({ query }) => {

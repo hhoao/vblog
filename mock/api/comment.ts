@@ -4,7 +4,7 @@ import { commentList } from '../data/comment';
 
 export default [
   {
-    url: '/basic-api/comments',
+    url: '/api/comments',
     timeout: 100,
     method: 'get',
     response: ({ query }) => {

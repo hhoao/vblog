@@ -9,7 +9,7 @@ import {
 
 export default [
   {
-    url: '/basic-api/articles',
+    url: '/api/articles',
     timeout: 100,
     method: 'get',
     response: ({ query }) => {
@@ -30,7 +30,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/articles/:id',
+    url: '/api/articles/:id',
     timeout: 100,
     method: 'get',
     response: ({ query }) => {

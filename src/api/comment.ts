@@ -7,4 +7,4 @@ import {
 
 export const getArticleCommentListApi = (
   params: ArticleCommentPageModelParams = { pageNum: 1, pageSize: 5 },
-) => defHttp.get<BasicFetchResult<ArticleCommentModel>>({ url: '/comments', params });
+) => defHttp.get<BasicFetchResult<ArticleCommentModel>>({ url: '/api/comments', params });

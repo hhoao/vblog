@@ -1,21 +1,27 @@
 <template>
-  <div :class="$props.class" class="markdown-viewer" v-html="getHtmlData"></div>
+  <div :class="[$props.class, prefixCls]" v-html="getHtmlData"></div>
 </template>
 
 <script lang="ts" setup>
-  import { computed, onMounted, watch } from 'vue';
+  import { computed, onMounted, ref, watch } from 'vue';
   import showdown from 'showdown';
   import showdownToc from 'showdown-toc';
   import hljs from 'highlight.js';
+  import { useDesign } from '/@/hooks/web/useDesign';
+
   const props = defineProps<{
     tocWrapper: object;
     value?: string | undefined;
     class?: string;
   }>();
+  let { prefixCls } = useDesign('markdown-viewer');
   const converter = new showdown.Converter({
     extensions: [showdownToc(props.tocWrapper)],
   });
+  converter.setFlavor('github');
   converter.setOption('tables', true);
+  converter.setOption('tasklists', true);
+  const isRendered = ref(false);
 
   const getHtmlData = computed(() => {
     return converter.makeHtml(props.value ?? '');
@@ -27,6 +33,7 @@
         document.querySelectorAll('pre code').forEach((el: HTMLElement) => {
           hljs.highlightElement(el);
         });
+        isRendered.value = true;
       }
     },
     {
@@ -34,16 +41,52 @@
       flush: 'post',
     },
   );
-
+  const getIsRendered = computed(() => isRendered.value);
+  // = () => {
+  //  return isRendered.value;
+  // };
   onMounted(() => {});
+
+  defineExpose({ getIsRendered });
 </script>
 
 <style lang="less">
-  .markdown-viewer {
+  @prefix-cls: ~'@{namespace}-markdown-viewer';
+  .@{prefix-cls} {
     width: 100%;
 
+    table {
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 0.4em 1em;
+      border: 1px solid #dddfe3;
+    }
+
     h1 {
-      font-size: 1.83em;
+      font-size: 1.4em;
+    }
+
+    h2 {
+      font-size: 1.35em;
+    }
+
+    h3 {
+      font-size: 1.3em;
+    }
+
+    h4 {
+      font-size: 1.25em;
+    }
+
+    h5 {
+      font-size: 1.2em;
+    }
+
+    h6 {
+      font-size: 1.15em;
     }
 
     & h1,

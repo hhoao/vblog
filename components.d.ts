@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
     ABreadcrumb: typeof import('ant-design-vue/es')['Breadcrumb'];
     AButton: typeof import('ant-design-vue/es')['Button'];
     ACard: typeof import('ant-design-vue/es')['Card'];
+    ACheckableTag: typeof import('ant-design-vue/es')['CheckableTag'];
     ACol: typeof import('ant-design-vue/es')['Col'];
     AComment: typeof import('ant-design-vue/es')['Comment'];
     ADivider: typeof import('ant-design-vue/es')['Divider'];
@@ -31,6 +32,7 @@ declare module '@vue/runtime-core' {
     ARow: typeof import('ant-design-vue/es')['Row'];
     ASkeleton: typeof import('ant-design-vue/es')['Skeleton'];
     ASpace: typeof import('ant-design-vue/es')['Space'];
+    ATag: typeof import('ant-design-vue/es')['Tag'];
     ATextarea: typeof import('ant-design-vue/es')['Textarea'];
     BasicArrow: typeof import('./src/components/Basic/src/BasicArrow.vue')['default'];
     BasicDrawer: typeof import('./src/components/Drawer/src/BasicDrawer.vue')['default'];

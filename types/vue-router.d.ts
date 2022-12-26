@@ -41,5 +41,7 @@ declare module 'vue-router' {
     ignoreRoute?: boolean;
     // Hide path for children
     hidePathForChildren?: boolean;
+    // Whether it is used for anchor jumps
+    anchorJump?: boolean;
   }
 }

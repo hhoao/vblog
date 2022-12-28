@@ -2,7 +2,7 @@
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
     <BasicTable @register="registerTable" :searchInfo="searchInfo">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增文章</a-button>
+        <a-button type="primary" @click="handleCreate">新增标签</a-button>
       </template>
       <template #action="{ record }">
         <TableAction
@@ -14,13 +14,13 @@
             },
             {
               icon: 'clarity:note-edit-line',
-              tooltip: '编辑文章',
+              tooltip: '编辑标签',
               onClick: handleEdit.bind(null, record),
             },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
-              tooltip: '删除此文章',
+              tooltip: '删除此标签',
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
@@ -44,14 +44,14 @@
 
   import { columns, searchFormSchema } from './tag.data';
   import { useGo } from '/@/hooks/web/usePage';
-  import { addTagApi, deleteTagApi, getTagListApi } from '/@/api/tag';
+  import { deleteTagApi, getTagListApi } from '/@/api/tag';
   import { TagParams } from '/@/api/model/TagModel';
 
   const go = useGo();
   const [register, { openModal }] = useModal();
   const searchInfo = reactive<Recordable>({});
   const [registerTable, { reload, updateTableDataRecord }] = useTable({
-    title: '文章列表',
+    title: '标签列表',
     api: getTagListApi,
     rowKey: 'id',
     columns,
@@ -89,7 +89,9 @@
   }
 
   function handleDelete(record: TagParams) {
-    deleteTagApi({ id: record.id });
+    deleteTagApi({ id: record.id }).then(() => {
+      reload();
+    });
   }
 
   function handleUpdateSuccess({ isUpdate, values }) {
@@ -98,7 +100,7 @@
       // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
       updateTableDataRecord(values.id, values);
     } else {
-      addTagApi(values);
+      // addTagApi(values);
       reload();
     }
   }

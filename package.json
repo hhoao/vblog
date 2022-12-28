@@ -2,9 +2,9 @@
   "name": "vblog-admin",
   "version": "1.00",
   "author": {
-    "name": "hhoa",
+    "name": "hhoao",
     "email": "huanghaohhoa@163.com",
-    "url": "https://github.com/HHoao"
+    "url": "https://github.com/hhoao"
   },
   "scripts": {
     "bootstrap": "pnpm install",
@@ -152,13 +152,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HHoao/VBlog-Admin"
+    "url": "git+https://github.com/HHoao/vblog"
   },
   "license": "MIT",
   "bugs": {
-    "url": "git@github.com:HHoao/vblog-admin.git/issues"
+    "url": "git@github.com:HHoao/vblog.git/issues"
   },
-  "homepage": "git@github.com:HHoao/vblog-admin.git",
+  "homepage": "git@github.com:HHoao/vblog.git",
   "engines": {
     "node": "^12 || >=14"
   },

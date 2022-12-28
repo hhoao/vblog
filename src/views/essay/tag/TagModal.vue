@@ -43,7 +43,7 @@
     ]);
   });
 
-  const getTitle = computed(() => (!unref(isUpdate) ? '新增文章' : '编辑文章'));
+  const getTitle = computed(() => (!unref(isUpdate) ? '新增标签' : '编辑标签'));
 
   async function handleSubmit() {
     try {

@@ -26,8 +26,7 @@ export const articleFormSchema: FormSchema[] = [
     rules: [
       {
         required: true,
-        message: '请输入标题',
-        min: 3,
+        message: '请输入标签',
       },
     ],
   },

@@ -87,7 +87,9 @@
   }
 
   function handleDelete(record: ArticleParam) {
-    deleteArticleApi({ id: record.id });
+    deleteArticleApi({ id: record.id }).then(() => {
+      reload();
+    });
   }
 
   function handleUpdateSuccess({ isUpdate, values }) {

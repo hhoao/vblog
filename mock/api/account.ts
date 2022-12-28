@@ -8,11 +8,12 @@ import {
 } from '../_util';
 import { accountList, createFakeUserList, generateToken, getUserByToken } from '../data/user';
 import { GetUserInfoModel } from '/@/api/model/userModel';
+import { AccountApi } from 'src/api/account';
 
 const tokenHead = 'Bearer';
 export default [
   {
-    url: '/basic-api/accounts',
+    url: AccountApi.AccountPageList,
     timeout: 100,
     method: 'get',
     response: ({ query }) => {
@@ -21,7 +22,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/account',
+    url: AccountApi.ACCOUNT_INFO,
     timeout: 1000,
     method: 'get',
     response: (request: requestParams) => {
@@ -39,7 +40,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/accounts/auth/token',
+    url: AccountApi.Login,
     timeout: 200,
     method: 'post',
     response: ({ body }) => {
@@ -58,7 +59,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/accounts/auth/token',
+    url: AccountApi.Logout,
     timeout: 200,
     method: 'delete',
     response: (request: requestParams) => {

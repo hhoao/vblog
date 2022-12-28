@@ -1,4 +1,3 @@
-const contentHeight; const contentHeight;
 <template>
   <div ref="wrapRef"></div>
 </template>
@@ -28,6 +27,7 @@ const contentHeight; const contentHeight;
   interface MarkdownOptions {
     placeholder?: string;
     value?: string;
+    upload?: IUpload;
     // 是否改变网站样式设置
     changeStyleSetting?: boolean;
     // 高度填充配置, 不填写则默认不开启
@@ -37,8 +37,9 @@ const contentHeight; const contentHeight;
   }
 
   type Lang = 'zh_CN' | 'en_US' | 'ja_JP' | 'ko_KR' | undefined;
+
   const props = defineProps<MarkdownOptions>();
-  const emit = defineEmits(['change', 'get', 'update:value']);
+  const emit = defineEmits(['update:value']);
   const wrapRef = ref<ElRef>(null);
   const vditorRef = ref(null) as Ref<Nullable<Vditor>>;
   const initializedRef = ref(false);
@@ -46,6 +47,7 @@ const contentHeight; const contentHeight;
   const { getLocale } = useLocale();
   const { getDarkMode } = useRootSetting();
   const valueRef = ref(props.value || '');
+
   const getCurrentLang = computed((): 'zh_CN' | 'en_US' | 'ja_JP' | 'ko_KR' => {
     let lang: Lang;
     switch (unref(getLocale)) {
@@ -123,16 +125,15 @@ const contentHeight; const contentHeight;
     input: (v) => {
       valueRef.value = v;
       emit('update:value', v);
-      emit('change', v);
     },
     after: () => {
       nextTick(() => {
         // modalFn?.redoModalHeight?.();
         initializedRef.value = true;
-        emit('get', instance);
       });
     },
   } as MarkdownOptions;
+
   const instance = {
     getVditor: (): Vditor => vditorRef.value!,
   };
@@ -180,6 +181,7 @@ const contentHeight; const contentHeight;
   function destroy() {
     restoreStyleSettingAfterSwitchOtherMenu();
     const vditorInstance = unref(vditorRef);
+    vditorInstance?.clearStack();
     if (!vditorInstance) return;
     try {
       vditorInstance?.destroy?.();
@@ -250,6 +252,8 @@ const contentHeight; const contentHeight;
   onBeforeUnmount(destroy);
   onDeactivated(destroy);
   defineExpose({
-    initAndMountEditor,
+    getVditor: () => {
+      return instance.getVditor();
+    },
   });
 </script>

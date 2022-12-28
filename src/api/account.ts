@@ -8,16 +8,16 @@ import {
 import { GetUserInfoModel, LoginParams, LoginResultModel } from '/@/api/model/userModel';
 import { ErrorMessageMode } from '/#/axios';
 
-enum Api {
-  ACCOUNT_INFO = '/account',
-  AccountPageList = '/accounts',
-  Login = '/accounts/auth/token',
-  Logout = '/accounts/auth/token',
+export enum AccountApi {
+  ACCOUNT_INFO = '/v1/account',
+  AccountPageList = '/v1/accounts',
+  Login = '/v1/accounts/auth/token',
+  Logout = '/v1/accounts/auth/token',
 }
-export const getAccountInfo = () => defHttp.get<GetUserInfoModel>({ url: Api.ACCOUNT_INFO });
+export const getAccountInfo = () => defHttp.get<GetUserInfoModel>({ url: AccountApi.ACCOUNT_INFO });
 
 export const getAccountPageList = (params: AccountPageParams) =>
-  defHttp.get<AccountListGetResultModel>({ url: Api.AccountPageList, params });
+  defHttp.get<AccountListGetResultModel>({ url: AccountApi.AccountPageList, params });
 
 export const getAccountList = (params: AccountParams) => {
   return getAccountPageList({
@@ -28,12 +28,15 @@ export const getAccountList = (params: AccountParams) => {
 };
 
 export const isAccountExist = (username: string) =>
-  defHttp.post({ url: Api.AccountPageList, params: { username } }, { errorMessageMode: 'none' });
+  defHttp.post(
+    { url: AccountApi.AccountPageList, params: { username } },
+    { errorMessageMode: 'none' },
+  );
 
 export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
   return defHttp.post<LoginResultModel>(
     {
-      url: Api.Login,
+      url: AccountApi.Login,
       params,
     },
     {
@@ -43,5 +46,5 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
 }
 
 export function doLogout() {
-  return defHttp.delete({ url: Api.Logout });
+  return defHttp.delete({ url: AccountApi.Logout });
 }

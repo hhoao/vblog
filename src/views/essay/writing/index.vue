@@ -23,9 +23,9 @@
         ref="markDownRef"
         v-model:value="formModel.content"
         placeholder="Please enter text"
-        value="value"
         :fillHeightConfig="{ containerRef: getMarkdownContainerRef }"
         :changeStyleSetting="true"
+        :upload="uploadConfig"
       />
     </div>
     <essay-writing-modal ref="modalRef" @public-essay="publicEssay" />
@@ -40,7 +40,21 @@
   import EssayWritingModal from '/@/views/essay/writing/EssayWritingModal.vue';
   import { EssayWritingModalType } from '/@/views/essay/writing/types/EssayWritingModalType';
   import { addArticleApi } from '/@/api/article';
-
+  import { uploadApi } from '/@/api/upload';
+  const uploadConfig: IUpload = {
+    handler(files: File[]): string | Promise<string> | Promise<null> | null {
+      return uploadApi(
+        {
+          file: files[0],
+        },
+        () => {},
+      ).then((value) => {
+        markDownRef.value?.getVditor().insertValue('![]' + '(' + value.data.result + ')');
+        return value.data.result;
+      }) as Promise<string>;
+    },
+    multiple: false,
+  };
   const formRef = ref<FormInstance>();
   const headRef = ref(null);
   const markDownRef = ref<Nullable<MarkDownActionType>>(null);
@@ -65,6 +79,10 @@
     }
     modalRef.value?.open();
   }
+  function reset() {
+    formModel.content = '';
+    formModel.title = '';
+  }
   function closeModal() {
     modalRef.value?.close();
   }
@@ -74,16 +92,17 @@
       ...data,
       ...formModel,
     }).then(() => {
+      reset();
       closeModal();
     });
   }
 
   onMounted(() => {
-    markDownRef.value?.initAndMountEditor();
+    // markDownRef.value?.initAndMountEditor();
   });
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   //noinspection LessUnresolvedVariable
   @prefix-cls: ~'@{namespace}-markdown';
 

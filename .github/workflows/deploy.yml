@@ -13,13 +13,6 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
 
-      - name: Sed Config Base
-        shell: bash
-        run: |
-          sed -i  's#VITE_PUBLIC_PATH\s*=.*#VITE_PUBLIC_PATH = /vblog/admin/#g' ./.env.production
-          sed -i  "s#VITE_BUILD_COMPRESS\s*=.*#VITE_BUILD_COMPRESS = 'gzip'#g" ./.env.production
-          cat ./.env.production
-
       - name: use Node.js 16
         uses: actions/setup-node@v3
         with:

@@ -7,9 +7,9 @@ import {
 import { defHttp } from '/@/utils/http/axios';
 
 enum Api {
-  setRoleStatus = '/role',
-  RolePageList = '/roles',
-  GetAllRoleList = '/role',
+  setRoleStatus = '/v1/role',
+  RolePageList = '/v1/roles',
+  GetAllRoleList = '/v1/role',
 }
 
 export const getRoleListByPage = (params?: RolePageParams) =>

@@ -119,7 +119,7 @@
             },
             () => {},
           )
-        ).data.url;
+        ).data.result;
       }
       emits('publicEssay', data);
     });

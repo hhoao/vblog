@@ -3,7 +3,7 @@
 
 .@{prefix-cls} {
   color: @menu-color;
-  background: @menu-bg-color;
+  //background: @menu-bg-color;
   .@{simple-prefix-cls}__parent {
     background-color: @sider-bg-color;
     > .@{prefix-cls}-submenu-title {
@@ -12,8 +12,8 @@
   }
 
   //vben-menu  vben-menu-vertical vben-simple-menu
-  &-item-active .@{prefix-cls}-submenu-title {
-    background: @sider-bg-active-color !important;
+  &-item-selected {
+    background: @sider-bg-active-color;
   }
 
   .collapse-title {

@@ -56,7 +56,7 @@
       // console.log(router.currentRoute.value.params);
       let curMenu: MenuWrapper = {
         name: tocWrapper.toc[0].text,
-        path: router.currentRoute.value.hash,
+        path: tocWrapper.toc[0].text,
         meta: { anchorJump: true },
         children: [],
         level: tocWrapper.toc[0].level,
@@ -65,7 +65,7 @@
       for (let i = 1; i < tocWrapper.toc.length; i++) {
         let nextMenu: MenuWrapper = {
           name: tocWrapper.toc[i].text,
-          path: router.currentRoute.value.hash,
+          path: tocWrapper.toc[i].text,
           meta: { anchorJump: true },
           children: [],
           level: tocWrapper.toc[i].level,

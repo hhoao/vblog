@@ -1,12 +1,11 @@
 <template>
-  <div :class="[$props.class, prefixCls]" v-html="getHtmlData"></div>
+  <div :class="[$props.class, prefixCls]" v-dompurify-html="getHtmlData" v-highlight></div>
 </template>
 
 <script lang="ts" setup>
-  import { computed, onMounted, ref, watch } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import showdown from 'showdown';
   import showdownToc from 'showdown-toc';
-  import hljs from 'highlight.js';
   import { useDesign } from '/@/hooks/web/useDesign';
 
   const props = defineProps<{
@@ -15,6 +14,7 @@
     class?: string;
   }>();
   let { prefixCls } = useDesign('markdown-viewer');
+
   const converter = new showdown.Converter({
     extensions: [showdownToc(props.tocWrapper)],
   });
@@ -26,26 +26,21 @@
   const getHtmlData = computed(() => {
     return converter.makeHtml(props.value ?? '');
   });
+
   watch(
-    () => props.value,
+    () => getHtmlData,
     (value) => {
-      if (value) {
-        document.querySelectorAll('pre code').forEach((el: HTMLElement) => {
-          hljs.highlightElement(el);
-        });
+      if (value && getHtmlData.value != null) {
         isRendered.value = true;
       }
     },
     {
+      deep: true,
       immediate: true,
       flush: 'post',
     },
   );
   const getIsRendered = computed(() => isRendered.value);
-  // = () => {
-  //  return isRendered.value;
-  // };
-  onMounted(() => {});
 
   defineExpose({ getIsRendered });
 </script>
@@ -54,6 +49,7 @@
   @prefix-cls: ~'@{namespace}-markdown-viewer';
   .@{prefix-cls} {
     width: 100%;
+    font-size: 1.2em;
 
     table {
       border-collapse: collapse;
@@ -101,8 +97,13 @@
       background: @code-bg-color;
     }
 
-    & pre code {
+    & pre {
+      padding: 10px;
       background: @code-block-bg-color;
+
+      & code {
+        background: inherit;
+      }
     }
   }
 </style>

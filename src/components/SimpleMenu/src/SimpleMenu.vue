@@ -24,6 +24,7 @@
   import { defineComponent, computed, ref, unref, reactive, toRefs, watch } from 'vue';
   import { useDesign } from '/@/hooks/web/useDesign';
   import Menu from './components/Menu.vue';
+  import * as routeType from '/@/router/types';
   import SimpleSubMenu from './SimpleSubMenu.vue';
   import { listenerRouteChange } from '/@/logics/mitt/routeChange';
   import { propTypes } from '/@/utils/propTypes';
@@ -85,7 +86,7 @@
           if (collapse) {
             menuState.openNames = [];
           } else {
-            setOpenKeys(currentRoute.value.path);
+            setOpenKeys(currentRoute.value.hash);
           }
         },
         { immediate: true },
@@ -97,7 +98,7 @@
           if (!props.isSplitMenu) {
             return;
           }
-          setOpenKeys(currentRoute.value.path);
+          setOpenKeys(currentRoute.value.hash);
         },
         { flush: 'post' },
       );
@@ -126,22 +127,25 @@
         setOpenKeys(path);
       }
 
-      async function handleSelect(menu: string) {
-        if (isUrl(menu)) {
-          openWindow(menu);
+      async function handleSelect(menu: routeType.Menu) {
+        if (isUrl(menu.path)) {
+          openWindow(menu.path);
           return;
         }
         const { beforeClickFn } = props;
         if (beforeClickFn && isFunction(beforeClickFn)) {
-          const flag = await beforeClickFn(menu);
+          const flag = await beforeClickFn(menu.path);
           if (!flag) return;
         }
 
         emit('menuClick', menu);
+        // console.log(location.href);
+        // console.log(decodeURIComponent(location.hash));
+        // console.log(menu.path);
 
         isClickGo.value = true;
-        // setOpenKeys(menu);
-        // menuState.activeName = menu;
+        setOpenKeys(menu.path);
+        menuState.activeName = menu.path;
       }
 
       return {

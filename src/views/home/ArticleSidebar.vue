@@ -1,41 +1,43 @@
 <template>
   <div class="sticky -top-800px">
-    <div class="overflow-hidden">
-      <a-card :loading="hotArticleLoading" style="font-size: 0.5rem">
-        <p> 热门文章 </p>
-        <div v-for="item in hotArticleListData" :key="item.id">
+    <a-card :loading="hotArticleLoading">
+      <p> 热门文章 </p>
+      <ul>
+        <li
+          v-for="item in hotArticleListData"
+          :key="item.id"
+          class="list-square list-inside text-current overflow-hidden overflow-ellipsis whitespace-nowrap"
+        >
           <router-link :to="`/article/${item.id}`" class="text-current">
             {{ item.title }}
           </router-link>
-        </div>
-      </a-card>
-      <a-card :loading="tagLoading" style="font-size: 0.5rem">
-        <p>标签列表</p>
-        <a-tag v-for="tag of tagList" :key="tag.id" color="blue">
-          <a href="">{{ tag.label }}</a>
-        </a-tag>
-      </a-card>
-      <a-card :loading="commentLoading" title="最新留言">
-        <a-list :data-source="newlyCommentListData">
-          <template #renderItem="{ item }">
-            <a-list-item>
-              <a-list-item-meta class="text-base display-inline overflow-hidden overflow-ellipsis">
-                <template #title>
-                  <p class="truncate m-0">{{ item.lastModification }}</p>
-                  <a href="" class="truncate text-base overflow-hidden overflow-ellipsis">
-                    {{ item.content }}</a
-                  >
-                </template>
-                <template #avatar>
-                  <a-avatar src="" />
-                </template>
-              </a-list-item-meta>
-            </a-list-item>
-          </template>
-        </a-list>
-      </a-card>
-      <a-card :loading="aboutMeLoading" title="关于">about me</a-card>
-    </div>
+        </li>
+      </ul>
+    </a-card>
+    <a-card :loading="tagLoading">
+      <p>标签列表</p>
+      <a-tag v-for="tag of tagList" :key="tag.id" color="blue">
+        <a href="">{{ tag.label }}</a>
+      </a-tag>
+    </a-card>
+    <a-card :loading="hotArticleLoading">
+      <p> 最新评论 </p>
+      <ul>
+        <li
+          v-for="item in newlyCommentListData"
+          :key="item.id"
+          class="list-square list-inside text-current overflow-hidden overflow-ellipsis whitespace-nowrap"
+        >
+          <router-link :to="`/article/${item.id}`" class="text-current">
+            {{ item.content }}
+          </router-link>
+        </li>
+      </ul>
+    </a-card>
+    <a-card :loading="aboutMeLoading">
+      <p>关于</p>
+      about me
+    </a-card>
   </div>
 </template>
 

@@ -1,11 +1,7 @@
 import type { Menu as MenuType } from '/@/router/types';
 import type { MenuState } from './types';
 
-import { computed, Ref, toRaw } from 'vue';
-
-import { unref } from 'vue';
-import { uniq } from 'lodash-es';
-import { getAllParentPath } from '/@/router/helper/menuHelper';
+import { computed, Ref, toRaw, unref } from 'vue';
 
 import { useTimeoutFn } from '/@/hooks/core/useTimeout';
 import { useDebounceFn } from '@vueuse/core';
@@ -18,7 +14,7 @@ export function useOpenKeys(
   collapse: Ref<boolean>,
 ) {
   const debounceSetOpenKeys = useDebounceFn(setOpenKeys, 50);
-  async function setOpenKeys(path: string) {
+  async function setOpenKeys() {
     const native = !mixSider.value;
     const menuList = toRaw(menus.value);
     useTimeoutFn(
@@ -28,14 +24,14 @@ export function useOpenKeys(
           menuState.openNames = [];
           return;
         }
-        const keys = getAllParentPath(menuList, path);
+        // const keys = getAllParentPath(menuList, hash);
 
-        if (!unref(accordion)) {
-          menuState.openNames = uniq([...menuState.openNames, ...keys]);
-        } else {
-          menuState.openNames = keys;
-        }
-        menuState.activeSubMenuNames = menuState.openNames;
+        // if (!unref(accordion)) {
+        //   menuState.openNames = uniq([...menuState.openNames, ...keys]);
+        // } else {
+        //   menuState.openNames = keys;
+        // }
+        // menuState.activeSubMenuNames = menuState.openNames;
       },
       30,
       native,

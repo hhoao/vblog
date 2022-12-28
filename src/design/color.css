@@ -1,4 +1,7 @@
 html {
+  /* base */
+  --color: #fff;
+  --text-hover-color: #000000;
   /* header */
   --header-bg-color: #ffffff;
   --header-bg-active-color: #273352;
@@ -9,7 +12,7 @@ html {
   --border-color: #fff;
   /* sider */
   --sider-bg-color: #fff;
-  --sider-bg-active-color: #fff;
+  --sider-bg-active-color: #f1f2fa;
   --sider-color: #ebebeb;
   --sider-border-color: #dbdbdb;
   --sider-active-color: #ff0000;
@@ -19,12 +22,10 @@ html {
   --menu-hover-color: #7456fb;
   /* content */
   --content-bg: #fff;
-  /* base */
-  --color: #fff;
   /* logo title */
   --logo-color: #666666;
   /* code */
   --code-color: #fff;
   --code-bg-color: #e0ffdd;
-  --code-block-bg-color: #f1f1f1;
+  --code-block-bg-color: #dfdfdf;
 }

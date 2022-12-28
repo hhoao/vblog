@@ -5,7 +5,6 @@ import 'virtual:windi-utilities.css';
 import 'virtual:svg-icons-register';
 import App from './App.vue';
 import 'highlight.js/styles/github.css';
-
 import { createApp } from 'vue';
 import { initAppConfigStore } from '/@/logics/initAppConfig';
 import { setupErrorHandle } from '/@/logics/error-handle';
@@ -15,6 +14,7 @@ import { setupStore } from '/@/store';
 import { setupI18n } from '/@/locales/setupI18n';
 import { setupGlobDirectives } from '/@/directives';
 import VueDOMPurifyHTML from 'vue-dompurify-html';
+import hljs from 'highlight.js';
 
 async function bootstrap() {
   const app = createApp(App);
@@ -25,6 +25,13 @@ async function bootstrap() {
   // Initialize internal system configuration
   // 初始化内部系统配置
   initAppConfigStore();
+
+  app.directive('highlight', function (el) {
+    const blocks = el.querySelectorAll('pre code');
+    blocks.forEach((block) => {
+      hljs.highlightBlock(block);
+    });
+  });
 
   app.use(VueDOMPurifyHTML);
   // Multilingual configuration

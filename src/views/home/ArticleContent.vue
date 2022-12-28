@@ -3,7 +3,7 @@
     <a-card v-for="item of articleListData" :key="item" class="mb-30px">
       <a-skeleton :loading="loading" active avatar>
         <div class="font-bold mb-10px text-st">
-          <router-link :to="`/article/${item.id}`" class="text-current">
+          <router-link :to="`/article/${item.id}`" class="text-current text-lg">
             {{ item.title }}
           </router-link>
         </div>
@@ -23,7 +23,7 @@
             alt="logo"
             :src="item.cover"
           />
-          <article v-html="item.content" class="md-description"></article>
+          <article v-html="item.content" class="md-description text-base"></article>
         </div>
         <p class="text-base">
           <a-space>
@@ -50,15 +50,12 @@
   const loading = ref<boolean>(true);
   let { prefixCls } = useDesign('article-content');
   let converter = new showdown.Converter({ metadata: true });
+  converter.setFlavor('github');
 
   async function getArticlePageList() {
     await getDetailsArticlePageListApi().then((res) => {
       for (let article of res.list) {
-        // console.log(converter.makeMarkdown(article.content));
-        // article.content = converter.makeMarkdown(article.content);
-
         article.content = converter.makeHtml(article.content);
-        // console.log(converter.getMetadata());
         articleListData.value.push(article);
       }
     });
@@ -78,6 +75,10 @@
     }
 
     .md-description {
+      h1 {
+        font-size: 1em;
+      }
+
       * {
         margin: 0px;
       }

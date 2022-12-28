@@ -1,8 +1,9 @@
 <template>
   <div class="w-3/5 ml-1/5 mr-1/5 mt-20px container p-20px">
     <article-content :id="id" />
-    <a-button class="float-left"> 上一篇</a-button>
-    <a-button class="float-right">下一篇</a-button>
+    <a-divider />
+    <article-left-right />
+    <a-divider />
     <div class="clear-both"></div>
     <article-comment />
   </div>
@@ -12,7 +13,8 @@
   import ArticleComment from '/@/views/article/ArticleComment.vue';
   import ArticleContent from '/@/views/article/ArticleContent.vue';
   import { onMounted } from 'vue';
-  // import { createRouter } from 'vue-router';
+  import ArticleLeftRight from '/@/views/article/ArticleLeftRight.vue';
+
   defineProps({
     id: String,
   });

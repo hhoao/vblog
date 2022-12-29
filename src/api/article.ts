@@ -4,6 +4,8 @@ import {
   DetailArticleModel,
   DetailArticleModelPageParams,
   DetailArticleModelParams,
+  SearchArticleModel,
+  SearchArticlePageParams,
 } from '/@/api/models/DetailArticleModel';
 import { BasicFetchResult } from '/@/api/models/BaseModel';
 
@@ -27,4 +29,10 @@ export const getDetailsArticle = (params?: DetailArticleModelParams) =>
   defHttp.get<DetailArticleModel>({
     url: `/api/articles/${params?.id}`,
     params: params ? Object.assign(params, { base: false }) : { base: false },
+  });
+
+export const searchArticle = (params: SearchArticlePageParams) =>
+  defHttp.get<BasicFetchResult<SearchArticleModel>>({
+    url: `/s1/search/articles`,
+    params: params,
   });

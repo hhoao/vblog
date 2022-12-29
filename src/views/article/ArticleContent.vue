@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, ref, watch } from 'vue';
+  import { onMounted, onUnmounted, ref, watch } from 'vue';
   import { useMenuStoreWithOut } from '/@/store/modules/menu';
   import { DetailArticleModel, DetailArticleModelParams } from '/@/api/models/DetailArticleModel';
   import { getDetailsArticle } from '/@/api/article';
@@ -35,6 +35,10 @@
     });
     loading.value = false;
   }
+
+  onUnmounted(() => {
+    setMenus([]);
+  });
 
   onMounted(() => {
     watch(

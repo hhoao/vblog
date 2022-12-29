@@ -28,7 +28,7 @@
             <li
               v-for="(item, index) in searchResult"
               :ref="setRefs(index)"
-              :key="item.path"
+              :key="item.id"
               :data-index="index"
               :class="[
                 `${prefixCls}-list__item`,
@@ -39,11 +39,12 @@
               @mouseenter="handleMouseenter"
               @click="handleEnter"
             >
-              <div :class="`${prefixCls}-list__item-icon`">
-                <Icon :icon="item.icon || 'mdi:form-select'" :size="20" />
-              </div>
               <div :class="`${prefixCls}-list__item-text`">
-                {{ item.name }}
+                <div class="overflow-hidden overflow-ellipsis whitespace-nowrap">
+                  {{ item.name }}
+                  <span class="divide-x">|</span>
+                  {{ item.digest }}
+                </div>
               </div>
               <div :class="`${prefixCls}-list__item-enter`">
                 <Icon icon="ant-design:enter-outlined" :size="20" />
@@ -66,7 +67,7 @@
   import vClickOutside from '/@/directives/clickOutside';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useRefs } from '/@/hooks/core/useRefs';
-  import { useMenuSearch } from './useMenuSearch';
+  import { useSearch } from './useSearch';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useAppInject } from '/@/hooks/web/useAppInject';
 
@@ -85,7 +86,7 @@
   const { getIsMobile } = useAppInject();
 
   const { handleSearch, searchResult, keyword, activeIndex, handleEnter, handleMouseenter } =
-    useMenuSearch(refs, scrollWrap, emit);
+    useSearch(refs, scrollWrap, emit);
 
   const getIsNotData = computed(() => !keyword || unref(searchResult).length === 0);
 

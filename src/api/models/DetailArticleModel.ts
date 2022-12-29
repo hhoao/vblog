@@ -3,6 +3,11 @@ import { BasicPageParams } from '/@/api/models/BaseModel';
 export interface DetailArticleModel extends BaseArticleModel {
   content: string;
 }
+export interface SearchArticleModel {
+  id: string;
+  title: string;
+  digest: string;
+}
 export interface BaseArticlePageListParam {
   title?: string;
   author?: string;
@@ -12,6 +17,9 @@ export interface BaseArticlePageListParam {
 }
 export interface DetailArticleModelParams {
   id: string;
+}
+export interface SearchArticlePageParams extends BasicPageParams {
+  queryInfo: string;
 }
 export type DetailArticleModelPageParams = BaseArticlePageListParam & BasicPageParams;
 

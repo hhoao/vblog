@@ -1,70 +1,48 @@
-import type { Menu } from '/@/router/types';
-import { ref, unref, Ref, nextTick } from 'vue';
-import { filter } from '/@/utils/helper/treeHelper';
-import { useGo } from '/@/hooks/web/usePage';
+import { nextTick, Ref, ref, unref } from 'vue';
 import { useScrollTo } from '/@/hooks/event/useScrollTo';
 import { onKeyStroke, useDebounceFn } from '@vueuse/core';
+import { searchArticle } from '/@/api/article';
+import { useGo } from '/@/hooks/web/usePage';
 
 export interface SearchResult {
   name: string;
-  path: string;
   icon?: string;
+  id: string;
+  digest: string;
 }
 
-// Translate special characters
-function transform(c: string) {
-  const code: string[] = ['$', '(', ')', '*', '+', '.', '[', ']', '?', '\\', '^', '{', '}', '|'];
-  return code.includes(c) ? `\\${c}` : c;
-}
-
-function createSearchReg(key: string) {
-  const keys = [...key].map((item) => transform(item));
-  const str = ['', ...keys, ''].join('.*');
-  return new RegExp(str);
-}
-
-export function useMenuSearch(refs: Ref<HTMLElement[]>, scrollWrap: Ref<ElRef>, emit: EmitType) {
+export function useSearch(refs: Ref<HTMLElement[]>, scrollWrap: Ref<ElRef>, emit: EmitType) {
   const searchResult = ref<SearchResult[]>([]);
   const keyword = ref('');
   const activeIndex = ref(-1);
 
-  const menuList: Menu[] = [];
-
   const go = useGo();
   const handleSearch = useDebounceFn(search, 200);
 
-  function search(e: ChangeEvent) {
+  async function search(e: ChangeEvent) {
     e?.stopPropagation();
+
     const key = e.target.value;
     keyword.value = key.trim();
     if (!key) {
       searchResult.value = [];
       return;
     }
-    const reg = createSearchReg(unref(keyword));
-    const filterMenu = filter(menuList, (item) => {
-      return reg.test(item.name) && !item.hideMenu;
-    });
-    searchResult.value = handlerSearchResult(filterMenu, reg);
-    activeIndex.value = 0;
-  }
+    searchResult.value = await searchArticle({ queryInfo: key, pageSize: 5, pageNum: 1 }).then(
+      (res) => {
+        const ret: SearchResult[] = [];
+        for (const item of res.list) {
+          ret.push({
+            id: item.id,
+            name: item.title,
+            digest: item.digest,
+          });
+        }
+        return ret;
+      },
+    );
 
-  function handlerSearchResult(filterMenu: Menu[], reg: RegExp, parent?: Menu) {
-    const ret: SearchResult[] = [];
-    filterMenu.forEach((item) => {
-      const { name, path, icon, children, hideMenu, meta } = item;
-      if (!hideMenu && reg.test(name) && (!children?.length || meta?.hideChildrenInMenu)) {
-        ret.push({
-          name: parent?.name ? `${parent.name} > ${name}` : name,
-          path,
-          icon,
-        });
-      }
-      if (!meta?.hideChildrenInMenu && Array.isArray(children) && children.length) {
-        ret.push(...handlerSearchResult(children, reg, item));
-      }
-    });
-    return ret;
+    activeIndex.value = 0;
   }
 
   // Activate when the mouse moves to a certain line
@@ -133,7 +111,8 @@ export function useMenuSearch(refs: Ref<HTMLElement[]>, scrollWrap: Ref<ElRef>, 
     const to = result[index];
     handleClose();
     await nextTick();
-    go(to.path);
+    // console.log(to);
+    go(`/article/${to.id}`);
   }
 
   // close search modal

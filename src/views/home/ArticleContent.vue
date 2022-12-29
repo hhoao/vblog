@@ -9,19 +9,18 @@
         </div>
         <div
           class="clear-both overflow-hidden overflow-ellipsis text-gray-500"
-          style="
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 5;
-          "
+          style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5"
         >
           <img
             v-if="!loading && item.cover"
             class="float-left h-3/4 w-2/7 m-2"
             alt="logo"
             :src="item.cover"
+            @error="
+              () => {
+                item.cover = '';
+              }
+            "
           />
           <article v-html="item.content" class="md-description text-base"></article>
         </div>

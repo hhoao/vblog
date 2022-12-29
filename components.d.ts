@@ -7,12 +7,20 @@ export {};
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AAvatar: typeof import('ant-design-vue/es')['Avatar'];
     ABreadcrumb: typeof import('ant-design-vue/es')['Breadcrumb'];
     AButton: typeof import('ant-design-vue/es')['Button'];
     ACard: typeof import('ant-design-vue/es')['Card'];
     ACol: typeof import('ant-design-vue/es')['Col'];
+    AComment: typeof import('ant-design-vue/es')['Comment'];
+    ADivider: typeof import('ant-design-vue/es')['Divider'];
+    AForm: typeof import('ant-design-vue/es')['Form'];
+    AFormItem: typeof import('ant-design-vue/es')['FormItem'];
     AInput: typeof import('ant-design-vue/es')['Input'];
     ALayoutSider: typeof import('ant-design-vue/es')['LayoutSider'];
+    AList: typeof import('ant-design-vue/es')['List'];
+    AListItem: typeof import('ant-design-vue/es')['ListItem'];
+    APagination: typeof import('ant-design-vue/es')['Pagination'];
     AppLocalePicker: typeof import('./src/components/Application/src/AppLocalePicker.vue')['default'];
     AppLogo: typeof import('./src/components/Application/src/AppLogo.vue')['default'];
     AppProvider: typeof import('./src/components/Application/src/AppProvider.vue')['default'];
@@ -24,6 +32,7 @@ declare module '@vue/runtime-core' {
     ASkeleton: typeof import('ant-design-vue/es')['Skeleton'];
     ASpace: typeof import('ant-design-vue/es')['Space'];
     ATag: typeof import('ant-design-vue/es')['Tag'];
+    ATextarea: typeof import('ant-design-vue/es')['Textarea'];
     BasicArrow: typeof import('./src/components/Basic/src/BasicArrow.vue')['default'];
     BasicDrawer: typeof import('./src/components/Drawer/src/BasicDrawer.vue')['default'];
     BasicHelp: typeof import('./src/components/Basic/src/BasicHelp.vue')['default'];

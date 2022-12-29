@@ -19,13 +19,13 @@
         >
           <img
             v-if="!loading && item.cover"
-            class="float-left h-3/4"
+            class="float-left h-3/4 w-2/7 m-2"
             alt="logo"
             :src="item.cover"
           />
           <article v-html="item.content" class="md-description text-base"></article>
         </div>
-        <p class="text-base">
+        <p class="text-base mt-4">
           <a-space>
             <span> <LikeOutlined /></span>
             <span> <StarOutlined /></span>
@@ -35,25 +35,51 @@
         </p>
       </a-skeleton>
     </a-card>
+    <div>
+      <a-pagination
+        v-model:current="page.pageNum"
+        show-quick-jumper
+        :total="page.total"
+        @change="pageOnChange"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, ref } from 'vue';
+  import { onMounted, reactive, ref } from 'vue';
   import { getDetailsArticlePageListApi } from '/@/api/article';
-  import { BaseArticleModel } from '/@/api/models/DetailArticleModel';
+  import { BaseArticleModel, DetailArticleModelPageParams } from '/@/api/models/DetailArticleModel';
   import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons-vue';
   import showdown from 'showdown';
   import { useDesign } from '/@/hooks/web/useDesign';
+  import { BasicPageParams } from '/@/api/models/BaseModel';
 
   const articleListData = ref<BaseArticleModel[]>([]);
   const loading = ref<boolean>(true);
+  const page = reactive<BasicPageParams>({
+    pageNum: 1,
+    pageSize: 10,
+    total: 100,
+  });
   let { prefixCls } = useDesign('article-content');
   let converter = new showdown.Converter({ metadata: true });
   converter.setFlavor('github');
 
-  async function getArticlePageList() {
-    await getDetailsArticlePageListApi().then((res) => {
+  function pageOnChange(pageNum, pageSize) {
+    getArticlePageList({ pageNum, pageSize });
+  }
+
+  function init() {
+    getArticlePageList({ pageNum: 1, pageSize: 10 });
+  }
+
+  async function getArticlePageList(pageParam: DetailArticleModelPageParams) {
+    await getDetailsArticlePageListApi(pageParam).then((res) => {
+      page.pageNum = res.pageNum;
+      page.pageSize = res.pageSize;
+      page.totalPage = res.totalPage;
+      page.total = Number(res.total);
       for (let article of res.list) {
         article.content = converter.makeHtml(article.content);
         articleListData.value.push(article);
@@ -63,7 +89,7 @@
   }
 
   onMounted(() => {
-    getArticlePageList();
+    init();
   });
 </script>
 
@@ -75,11 +101,8 @@
     }
 
     .md-description {
-      h1 {
-        font-size: 1em;
-      }
-
       * {
+        font-size: 1em;
         margin: 0px;
       }
     }

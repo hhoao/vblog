@@ -3,20 +3,18 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, watch } from 'vue';
+  import { computed, onUpdated, ref } from 'vue';
   import showdown from 'showdown';
-  import showdownToc from 'showdown-toc';
   import { useDesign } from '/@/hooks/web/useDesign';
 
   const props = defineProps<{
-    tocWrapper: object;
     value?: string | undefined;
     class?: string;
   }>();
   let { prefixCls } = useDesign('markdown-viewer');
 
   const converter = new showdown.Converter({
-    extensions: [showdownToc(props.tocWrapper)],
+    extensions: [],
   });
   converter.setFlavor('github');
   converter.setOption('tables', true);
@@ -26,21 +24,11 @@
   const getHtmlData = computed(() => {
     return converter.makeHtml(props.value ?? '');
   });
-
-  watch(
-    () => getHtmlData,
-    (value) => {
-      if (value && getHtmlData.value != null) {
-        isRendered.value = true;
-      }
-    },
-    {
-      deep: true,
-      immediate: true,
-      flush: 'post',
-    },
-  );
   const getIsRendered = computed(() => isRendered.value);
+
+  onUpdated(() => {
+    isRendered.value = true;
+  });
 
   defineExpose({ getIsRendered });
 </script>

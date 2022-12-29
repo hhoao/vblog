@@ -19,6 +19,7 @@
   import ArticleSidebar from '/@/views/home/ArticleSidebar.vue';
   import { ref } from 'vue';
   import { useAppInject } from '/@/hooks/web/useAppInject';
+
   const { getIsMobile } = useAppInject();
   const container = ref(null);
 </script>

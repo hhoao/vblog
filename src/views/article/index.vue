@@ -4,6 +4,7 @@
     <a-divider />
     <article-left-right />
     <a-divider />
+    <div class="divide-y"></div>
     <div class="clear-both"></div>
     <article-comment />
   </div>

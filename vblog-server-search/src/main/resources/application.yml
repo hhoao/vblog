@@ -3,5 +3,3 @@ spring:
     active: dev #默认开发环境
   jackson:
     default-property-inclusion: non_null
-    generator:
-      write_numbers_as_strings: true

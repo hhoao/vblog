@@ -27,7 +27,7 @@ public class EsArticleController {
     private final EsArticleService esArticleService;
 
     @Operation(summary = "分页获取搜索文章")
-    @GetMapping("/search/article")
+    @GetMapping("/search/articles")
     public CommonResult<CommonPage<EsArticle>> search(
             String queryInfo,
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer pageNum,
